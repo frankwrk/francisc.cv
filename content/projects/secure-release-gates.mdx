@@ -1,0 +1,56 @@
+---
+title: "Security hardening and incident resilience"
+description: "Implemented practical security controls, monitoring, and vulnerability workflows for client web platforms."
+role: "Founder & systems designer"
+tags: ["Security", "Systems", "DevEx"]
+stack: ["Cloudflare WAF", "SSL/TLS", "Tenable.io", "Splunk", "UptimeRobot", "AWS"]
+outcomes:
+  - "Reduced downtime and attack impact by up to 70% in protected client environments."
+  - "Improved response speed with structured monitoring and alert pipelines."
+  - "Increased resilience through patching automation and post-incident hardening."
+featured: true
+order: 4
+---
+
+## Problem / Context
+
+Small and mid-sized organizations often had security tooling in place but lacked a coherent operational model for prevention, detection, and response.
+
+## Approach
+
+I focused on pragmatic controls tied to measurable operational outcomes.
+
+- Strengthen perimeter and access controls.
+- Monitor critical events and certificate/uptime health.
+- Define incident triage and post-incident hardening steps.
+
+## Execution
+
+- Deployed Cloudflare firewall and policy controls.
+- Implemented SSL, DNS, and access hardening patterns.
+- Set up vulnerability scanning and log review workflows.
+- Automated recurring maintenance tasks for patching and monitoring.
+
+```yaml
+security_baseline:
+  - waf_rules_enabled
+  - ssl_tls_enforced
+  - uptime_and_log_alerts
+  - vulnerability_scan_cycle
+```
+
+## Results
+
+- Reduced downtime and attack impact by up to 70% in targeted environments.
+- Better visibility into risk through monitoring and reporting routines.
+- Faster incident containment with clearer ownership and response playbooks.
+
+## Learnings
+
+Security improvements hold only when controls are paired with consistent operational habits.
+
+## Artifacts
+
+- Security baseline checklist
+- Incident response and post-mortem template
+- Vulnerability remediation workflow

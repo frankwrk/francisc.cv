@@ -1,0 +1,13 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#0B1018"/>
+  <rect x="120" y="100" width="1040" height="520" rx="10" stroke="#2A3344"/>
+  <rect x="170" y="160" width="220" height="380" rx="8" fill="#111A27" stroke="#2A3344"/>
+  <rect x="430" y="160" width="300" height="130" rx="8" fill="#111A27" stroke="#2A3344"/>
+  <rect x="430" y="320" width="300" height="220" rx="8" fill="#111A27" stroke="#2A3344"/>
+  <rect x="770" y="160" width="340" height="380" rx="8" fill="#111A27" stroke="#2A3344"/>
+  <line x1="430" y1="225" x2="390" y2="225" stroke="#4F89FF"/>
+  <line x1="770" y1="350" x2="730" y2="350" stroke="#4F89FF"/>
+  <text x="185" y="200" fill="#97A3B8" font-size="24" font-family="monospace">Content model</text>
+  <text x="450" y="205" fill="#97A3B8" font-size="24" font-family="monospace">Template rules</text>
+  <text x="790" y="205" fill="#97A3B8" font-size="24" font-family="monospace">Publishing flow</text>
+</svg>

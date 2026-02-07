@@ -1,0 +1,56 @@
+---
+title: "Requirements and handover documentation system"
+description: "Built a repeatable documentation model that reduced ambiguity between business, design, and engineering teams."
+role: "Product & technical consultant"
+tags: ["Product", "DevEx", "Systems"]
+stack: ["MDX", "Notion", "API docs", "Runbooks"]
+outcomes:
+  - "Improved project clarity with explicit problem statements and acceptance criteria."
+  - "Reduced handover friction through setup and maintenance guides for non-technical owners."
+  - "Helped teams make faster decisions by documenting scope, constraints, and dependencies upfront."
+featured: true
+order: 2
+---
+
+## Problem / Context
+
+Projects often stalled because teams had partial context: business goals were clear in meetings but unclear in execution artifacts.
+
+## Approach
+
+I standardized discovery and handover documentation as part of delivery, not as optional cleanup.
+
+- Define the problem and success criteria before implementation.
+- Write user stories and acceptance criteria in plain language.
+- Capture decision rationale when trade-offs are made.
+
+## Execution
+
+- Created reusable templates for discovery, scope, and handover.
+- Linked technical decisions to business and UX goals.
+- Produced maintenance instructions for teams inheriting systems after launch.
+
+```ts
+type DeliveryArtifact = {
+  problem: string;
+  acceptanceCriteria: string[];
+  constraints: string[];
+  handoverChecklist: string[];
+};
+```
+
+## Results
+
+- Teams aligned earlier and reduced avoidable rework.
+- Stakeholders had clearer ownership boundaries during implementation.
+- Non-technical operators could manage production systems with less dependency on original builders.
+
+## Learnings
+
+Documentation quality directly affects delivery speed and long-term maintainability.
+
+## Artifacts
+
+- Discovery and scope template set
+- Handover and maintenance guides
+- Decision record format

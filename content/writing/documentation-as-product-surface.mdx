@@ -1,0 +1,40 @@
+---
+title: "Documentation as a product surface"
+description: "Why setup guides, handover notes, and decision logs are part of user experience and product quality."
+date: "2025-12-16"
+tags: ["Documentation", "Product", "DevEx"]
+takeaways:
+  - "Documentation is how teams preserve context when people and priorities change."
+  - "Acceptance criteria should be readable by both technical and non-technical stakeholders."
+  - "Handover quality is a direct predictor of support load."
+---
+
+## The hidden product surface
+
+In consulting work, the same issue appears in different industries: teams invest in build quality but underinvest in transfer quality. Then the original builders become permanent support.
+
+## Documentation should answer four questions
+
+Every project handover should make these explicit:
+
+1. What was built, and why?
+2. What are the known constraints and trade-offs?
+3. How do I run and update this system safely?
+4. What should I check first during an incident?
+
+## Treat docs as requirements infrastructure
+
+I now write documentation alongside user stories and acceptance criteria, not after launch. This keeps scope decisions visible and reduces surprises near release.
+
+```ts
+type HandoverPackage = {
+  systemOverview: string;
+  setupGuide: string[];
+  maintenanceChecklist: string[];
+  knownRisks: string[];
+};
+```
+
+## Practical rule
+
+If a non-technical owner cannot perform routine updates using your docs, the product is not fully delivered.
