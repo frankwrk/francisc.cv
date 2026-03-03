@@ -1,3 +1,0 @@
-export function Skeleton({ className }: { className: string }) {
-  return <div className={`animate-pulse rounded-md bg-card2 ${className}`} aria-hidden />;
-}

@@ -1,147 +1,30 @@
-# francisc.cv
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Portfolio-grade personal site built with Next.js 16 App Router, TypeScript, Tailwind CSS v4, and a content-first MDX workflow.
+## Getting Started
 
-## Stack
-
-- Next.js 16 (App Router)
-- TypeScript
-- Tailwind CSS v4 with CSS variable tokens
-- MDX content in `/content` (no CMS/database)
-- Geist Sans + Geist Mono + Geist Pixel via `geist/font/*`
-
-## Run
+First, run the development server:
 
 ```bash
-pnpm install
-pnpm dev
+bun dev
 ```
 
-Production build:
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-pnpm build
-pnpm start
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Content model
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-All long-form content lives in `/content`:
+## Learn More
 
-- `content/projects/*.mdx`
-- `content/writing/*.mdx`
-- `content/pages/about.mdx`
-- `content/pages/resume.mdx`
-- `content/pages/now.mdx`
+To learn more about Next.js, take a look at the following resources:
 
-Frontmatter examples:
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### Project
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-```yaml
-title: "Project title"
-description: "One-line summary"
-role: "Role"
-tags: ["Product", "UX"]
-stack: ["Next.js", "TypeScript"]
-outcomes:
-  - "Outcome one"
-links:
-  github: "https://github.com/..."
-featured: true
-order: 1
-```
+## Deploy on Vercel
 
-### Writing
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-```yaml
-title: "Post title"
-description: "Post summary"
-date: "2026-01-14"
-tags: ["Systems", "UX"]
-takeaways:
-  - "Key takeaway"
-```
-
-## Add new content
-
-1. Add a new `.mdx` file under the relevant `content/*` folder.
-2. Include frontmatter fields matching existing examples.
-3. Restart `pnpm dev` if file discovery does not hot-reload in your editor.
-
-## MDX components
-
-Custom MDX components are mapped in:
-
-- `src/components/mdx/mdx-components.tsx`
-
-Available components include:
-
-- `Callout`
-- `Badge`
-- `Figure`
-- `InlineCode`
-- `Steps`
-- `Table`
-- `LinkCard`
-- `ContactForm`
-
-## Design system tokens
-
-Theme tokens are defined in `src/app/globals.css`:
-
-- `--bg`
-- `--fg`
-- `--muted`
-- `--border`
-- `--border2`
-- `--card`
-- `--card2`
-- `--accent`
-- `--accent-muted`
-- `--ring`
-
-These are mapped into Tailwind v4 utilities through `@theme inline`.
-
-## Geist Pixel notes
-
-This project uses Geist Pixel directly through `geist/font/pixel` in `src/app/layout.tsx`.
-
-If you need a local fallback:
-
-1. Add font files under `public/fonts/` (example: `GeistPixelSquare.woff2`).
-2. Swap to `next/font/local` in `src/app/layout.tsx` for the pixel accent font.
-3. Keep CSS variable naming aligned with `--font-geist-pixel-square` to avoid style changes.
-
-Reference:
-
-- [Introducing Geist Pixel](https://vercel.com/blog/introducing-geist-pixel)
-- [Vercel Font docs](https://vercel.com/font)
-
-## Resume PDF
-
-- Public file path: `public/resume.pdf`
-- Resume page source: `content/pages/resume.mdx`
-- Role-specific resume variants: `public/resumes/*.pdf`
-
-Current default download (`public/resume.pdf`) points to the Technical Product Manager version.
-The resume page also exposes role-specific links for cybersecurity, UI/UX, WordPress, and general applications.
-
-To update:
-
-1. Replace `public/resume.pdf` with the latest version.
-2. Replace or add variants under `public/resumes/` using stable slug filenames.
-3. Update `content/pages/resume.mdx` links and highlights to match the latest role-specific narratives.
-
-## SEO and metadata
-
-- Global metadata: `src/app/layout.tsx`
-- Sitemap: `src/app/sitemap.ts`
-- Robots: `src/app/robots.ts`
-- OG image: `src/app/opengraph-image.tsx`
-
-## Notes
-
-- Command palette (`⌘K` / `Ctrl+K`) indexes pages, projects, and writing entries from local content.
-- Search is local and build-time sourced; no external service required.
-- Analytics hook is a placeholder component in `src/components/site/analytics.tsx`.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
