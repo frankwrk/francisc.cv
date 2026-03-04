@@ -3,6 +3,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { siteScaffoldConfig } from "@/config/site-scaffold";
+import { SiteNav } from "@/components/layout/site-nav";
 import { cn } from "@/utils/cn";
 
 type SiteScaffoldProps = {
@@ -141,9 +142,10 @@ function TopOuterRuler() {
 function TopRuler() {
   return (
     <div
-      className="flex h-[50px] items-center justify-end border-b px-4 md:px-6"
+      className="flex h-[50px] items-center justify-between border-b px-4 md:px-6"
       style={{ borderColor: "var(--scaffold-line)" }}
     >
+      <SiteNav />
       <ThemeToggle />
     </div>
   );
@@ -340,7 +342,7 @@ export function SiteScaffold({ children }: SiteScaffoldProps) {
                   }}
                 >
                   {index === 0 ? (
-                    <div className="h-full px-5 py-6 md:pl-20 md:pr-10 md:py-10">
+                    <div className="h-full overflow-y-auto px-5 py-6 md:py-10 md:pl-20 md:pr-10">
                       {children}
                     </div>
                   ) : (
