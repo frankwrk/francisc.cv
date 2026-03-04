@@ -1,38 +1,64 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "motion/react";
 import { FlipWords } from "@/components/ui/flip-words";
 import { cn } from "@/utils/cn";
 
 const flipNavWords = ["Thinking", "Writing", "Notes"];
 
+const links = [
+  { label: "Home", href: "/" },
+  { label: "Work", href: "/work" },
+  { label: "Resume", href: "/resume" },
+  { label: "Thinking", href: "/thinking", flip: true },
+];
+
 export function SiteNav() {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
 
-  const links = [
-    { label: "Home", href: "/" },
-    { label: "Work", href: "/work" },
-    { label: "Resume", href: "/resume" },
-    { label: "Thinking", href: "/thinking", flip: true },
-  ];
+  // Close on outside click + ESC
+  useEffect(() => {
+    if (!isOpen) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setIsOpen(false);
+    }
+    function onClick(e: MouseEvent) {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setIsOpen(false);
+    }
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("click", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("click", onClick);
+    };
+  }, [isOpen]);
+
+  function isActive(href: string) {
+    return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
+  }
+
+  function linkCls(href: string) {
+    return cn(
+      "text-[10px] tracking-[0.18em] transition-colors [font-family:var(--font-geist-pixel-circle)]",
+      isActive(href)
+        ? "text-[var(--scaffold-toggle-text-active)]"
+        : "text-[var(--scaffold-ruler)] hover:text-[var(--scaffold-toggle-text-active)]"
+    );
+  }
 
   return (
-    <nav className="flex items-center gap-4 md:gap-5">
-      {links.map(({ label, href, flip }) => {
-        const isActive =
-          href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
-        return (
-          <Link
-            key={href}
-            href={href}
-            className={cn(
-              "text-[10px] tracking-[0.18em] transition-colors [font-family:var(--font-geist-pixel-circle)]",
-              isActive
-                ? "text-[var(--scaffold-toggle-text-active)]"
-                : "text-[var(--scaffold-ruler)] hover:text-[var(--scaffold-toggle-text-active)]"
-            )}
-          >
+    // No `relative` here — the absolute dropdown resolves to the canvas column instead,
+    // giving it the full canvas width automatically.
+    <div ref={navRef}>
+      {/* Desktop: inline nav */}
+      <nav className="hidden items-center gap-4 md:flex md:gap-5">
+        {links.map(({ label, href, flip }) => (
+          <Link key={href} href={href} className={linkCls(href)}>
             {flip ? (
               <span className="relative inline-block">
                 <span aria-hidden className="invisible">
@@ -46,8 +72,48 @@ export function SiteNav() {
               <span>{label}</span>
             )}
           </Link>
-        );
-      })}
-    </nav>
+        ))}
+      </nav>
+
+      {/* Mobile: MENU toggle */}
+      <button
+        onClick={() => setIsOpen((v) => !v)}
+        aria-expanded={isOpen}
+        aria-label="Toggle navigation"
+        className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors [font-family:var(--font-geist-pixel-circle)] hover:text-[var(--scaffold-toggle-text-active)] md:hidden"
+      >
+        {isOpen ? "CLOSE" : "MENU"}
+      </button>
+
+      {/* Mobile: full-width dropdown panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="absolute left-0 right-0 top-[50px] z-50 border-b border-[var(--scaffold-line)] bg-[var(--scaffold-surface)] md:hidden"
+          >
+            <nav>
+              {links.map(({ label, href }, i) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setIsOpen(false)}
+                  className={cn(
+                    linkCls(href),
+                    "flex items-center px-5 py-4",
+                    i > 0 && "border-t border-[var(--scaffold-line)]"
+                  )}
+                >
+                  {label}
+                </Link>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
