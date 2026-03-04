@@ -24,7 +24,8 @@ export function SiteNav() {
   const { trigger } = useWebHaptics();
   const prefersReducedMotion = useReducedMotion();
 
-  // Close on outside click + ESC
+  // Close on outside click + ESC. Defer adding document click listener by one frame
+  // so the same tap that opened the menu (e.g. on mobile) is not treated as outside click.
   useEffect(() => {
     if (!isOpen) return;
     function onKey(e: KeyboardEvent) {
@@ -34,8 +35,13 @@ export function SiteNav() {
       if (navRef.current && !navRef.current.contains(e.target as Node)) setIsOpen(false);
     }
     document.addEventListener("keydown", onKey);
-    document.addEventListener("click", onClick);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) document.addEventListener("click", onClick);
+    });
     return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("click", onClick);
     };
@@ -103,6 +109,7 @@ export function SiteNav() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="mobile-nav"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: prefersReducedMotion ? 0 : -4 }}
