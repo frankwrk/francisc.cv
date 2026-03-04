@@ -503,14 +503,15 @@ function sampleField(c, r, cols, rows, cfg, nsm) {
 
   if (cfg.bias === 'interference') {
     // Two noise orientations at ~72° to each other, plus a third octave
+    // Octave offsets scaled by 0.01 to match server-side discrete-field.ts
     let n1 = noise(nx, ny);
     let n2 = noise(ny * 0.72 + 1000, nx * 0.72 + 2000);
-    let n3 = noise(nx * o.f + o.ox, ny * o.f + o.oy);
+    let n3 = noise(nx * o.f + o.ox * 0.01, ny * o.f + o.oy * 0.01);
     val = n1 * 0.44 + n2 * 0.36 + n3 * 0.20;
   } else {
-    // Standard: primary layer + single octave
+    // Standard: primary layer + single octave (offsets scaled by 0.01 to match server)
     let n1 = noise(nx, ny);
-    let n2 = noise(nx * o.f + o.ox, ny * o.f + o.oy);
+    let n2 = noise(nx * o.f + o.ox * 0.01, ny * o.f + o.oy * 0.01);
     val = n1 * (1 - o.w) + n2 * o.w;
   }
 
@@ -520,7 +521,8 @@ function sampleField(c, r, cols, rows, cfg, nsm) {
 
     case 'drift-ltr': {
       // Smooth directional gradient: left darker, right brighter
-      let t = c / (cols - 1);
+      // Guard cols === 1 to avoid division by zero (match server-side discrete-field.ts)
+      let t = cols > 1 ? c / (cols - 1) : 0;
       val = val * 0.58 + t * 0.42;
       break;
     }

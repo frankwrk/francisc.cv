@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import React, { type ReactNode } from "react";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
@@ -24,10 +24,6 @@ export const metadata: Metadata = {
     template: `%s — ${siteName}`,
   },
   description: siteDescription,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "oklch(100% 0 89.88)" },
-    { media: "(prefers-color-scheme: dark)", color: "oklch(26.0325% 0 89.88)" },
-  ],
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -58,6 +54,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "oklch(100% 0 89.88)" },
+    { media: "(prefers-color-scheme: dark)", color: "oklch(26.0325% 0 89.88)" },
+  ],
 };
 
 const personSchema = {
