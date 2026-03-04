@@ -41,3 +41,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# reference app
+/alignui
+
+# Agents FIle
+/AGENTS.md
+/OVERVIEW.md
+/CLAUDE.md
