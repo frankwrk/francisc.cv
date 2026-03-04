@@ -982,15 +982,13 @@
 
 /* AlignUI Body Styles */
 body {
-  background: oklch(97.6139% 0 89.88);
+  /* Background is applied by SiteScaffold's fixed bg layer via --scaffold-bg.
+     No hardcoded value here so the palette in site-scaffold.ts remains the single
+     source of truth. */
   color: var(--color-text-strong-950);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-}
-
-.dark body {
-  background: oklch(20.4627% 0 89.88);
 }
 
 .site-scaffold {
