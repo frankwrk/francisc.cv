@@ -37,7 +37,7 @@ export default function Home() {
             </span>
           </HoverBorderGradient>
 
-          <Signature className="w-[176px] max-w-full text-[var(--scaffold-ruler)]" />
+          <Signature className="w-[123px] max-w-full text-[var(--scaffold-ruler)]" />
         </div>
       </section>
     </article>
