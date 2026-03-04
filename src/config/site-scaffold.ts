@@ -47,7 +47,7 @@ export type SiteScaffoldConfig = {
 // Update values in this object to customize the global scaffold.
 export const siteScaffoldConfig: SiteScaffoldConfig = {
   canvasMaxWidth: 980,
-  pageTopPadding: 40,
+  pageTopPadding: 52,
   sideRailWidth: 40,
   borderWidth: 1,
   cornerMarkers: {

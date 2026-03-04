@@ -71,7 +71,10 @@ function SideRuler({ align }: { align: "left" | "right" }) {
         color: "var(--scaffold-ruler)",
       }}
     >
-      <ul className="relative h-full w-full">
+      <ul
+        className="relative h-full w-full"
+        style={{ marginTop: `-${siteScaffoldConfig.borderWidth}px` }}
+      >
         {sideRulerValues.map((value) => {
           const relativeValue = value - siteScaffoldConfig.rulerSide.start;
           if (relativeValue === 0) {
@@ -150,7 +153,7 @@ function BorderExtensions() {
   const { horizontalLength, verticalLength } = siteScaffoldConfig.edgeExtensions;
 
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 z-10">
+    <div aria-hidden className="pointer-events-none absolute inset-0 z-10 hidden md:block">
       <div
         className="absolute left-0 top-0 h-px -translate-x-full"
         style={{
@@ -219,7 +222,7 @@ function CornerMarkers() {
     height: marker.size,
     borderWidth: marker.borderWidth,
     borderColor: "var(--scaffold-line)",
-    background: "oklch(100% 0 89.88)",
+    background: "var(--scaffold-surface)",
   } as const;
 
   return (
@@ -284,16 +287,17 @@ export function SiteScaffold({ children }: SiteScaffoldProps) {
       />
 
       <div
-        className="mx-auto grid w-full grid-cols-[1fr] md:grid-cols-[auto_minmax(0,1fr)_auto]"
+        className="mx-auto grid w-full grid-cols-[1fr] grid-rows-[1fr] px-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0"
         style={{
           maxWidth: siteScaffoldConfig.canvasMaxWidth + 128,
           paddingTop: siteScaffoldConfig.pageTopPadding,
+          height: "100dvh",
         }}
       >
         <SideRuler align="left" />
 
         <div
-          className="relative overflow-visible"
+          className="relative flex h-full flex-col overflow-visible"
           style={{
             background: "var(--scaffold-surface)",
             borderStyle: "solid",
@@ -306,13 +310,13 @@ export function SiteScaffold({ children }: SiteScaffoldProps) {
           <BorderExtensions />
           <TopRuler />
 
-          <div>
+          <div className="flex flex-1 flex-col">
             {siteScaffoldConfig.sections.map((section, index) => (
               <section
                 key={section.id}
                 className={cn(
                   "relative",
-                  index === 0 ? "p-0" : "px-4 py-4 md:px-6 md:py-6"
+                  index === 0 ? "flex-1 p-0" : "px-4 py-4 md:px-6 md:py-6"
                 )}
                 style={{
                   minHeight: section.minHeight,
