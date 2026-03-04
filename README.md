@@ -24,6 +24,13 @@ bun run build
 
 CI is configured in `.github/workflows/ci.yml` and runs the same checks on pull requests and pushes to `main`.
 
+## Dependency Notes
+
+- `next-mdx-remote` was upgraded from `5.0.0` to `6.0.0` to address the Vercel-blocking security advisory (`CVE-2026-0969`).
+- `react` and `react-dom` were upgraded to `19.2.4`.
+- `eslint` remains on `9.x` (latest compatible) because the current Next.js lint plugin stack has peer ranges targeting ESLint `<=9`.
+- `@types/node` remains on `20.x` to align with the project runtime baseline instead of tracking Node 25 type APIs.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
