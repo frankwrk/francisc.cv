@@ -17,12 +17,8 @@ export const siteProfileConfig: SiteProfileConfig = {
   initials: "FF",
   avatarAlt: "Portrait of Francisc Furdui",
   avatarSources: [
-    "/images/francisc-furdui.png",
     "/images/francisc-furdui.jpg",
     "/images/francisc-furdui.jpeg",
-    "/images/profile.jpg",
-    "/images/profile.jpeg",
-    "/images/profile.png",
   ],
   introParagraphs: [
     "I build clear, structured digital products where strategy, systems, and execution stay tightly connected. I care about making complexity navigable, not performative.",

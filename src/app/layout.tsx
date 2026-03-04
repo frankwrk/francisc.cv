@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   title: "francisc.cv",
   description: "Portfolio and systems-thinking artifact by Francisc Furdui.",
   icons: {
-    icon: "/images/favicon.png",
-    shortcut: "/images/favicon.png",
-    apple: "/images/favicon.png",
+    icon: "/images/favicon.jpg",
+    shortcut: "/images/favicon.jpg",
+    apple: "/images/favicon.jpg",
   },
 };
 

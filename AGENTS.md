@@ -85,6 +85,7 @@ Reference app strategy:
 - Keep scaffold/global visual tokens in `src/config/site-scaffold.ts` as the single source of truth for site-wide styling.
 - Keep profile-specific content/media/contact CTA in `src/config/site-profile.ts` as the single source of truth.
 - Home avatar now tries multiple profile image paths from `siteProfileConfig.avatarSources` and falls back to initials when no image is found.
+- Current canonical profile assets are `public/images/francisc-furdui.jpg` (avatar) and `public/images/favicon.jpg` (site icon).
 
 ### Global UI scaffold conventions
 
