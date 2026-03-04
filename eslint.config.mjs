@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local AlignUI reference workspace (not part of app runtime).
+    "alignui/**",
   ]),
 ]);
 

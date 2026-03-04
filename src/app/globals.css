@@ -982,9 +982,37 @@
 
 /* AlignUI Body Styles */
 body {
-  background: var(--color-bg-white-0);
+  background: oklch(97.6139% 0 89.88);
   color: var(--color-text-strong-950);
-  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
+}
+
+.dark body {
+  background: oklch(20.4627% 0 89.88);
+}
+
+.site-scaffold {
+  --scaffold-bg: var(--scaffold-bg-light);
+  --scaffold-surface: var(--scaffold-surface-light);
+  --scaffold-line: var(--scaffold-line-light);
+  --scaffold-ruler: var(--scaffold-ruler-light);
+  --scaffold-section-divider: var(--scaffold-line-light);
+  --scaffold-toggle-track: var(--scaffold-toggle-track-light);
+  --scaffold-toggle-thumb: var(--scaffold-toggle-thumb-light);
+  --scaffold-toggle-text-active: var(--scaffold-toggle-text-active-light);
+  --scaffold-toggle-text-inactive: var(--scaffold-toggle-text-inactive-light);
+}
+
+.dark .site-scaffold {
+  --scaffold-bg: var(--scaffold-bg-dark);
+  --scaffold-surface: var(--scaffold-surface-dark);
+  --scaffold-line: var(--scaffold-line-dark);
+  --scaffold-ruler: var(--scaffold-ruler-dark);
+  --scaffold-section-divider: var(--scaffold-line-dark);
+  --scaffold-toggle-track: var(--scaffold-toggle-track-dark);
+  --scaffold-toggle-thumb: var(--scaffold-toggle-thumb-dark);
+  --scaffold-toggle-text-active: var(--scaffold-toggle-text-active-dark);
+  --scaffold-toggle-text-inactive: var(--scaffold-toggle-text-inactive-dark);
 }
