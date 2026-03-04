@@ -992,6 +992,7 @@ body {
 }
 
 .site-scaffold {
+  color-scheme: light;
   --scaffold-bg: var(--scaffold-bg-light);
   --scaffold-surface: var(--scaffold-surface-light);
   --scaffold-line: var(--scaffold-line-light);
@@ -1004,6 +1005,7 @@ body {
 }
 
 .dark .site-scaffold {
+  color-scheme: dark;
   --scaffold-bg: var(--scaffold-bg-dark);
   --scaffold-surface: var(--scaffold-surface-dark);
   --scaffold-line: var(--scaffold-line-dark);

@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
+import { useWebHaptics } from "web-haptics/react";
 import { cn } from "@/utils/cn";
 
 type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
@@ -27,6 +28,8 @@ export function HoverBorderGradient<TTag extends React.ElementType = "button">({
   const Tag = (as ?? "button") as React.ElementType;
   const [hovered, setHovered] = useState<boolean>(false);
   const [direction, setDirection] = useState<Direction>("TOP");
+  const { trigger } = useWebHaptics();
+  const prefersReducedMotion = useReducedMotion();
 
   const movingMap: Record<Direction, string> = {
     TOP: "radial-gradient(20.7% 50% at 50% 0%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
@@ -61,8 +64,10 @@ export function HoverBorderGradient<TTag extends React.ElementType = "button">({
         setHovered(true);
       }}
       onMouseLeave={() => setHovered(false)}
+      onClickCapture={() => trigger("success")}
       className={cn(
         "relative flex rounded-full border content-center items-center flex-col flex-nowrap gap-10 h-min justify-center overflow-visible p-px decoration-clone w-fit transition duration-500",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--scaffold-ruler)]",
         containerClassName
       )}
       {...props}
@@ -87,11 +92,13 @@ export function HoverBorderGradient<TTag extends React.ElementType = "button">({
         }}
         initial={{ background: movingMap[direction] }}
         animate={{
-          background: hovered
+          background: prefersReducedMotion
+            ? movingMap["TOP"]
+            : hovered
             ? [movingMap[direction], highlight]
             : movingMap[direction],
         }}
-        transition={{ ease: "linear", duration: duration ?? 1 }}
+        transition={{ ease: "linear", duration: prefersReducedMotion ? 0 : (duration ?? 1) }}
       />
       <div className="absolute inset-[2px] z-[1] flex-none rounded-[100px] bg-[var(--scaffold-surface)]" />
     </Tag>

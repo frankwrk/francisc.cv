@@ -10,6 +10,8 @@ type CalloutProps = {
 export function Callout({ type = "note", title, children }: CalloutProps) {
   return (
     <aside
+      role={type === "warning" ? "alert" : "note"}
+      aria-label={title ? `${type}: ${title}` : type}
       className={cn(
         "my-6 border-l-2 py-3 pl-4 pr-3 text-[14px] leading-relaxed",
         "bg-[var(--scaffold-bg)]",

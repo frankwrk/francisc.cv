@@ -37,7 +37,7 @@ const SegmentedControlList = React.forwardRef<
 
       <div
         className={cn(
-          "absolute inset-y-1 left-0 -z-10 rounded-md bg-bg-white-0 shadow-toggle-switch transition-transform duration-300",
+          "absolute inset-y-1 left-0 -z-10 rounded-md bg-bg-white-0 shadow-toggle-switch transition-transform duration-300 motion-reduce:transition-none",
           floatingBgClassName
         )}
         style={{
@@ -61,10 +61,10 @@ const SegmentedControlTrigger = React.forwardRef<
       ref={forwardedRef}
       className={cn(
         "peer",
-        "relative z-10 h-7 whitespace-nowrap rounded-md px-1 text-label-sm text-text-soft-400 outline-none",
+        "relative z-10 h-7 whitespace-nowrap rounded-md px-1 text-label-sm text-text-soft-400",
         "flex items-center justify-center gap-1.5",
         "transition duration-300 ease-out",
-        "focus:outline-none",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[var(--scaffold-ruler)]",
         "data-[state=active]:text-text-strong-950",
         className
       )}

@@ -21,9 +21,9 @@ export const siteProfileConfig: SiteProfileConfig = {
     "/images/francisc-furdui.jpeg",
   ],
   introParagraphs: [
-    "I build clear, structured digital products where strategy, systems, and execution stay tightly connected. I care about making complexity navigable, not performative.",
-    "Recently, I have been focused on shaping this portfolio into a living operating artifact: documenting work with evidence, clarifying decisions, and designing interfaces that support thinking as much as presentation.",
-    "I am always interested in collaborating with thoughtful people who value rigor, craft, and practical outcomes. If you are working on meaningful product or platform challenges, I would welcome the conversation.",
+    "I work on digital products where strategy and execution are treated as the same problem. My instinct is to reduce complexity before adding features.",
+    "Right now I'm building this portfolio as something I actually use — a place to document decisions and present work with evidence, not just outcomes.",
+    "If you're working on something hard and need someone who can move between design, engineering, and product without losing the thread, I'd like to hear about it.",
   ],
   contact: {
     email: "francisc.frd@gmail.com",

@@ -1,9 +1,13 @@
+import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { getAllArticles, getArticleBySlug } from "@/lib/content";
 import { Callout } from "@/components/mdx/callout";
 import { Figure } from "@/components/mdx/figure";
 import { MdxContent } from "@/components/mdx/mdx-content";
+import { siteUrl } from "@/config/site-url";
 
 export async function generateStaticParams() {
   const articles = await getAllArticles();
@@ -12,12 +16,53 @@ export async function generateStaticParams() {
 
 type Props = { params: Promise<{ slug: string }> };
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const { meta } = await getArticleBySlug(slug);
+  return {
+    title: meta.title,
+    description: meta.description,
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `/thinking/${slug}`,
+      type: "article",
+      publishedTime: meta.date,
+      authors: ["Francisc Furdui"],
+    },
+    twitter: {
+      title: meta.title,
+      description: meta.description,
+    },
+    alternates: { canonical: `/thinking/${slug}` },
+  };
+}
+
 export default async function ThinkingDetailPage({ params }: Props) {
   const { slug } = await params;
   const { meta, source } = await getArticleBySlug(slug);
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: meta.title,
+    description: meta.description,
+    datePublished: meta.date,
+    author: {
+      "@type": "Person",
+      name: "Francisc Furdui",
+      url: siteUrl,
+    },
+    url: `${siteUrl}/thinking/${slug}`,
+  };
+
   return (
-    <article className="max-w-2xl space-y-8 pt-2 [font-family:var(--font-geist-sans)]">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <article className="max-w-2xl space-y-8 pt-2 [font-family:var(--font-geist-sans)]">
       <header className="space-y-4">
         <p className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]">
           THINKING
@@ -64,9 +109,15 @@ export default async function ThinkingDetailPage({ params }: Props) {
         <MDXRemote
           source={source}
           components={{ Callout, Figure }}
-          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          options={{
+              mdxOptions: {
+                remarkPlugins: [remarkGfm],
+                rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: "append" }]],
+              },
+            }}
         />
       </MdxContent>
     </article>
+    </>
   );
 }

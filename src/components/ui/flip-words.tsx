@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/utils/cn";
 
 type FlipWordsProps = {
@@ -12,6 +12,7 @@ type FlipWordsProps = {
 
 export function FlipWords({ words, duration = 2500, className }: FlipWordsProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
   const startAnimation = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % words.length);
@@ -26,10 +27,10 @@ export function FlipWords({ words, duration = 2500, className }: FlipWordsProps)
     <AnimatePresence mode="wait">
       <motion.span
         key={words[currentIndex]}
-        initial={{ opacity: 0, y: 6 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -6 }}
-        transition={{ duration: 0.2, ease: "easeInOut" }}
+        exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
+        transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.2, ease: "easeInOut" }}
         className={cn("inline-block", className)}
       >
         {words[currentIndex]}

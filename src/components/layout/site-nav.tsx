@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useWebHaptics } from "web-haptics/react";
 import { FlipWords } from "@/components/ui/flip-words";
 import { cn } from "@/utils/cn";
 
@@ -20,6 +21,8 @@ export function SiteNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const { trigger } = useWebHaptics();
+  const prefersReducedMotion = useReducedMotion();
 
   // Close on outside click + ESC
   useEffect(() => {
@@ -45,6 +48,7 @@ export function SiteNav() {
   function linkCls(href: string) {
     return cn(
       "text-[10px] tracking-[0.18em] transition-colors [font-family:var(--font-geist-pixel-circle)]",
+      "rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]",
       isActive(href)
         ? "text-[var(--scaffold-toggle-text-active)]"
         : "text-[var(--scaffold-ruler)] hover:text-[var(--scaffold-toggle-text-active)]"
@@ -56,12 +60,18 @@ export function SiteNav() {
     // giving it the full canvas width automatically.
     <div ref={navRef}>
       {/* Desktop: inline nav */}
-      <nav className="hidden items-center gap-4 md:flex md:gap-5">
+      <nav aria-label="Main navigation" className="hidden items-center gap-4 md:flex md:gap-5">
         {links.map(({ label, href, flip }) => (
-          <Link key={href} href={href} className={linkCls(href)}>
+          <Link
+            key={href}
+            href={href}
+            className={linkCls(href)}
+            onClick={() => trigger([30])}
+            {...(flip ? { "aria-label": label } : {})}
+          >
             {flip ? (
-              <span className="relative inline-block">
-                <span aria-hidden className="invisible">
+              <span className="relative inline-block" aria-hidden="true">
+                <span className="invisible">
                   {flipNavWords.reduce((a, b) => (a.length >= b.length ? a : b))}
                 </span>
                 <span className="absolute inset-0 flex items-center">
@@ -77,10 +87,14 @@ export function SiteNav() {
 
       {/* Mobile: MENU toggle */}
       <button
-        onClick={() => setIsOpen((v) => !v)}
+        onClick={() => {
+          trigger(isOpen ? [60] : "nudge");
+          setIsOpen((v) => !v);
+        }}
         aria-expanded={isOpen}
         aria-label="Toggle navigation"
-        className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors [font-family:var(--font-geist-pixel-circle)] hover:text-[var(--scaffold-toggle-text-active)] md:hidden"
+        aria-controls="mobile-nav"
+        className="rounded-sm text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors [font-family:var(--font-geist-pixel-circle)] hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] md:hidden"
       >
         {isOpen ? "CLOSE" : "MENU"}
       </button>
@@ -89,18 +103,18 @@ export function SiteNav() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -4 }}
+            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.15, ease: "easeOut" }}
+            exit={{ opacity: 0, y: prefersReducedMotion ? 0 : -4 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.15, ease: "easeOut" }}
             className="absolute left-0 right-0 top-[50px] z-50 border-b border-[var(--scaffold-line)] bg-[var(--scaffold-surface)] md:hidden"
           >
-            <nav>
+            <nav aria-label="Mobile navigation">
               {links.map(({ label, href }, i) => (
                 <Link
                   key={href}
                   href={href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => { trigger([30]); setIsOpen(false); }}
                   className={cn(
                     linkCls(href),
                     "flex items-center px-5 py-4",

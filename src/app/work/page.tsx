@@ -1,5 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllProjects } from "@/lib/content";
+import { DiscreteFieldPreview } from "@/components/ui/discrete-field-preview";
+
+export const metadata: Metadata = {
+  title: "Work",
+  description:
+    "Selected projects across technical product management, UX design, and web engineering by Francisc Furdui.",
+  openGraph: {
+    title: "Work — francisc.cv",
+    description:
+      "Selected projects across technical product management, UX design, and web engineering by Francisc Furdui.",
+    url: "/work",
+  },
+  alternates: { canonical: "/work" },
+};
 
 export default async function WorkPage() {
   const projects = await getAllProjects();
@@ -20,9 +35,14 @@ export default async function WorkPage() {
           <Link
             key={project.slug}
             href={`/work/${project.slug}`}
-            className="group block border border-[var(--scaffold-line)] p-5 transition-colors hover:border-[var(--scaffold-ruler)]"
+            className="group block overflow-hidden border border-[var(--scaffold-line)] transition-colors hover:border-[var(--scaffold-ruler)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)]"
           >
-            <div className="space-y-3">
+            {/* Discrete Field thumbnail */}
+            <div className="border-b border-[var(--scaffold-line)] transition-opacity group-hover:opacity-90">
+              <DiscreteFieldPreview slug={project.slug} height={110} />
+            </div>
+
+            <div className="space-y-3 p-5">
               <div className="flex items-start justify-between gap-3">
                 <h2 className="text-[15px] font-medium leading-snug text-[var(--scaffold-toggle-text-active)] group-hover:underline">
                   {project.title}

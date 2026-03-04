@@ -1,10 +1,12 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import { useWebHaptics } from "web-haptics/react";
 import * as SegmentedControl from "@/components/ui/segmented-control";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
+  const { trigger } = useWebHaptics();
   const value = resolvedTheme === "dark" ? "dark" : "light";
 
   return (
@@ -12,6 +14,7 @@ export function ThemeToggle() {
       value={value}
       onValueChange={(nextValue) => {
         if (nextValue === "light" || nextValue === "dark") {
+          trigger([20, 60, 20]);
           setTheme(nextValue);
         }
       }}

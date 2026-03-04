@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useWebHaptics } from "web-haptics/react";
 import * as SegmentedControl from "@/components/ui/segmented-control";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import {
@@ -13,8 +15,19 @@ import { cn } from "@/utils/cn";
 
 const roles: ResumeRole[] = ["tpm", "ux", "security", "wordpress", "general"];
 
-export default function ResumePage() {
-  const [selectedRole, setSelectedRole] = useState<ResumeRole | null>(null);
+function ResumeContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const { trigger } = useWebHaptics();
+
+  const roleParam = searchParams.get("role") as ResumeRole | null;
+  const selectedRole = roles.includes(roleParam as ResumeRole) ? roleParam : null;
+
+  function setSelectedRole(role: ResumeRole | null) {
+    const params = new URLSearchParams();
+    if (role) params.set("role", role);
+    router.replace(role ? `?role=${role}` : "/resume", { scroll: false });
+  }
 
   const pdfHref = selectedRole ? resumePDFs[selectedRole] : resumePDFs.general;
   const downloadLabel = selectedRole
@@ -39,7 +52,7 @@ export default function ResumePage() {
         </p>
         <SegmentedControl.Root
           value={selectedRole ?? "all"}
-          onValueChange={(v) => setSelectedRole(v === "all" ? null : (v as ResumeRole))}
+          onValueChange={(v) => { trigger([20]); setSelectedRole(v === "all" ? null : (v as ResumeRole)); }}
           aria-label="Resume role filter"
         >
           <SegmentedControl.List
@@ -111,7 +124,7 @@ export default function ResumePage() {
                       className="flex gap-2 text-[13px] leading-relaxed text-[var(--scaffold-ruler)]"
                     >
                       <span className="mt-0.5 shrink-0 text-[var(--scaffold-line)]">—</span>
-                      {bullet}
+                      <span className="min-w-0">{bullet}</span>
                     </li>
                   ))}
                 </ul>
@@ -185,5 +198,13 @@ export default function ResumePage() {
         </HoverBorderGradient>
       </div>
     </article>
+  );
+}
+
+export default function ResumePage() {
+  return (
+    <Suspense>
+      <ResumeContent />
+    </Suspense>
   );
 }

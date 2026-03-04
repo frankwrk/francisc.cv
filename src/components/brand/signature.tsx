@@ -115,6 +115,7 @@ export function Signature({ className }: SignatureProps) {
     <motion.svg
       viewBox={siteSignatureConfig.viewBox}
       fill="none"
+      role="img"
       aria-label="Hand-drawn signature"
       className={cn("h-auto", className)}
       style={{ width: siteSignatureConfig.width }}

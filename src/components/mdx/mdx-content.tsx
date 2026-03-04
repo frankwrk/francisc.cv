@@ -5,8 +5,8 @@ export function MdxContent({ children }: { children: ReactNode }) {
     <div
       className="
         space-y-4 text-[15px] leading-7 text-[var(--scaffold-ruler)]
-        [&_h2]:mb-1 [&_h2]:mt-8 [&_h2]:text-[17px] [&_h2]:font-medium [&_h2]:leading-snug [&_h2]:tracking-tight [&_h2]:text-[var(--scaffold-toggle-text-active)]
-        [&_h3]:mb-1 [&_h3]:mt-6 [&_h3]:text-[15px] [&_h3]:font-medium [&_h3]:text-[var(--scaffold-toggle-text-active)]
+        [&_h2]:mb-1 [&_h2]:mt-8 [&_h2]:text-[17px] [&_h2]:font-medium [&_h2]:leading-snug [&_h2]:tracking-tight [&_h2]:text-balance [&_h2]:text-[var(--scaffold-toggle-text-active)]
+        [&_h3]:mb-1 [&_h3]:mt-6 [&_h3]:text-[15px] [&_h3]:font-medium [&_h3]:text-balance [&_h3]:text-[var(--scaffold-toggle-text-active)]
         [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5
         [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5
         [&_li]:leading-relaxed

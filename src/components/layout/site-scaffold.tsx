@@ -141,13 +141,13 @@ function TopOuterRuler() {
 
 function TopRuler() {
   return (
-    <div
+    <header
       className="flex h-[50px] items-center justify-between border-b px-4 md:px-6"
       style={{ borderColor: "var(--scaffold-line)" }}
     >
       <SiteNav />
       <ThemeToggle />
-    </div>
+    </header>
   );
 }
 
@@ -310,6 +310,12 @@ export function SiteScaffold({ children }: SiteScaffoldProps) {
           <CornerMarkers />
           <TopOuterRuler />
           <BorderExtensions />
+          <a
+            href="#main-content"
+            className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-[54px] focus-visible:z-[100] focus-visible:rounded focus-visible:bg-[var(--scaffold-surface)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-[var(--scaffold-toggle-text-active)] focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)]"
+          >
+            Skip to main content
+          </a>
           <TopRuler />
 
           <div className="flex flex-1 flex-col">
@@ -342,9 +348,9 @@ export function SiteScaffold({ children }: SiteScaffoldProps) {
                   }}
                 >
                   {index === 0 ? (
-                    <div className="h-full overflow-y-auto px-5 py-6 md:py-10 md:pl-20 md:pr-10">
+                    <main id="main-content" tabIndex={-1} className="h-full overflow-y-auto px-5 py-6 outline-none md:py-10 md:pl-20 md:pr-10">
                       {children}
-                    </div>
+                    </main>
                   ) : (
                     <div className="h-full min-h-24 p-4 md:p-8">
                       <div

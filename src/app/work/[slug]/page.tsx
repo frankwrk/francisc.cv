@@ -1,5 +1,8 @@
+import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { getAllProjects, getProjectBySlug } from "@/lib/content";
 import { Figure } from "@/components/mdx/figure";
 import { Callout } from "@/components/mdx/callout";
@@ -11,6 +14,26 @@ export async function generateStaticParams() {
 }
 
 type Props = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const { meta } = await getProjectBySlug(slug);
+  return {
+    title: meta.title,
+    description: meta.description,
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url: `/work/${slug}`,
+      type: "article",
+    },
+    twitter: {
+      title: meta.title,
+      description: meta.description,
+    },
+    alternates: { canonical: `/work/${slug}` },
+  };
+}
 
 export default async function WorkDetailPage({ params }: Props) {
   const { slug } = await params;
@@ -72,7 +95,12 @@ export default async function WorkDetailPage({ params }: Props) {
         <MDXRemote
           source={source}
           components={{ Figure, Callout }}
-          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          options={{
+              mdxOptions: {
+                remarkPlugins: [remarkGfm],
+                rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: "append" }]],
+              },
+            }}
         />
       </MdxContent>
     </article>

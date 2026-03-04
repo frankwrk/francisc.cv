@@ -1,5 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllArticles } from "@/lib/content";
+
+export const metadata: Metadata = {
+  title: "Thinking",
+  description:
+    "Writing and notes on product, systems, and design by Francisc Furdui.",
+  openGraph: {
+    title: "Thinking — francisc.cv",
+    description:
+      "Writing and notes on product, systems, and design by Francisc Furdui.",
+    url: "/thinking",
+  },
+  alternates: { canonical: "/thinking" },
+};
 
 export default async function ThinkingPage() {
   const articles = await getAllArticles();
@@ -33,7 +47,7 @@ export default async function ThinkingPage() {
               )}
               <Link
                 href={`/thinking/${article.slug}`}
-                className="text-[17px] font-medium leading-snug tracking-tight text-[var(--scaffold-toggle-text-active)] hover:underline"
+                className="rounded-sm text-[17px] font-medium leading-snug tracking-tight text-[var(--scaffold-toggle-text-active)] hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
               >
                 {article.title}
               </Link>
