@@ -17,31 +17,34 @@ const links = [
   { label: "Thinking", href: "/thinking", flip: true },
 ];
 
+/** Grace period (ms) after opening during which we ignore outside clicks. Prevents iOS
+ * synthetic click (fired after layout shift) from immediately closing the menu. */
+const OUTSIDE_CLICK_GRACE_MS = 400;
+
 export function SiteNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const openedAtRef = useRef<number>(0);
   const { trigger } = useWebHaptics();
   const prefersReducedMotion = useReducedMotion();
 
-  // Close on outside click + ESC. Defer adding document click listener by one frame
-  // so the same tap that opened the menu (e.g. on mobile) is not treated as outside click.
+  // Close on outside click + ESC. Ignore outside clicks for a short grace period after
+  // opening so iOS synthetic click (delivered after layout shift) does not close the menu.
   useEffect(() => {
     if (!isOpen) return;
+    openedAtRef.current = Date.now();
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setIsOpen(false);
     }
     function onClick(e: MouseEvent) {
-      if (navRef.current && !navRef.current.contains(e.target as Node)) setIsOpen(false);
+      if (navRef.current?.contains(e.target as Node)) return;
+      if (Date.now() - openedAtRef.current < OUTSIDE_CLICK_GRACE_MS) return;
+      setIsOpen(false);
     }
     document.addEventListener("keydown", onKey);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) document.addEventListener("click", onClick);
-    });
+    document.addEventListener("click", onClick);
     return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("click", onClick);
     };
