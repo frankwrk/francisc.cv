@@ -61,7 +61,7 @@ function SideRuler({ align }: { align: "left" | "right" }) {
     <aside
       aria-hidden
       className={cn(
-        "hidden h-full select-none overflow-hidden text-[10px] leading-none tracking-[0.22em] md:flex",
+        "hidden h-full select-none overflow-visible text-[10px] leading-none tracking-[0.22em] md:flex",
         align === "left"
           ? "justify-end"
           : "justify-start"
@@ -74,6 +74,10 @@ function SideRuler({ align }: { align: "left" | "right" }) {
       <ul className="relative h-full w-full">
         {sideRulerValues.map((value) => {
           const relativeValue = value - siteScaffoldConfig.rulerSide.start;
+          if (relativeValue === 0) {
+            return null;
+          }
+
           const positionPx = relativeValue * unitPx;
           const ratio = range === 0 ? 0 : relativeValue / range;
           const opacity = Math.max(0.2, 0.95 - ratio * 0.72);
@@ -93,13 +97,13 @@ function SideRuler({ align }: { align: "left" | "right" }) {
           >
             {align === "left" ? (
               <>
-                <span>{String(value).padStart(3, "0")}</span>
+                <span>{String(value)}</span>
                 {tick}
               </>
             ) : (
               <>
                 {tick}
-                <span>{String(value).padStart(3, "0")}</span>
+                <span>{String(value)}</span>
               </>
             )}
           </li>
@@ -110,41 +114,34 @@ function SideRuler({ align }: { align: "left" | "right" }) {
   );
 }
 
-function TopRuler() {
+function TopOuterRuler() {
   return (
-    <div
-      className="flex items-center justify-between border-b px-4 py-2 md:px-6"
-      style={{ borderColor: "var(--scaffold-line)" }}
-    >
-      <div className="flex items-center gap-1.5">
-        <span className="h-1.5 w-1.5 rounded-full bg-[var(--scaffold-line)]" />
-        <span className="h-1.5 w-1.5 rounded-full bg-[var(--scaffold-line)]" />
-        <span className="h-1.5 w-1.5 rounded-full bg-[var(--scaffold-line)]" />
-      </div>
-
+    <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-8 z-20 hidden md:block">
       <ol
-        className="hidden flex-1 items-center justify-between px-6 text-[10px] md:flex"
+        className="flex items-start justify-between px-6"
         style={{ color: "var(--scaffold-ruler)" }}
       >
         {siteScaffoldConfig.rulerTopValues.map((value) => (
           <li
-            key={`top-${value}`}
-            className="font-mono tracking-[0.22em] [font-family:var(--font-geist-pixel-grid)]"
+            key={`top-outer-${value}`}
+            className="flex flex-col items-center gap-1 font-mono tracking-[0.22em] [font-family:var(--font-geist-pixel-grid)]"
           >
-            {value}
+            <span className="text-[10px] leading-none">{value}</span>
+            <span className="h-1.5 w-px bg-[var(--scaffold-ruler)] opacity-70" />
           </li>
         ))}
       </ol>
+    </div>
+  );
+}
 
-      <div className="flex items-center gap-3">
-        <div
-          className="text-[10px] tracking-[0.22em] opacity-70 [font-family:var(--font-geist-pixel-line)]"
-          style={{ color: "var(--scaffold-ruler)" }}
-        >
-          + + +
-        </div>
-        <ThemeToggle />
-      </div>
+function TopRuler() {
+  return (
+    <div
+      className="flex h-[50px] items-center justify-end border-b px-4 md:px-6"
+      style={{ borderColor: "var(--scaffold-line)" }}
+    >
+      <ThemeToggle />
     </div>
   );
 }
@@ -305,6 +302,7 @@ export function SiteScaffold({ children }: SiteScaffoldProps) {
           }}
         >
           <CornerMarkers />
+          <TopOuterRuler />
           <BorderExtensions />
           <TopRuler />
 

@@ -48,7 +48,7 @@ export type SiteScaffoldConfig = {
 export const siteScaffoldConfig: SiteScaffoldConfig = {
   canvasMaxWidth: 980,
   pageTopPadding: 40,
-  sideRailWidth: 28,
+  sideRailWidth: 40,
   borderWidth: 1,
   cornerMarkers: {
     size: 10,

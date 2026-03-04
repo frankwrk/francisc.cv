@@ -99,8 +99,9 @@ Customize scaffold behavior in `site-scaffold.ts`:
 - Full-bleed major section divider thickness
 - Corner border extension fade lengths (`edgeExtensions.horizontalLength`, `edgeExtensions.verticalLength`)
 - Canvas width and side ruler spacing
-- Top ruler numbers
+- Top ruler numbers rendered outside the top bar, with downward ticks
 - Vertical ruler range/step + unit mapping (`rulerSide.start/end/step/unitPx`; default major marks at `50`-unit increments with pixel-based spacing and opacity fade toward bottom)
+- Side rulers hide the `start` marker and keep inward-facing ticks
 - Section count and minimum heights
 - Current default uses a single active `hero` section and responsive `minHeight: clamp(520px, 82dvh, 900px)` to keep the first view larger on desktop while remaining responsive on smaller screens.
 
