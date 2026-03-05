@@ -14,6 +14,7 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteUrl } from "@/config/site-url";
 import { DialRoot } from "dialkit";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "dialkit/styles.css";
 import "./globals.css";
 
@@ -103,6 +104,7 @@ export default function RootLayout({
           <DialRoot />
         </ThemeProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
