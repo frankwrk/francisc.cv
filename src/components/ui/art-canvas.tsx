@@ -52,7 +52,31 @@ export function ArtCanvas({ slug, height = 110, serverConfig }: ArtCanvasProps) 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    drawFromConfig(ctx, w, h, config);
+
+    const animated = config.animation?.enabled ?? false;
+    const speed    = config.animation?.speed ?? 1;
+
+    if (!animated) {
+      drawFromConfig(ctx, w, h, config, 0);
+      return;
+    }
+
+    // Animated mode: run RAF loop
+    let time   = 0;
+    let lastTs = 0;
+    let frameId: number;
+
+    function draw(ts: number) {
+      const dt = Math.min(ts - lastTs, 100);
+      lastTs = ts;
+      time  += (dt / 1000) * speed;
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drawFromConfig(ctx!, w, h, config!, time);
+      frameId = requestAnimationFrame(draw);
+    }
+
+    frameId = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(frameId);
   }, [config]);
 
   if (!config) {

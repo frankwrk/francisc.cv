@@ -8,20 +8,7 @@
 
 import type { ArtConfig } from "@/lib/art-assignments";
 
-export const artAssignments: Record<string, ArtConfig> = {
-  // Paste exported configs from /art here.
-  // Example:
-  // "geoformations-redesign": {
-  //   variant: "waveform-bars",
-  //   fg: "#e0ca8c",
-  //   bg: "#c94c1c",
-  //   layout: { count: 24, columns: 12 },
-  //   waveformBars: { waveType: "sine", amplitude: 0.75, frequency: 1.5, phaseOffset: 0, fromBottom: true },
-  //   gridBlocks: { gap: 4, noiseScale: 1.5, roundness: 0 },
-  //   noiseLines: { lineWidth: 2, displacement: 30, direction: "horizontal", noiseScale: 1.5 },
-  //   pixelScatter: { size: 6, density: 0.6, roundness: 0 },
-  //   fluidGrid: { gap: 3, flowAmount: 20, noiseScale: 1 },
-  // },
+export const artAssignments = {
   "geoformations-redesign": {
     variant: "noise-lines",
     fg: "#e0ca8c",
@@ -59,7 +46,6 @@ export const artAssignments: Record<string, ArtConfig> = {
       noiseScale: 1,
     },
   },
-
   "platform-onboarding-accelerator": {
     variant: "grid-blocks",
     fg: "#000000",
@@ -97,7 +83,6 @@ export const artAssignments: Record<string, ArtConfig> = {
       noiseScale: 1.9,
     },
   },
-
   "secure-release-gates": {
     variant: "fluid-grid",
     fg: "#dbbdd8",
@@ -135,24 +120,27 @@ export const artAssignments: Record<string, ArtConfig> = {
       noiseScale: 1.9,
     },
   },
-
   "docs-as-product-playbook": {
     variant: "waveform-bars",
     fg: "#e0ca8c",
     bg: "#c94c1c",
+    animation: {
+      enabled: true,
+      speed: 0.4,
+    },
     layout: {
-      count: 60,
-      columns: 12,
+      count: 74,
+      columns: 20,
     },
     waveformBars: {
-      waveType: "sawtooth",
-      amplitude: 0.92,
-      frequency: 1.9,
+      waveType: "sine",
+      amplitude: 0.65,
+      frequency: 1.5,
       phaseOffset: 0,
       fromBottom: true,
     },
     gridBlocks: {
-      gap: 5,
+      gap: 4,
       noiseScale: 1.5,
       roundness: 0,
     },
@@ -171,6 +159,177 @@ export const artAssignments: Record<string, ArtConfig> = {
       gap: 3,
       flowAmount: 20,
       noiseScale: 1,
+    },
+  },
+  "bridging-ux-and-engineering": {
+    variant: "truchet-tiles",
+    fg: "#1a5700",
+    bg: "#003312",
+    animation: {
+      enabled: true,
+      speed: 1,
+    },
+    layout: {
+      count: 94,
+      columns: 12,
+    },
+    waveformBars: {
+      waveType: "sine",
+      amplitude: 0.75,
+      frequency: 1.5,
+      phaseOffset: 0,
+      fromBottom: true,
+    },
+    gridBlocks: {
+      gap: 4,
+      noiseScale: 1.2,
+      roundness: 0,
+    },
+    noiseLines: {
+      lineWidth: 2,
+      displacement: 30,
+      direction: "horizontal",
+      noiseScale: 1.2,
+    },
+    pixelScatter: {
+      size: 6,
+      density: 0.6,
+      roundness: 0,
+    },
+    fluidGrid: {
+      gap: 3,
+      flowAmount: 20,
+      noiseScale: 1.2,
+    },
+    contourLines: {
+      bandCount: 8,
+      noiseScale: 1.2,
+      contrast: 0.5,
+    },
+    truchetTiles: {
+      tileSize: 24,
+      lineWidth: 2,
+      noiseScale: 1.2,
+    },
+    particleFlow: {
+      particleCount: 200,
+      fieldScale: 1,
+      stepLength: 3,
+      trail: 30,
+    },
+  },
+  "documentation-as-product-surface": {
+    variant: "grid-blocks",
+    fg: "#be2409",
+    bg: "#1c1c1c",
+    animation: {
+      enabled: true,
+      speed: 0.7,
+    },
+    layout: {
+      count: 42,
+      columns: 39,
+    },
+    waveformBars: {
+      waveType: "sine",
+      amplitude: 0.75,
+      frequency: 1.5,
+      phaseOffset: 0,
+      fromBottom: true,
+    },
+    gridBlocks: {
+      gap: 7,
+      noiseScale: 0.7,
+      roundness: 0,
+    },
+    noiseLines: {
+      lineWidth: 2,
+      displacement: 30,
+      direction: "horizontal",
+      noiseScale: 0.7,
+    },
+    pixelScatter: {
+      size: 6,
+      density: 0.6,
+      roundness: 0,
+    },
+    fluidGrid: {
+      gap: 7,
+      flowAmount: 20,
+      noiseScale: 0.7,
+    },
+    contourLines: {
+      bandCount: 8,
+      noiseScale: 0.7,
+      contrast: 0.5,
+    },
+    truchetTiles: {
+      tileSize: 40,
+      lineWidth: 2,
+      noiseScale: 0.7,
+    },
+    particleFlow: {
+      particleCount: 200,
+      fieldScale: 1,
+      stepLength: 3,
+      trail: 30,
+    },
+  },
+  "systems-thinking-in-web-projects": {
+    variant: "particle-flow",
+    fg: "#8ee1ab",
+    bg: "#000000",
+    animation: {
+      enabled: true,
+      speed: 0.3,
+    },
+    layout: {
+      count: 24,
+      columns: 12,
+    },
+    waveformBars: {
+      waveType: "sine",
+      amplitude: 0.75,
+      frequency: 1.5,
+      phaseOffset: 0,
+      fromBottom: true,
+    },
+    gridBlocks: {
+      gap: 4,
+      noiseScale: 1.5,
+      roundness: 0,
+    },
+    noiseLines: {
+      lineWidth: 2,
+      displacement: 30,
+      direction: "horizontal",
+      noiseScale: 1.5,
+    },
+    pixelScatter: {
+      size: 6,
+      density: 0.6,
+      roundness: 0,
+    },
+    fluidGrid: {
+      gap: 3,
+      flowAmount: 20,
+      noiseScale: 1,
+    },
+    contourLines: {
+      bandCount: 8,
+      noiseScale: 1,
+      contrast: 0.5,
+    },
+    truchetTiles: {
+      tileSize: 40,
+      lineWidth: 2,
+      noiseScale: 1,
+    },
+    particleFlow: {
+      particleCount: 430,
+      fieldScale: 0.7,
+      stepLength: 2.5,
+      trail: 35,
     },
   },
 };

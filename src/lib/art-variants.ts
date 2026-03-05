@@ -5,6 +5,15 @@
  * No side effects outside of the canvas.
  */
 
+// ─── Color utilities ─────────────────────────────────────────────────────────
+
+export function parseHex(hex: string): [number, number, number] {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return [isNaN(r) ? 0 : r, isNaN(g) ? 0 : g, isNaN(b) ? 0 : b];
+}
+
 // ─── Noise ────────────────────────────────────────────────────────────────────
 
 function hash2(x: number, y: number): number {
@@ -315,6 +324,164 @@ export function drawFluidGrid(
 
       ctx.globalAlpha = 0.2 + scale * 0.8;
       ctx.fillRect(x, y, bw, bh);
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+// ─── Contour Lines ────────────────────────────────────────────────────────────
+// Topographic-map style elevation bands rendered as quantized noise. Each band
+// is filled with a color interpolated between bg and fg, giving the impression
+// of terrain viewed from above.
+
+export interface ContourLinesParams {
+  bandCount: number;
+  noiseScale: number;
+  contrast: number; // 0 = smooth gradient, 1 = hard band edges
+}
+
+export function drawContourLines(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  fg: string,
+  bg: string,
+  p: ContourLinesParams,
+  time: number,
+): void {
+  const fgRgb = parseHex(fg);
+  const bgRgb = parseHex(bg);
+  const bands = Math.max(2, Math.round(p.bandCount));
+  const scale = p.noiseScale * 0.006;
+  const contrast = Math.max(0, Math.min(1, p.contrast));
+
+  // Sample at step=2 for performance; fill 2×2 blocks per sample
+  const step = 2;
+  const imageData = ctx.createImageData(w, h);
+  const data = imageData.data;
+
+  for (let y = 0; y < h; y += step) {
+    for (let x = 0; x < w; x += step) {
+      const n = noise2D(x * scale + time * 0.07, y * scale);
+      const bandF   = n * bands;
+      const bandIdx = Math.floor(bandF);
+      const bandFrac = bandF - bandIdx;
+      const t = (bandIdx + (contrast < 0.5 ? bandFrac : Math.round(bandFrac))) / bands;
+
+      const r = Math.round(bgRgb[0] + (fgRgb[0] - bgRgb[0]) * t);
+      const g = Math.round(bgRgb[1] + (fgRgb[1] - bgRgb[1]) * t);
+      const b = Math.round(bgRgb[2] + (fgRgb[2] - bgRgb[2]) * t);
+
+      for (let dy = 0; dy < step && y + dy < h; dy++) {
+        for (let dx = 0; dx < step && x + dx < w; dx++) {
+          const i = ((y + dy) * w + (x + dx)) * 4;
+          data[i] = r; data[i + 1] = g; data[i + 2] = b; data[i + 3] = 255;
+        }
+      }
+    }
+  }
+  ctx.putImageData(imageData, 0, 0);
+}
+
+// ─── Truchet Tiles ────────────────────────────────────────────────────────────
+// Quarter-circle arcs at tile corners, connecting edge midpoints. Two
+// orientations driven by noise + hash per tile create flowing maze-like paths.
+
+export interface TruchetTilesParams {
+  tileSize: number;
+  lineWidth: number;
+  noiseScale: number;
+}
+
+export function drawTruchetTiles(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  fg: string,
+  bg: string,
+  p: TruchetTilesParams,
+  time: number,
+): void {
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, w, h);
+  ctx.strokeStyle = fg;
+  ctx.lineWidth = Math.max(0.5, p.lineWidth);
+  ctx.lineCap = "round";
+
+  const ts   = Math.max(8, Math.round(p.tileSize));
+  const half = ts / 2;
+  const cols = Math.ceil(w / ts) + 1;
+  const rows = Math.ceil(h / ts) + 1;
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const x = c * ts;
+      const y = r * ts;
+
+      const n = noise2D(c * p.noiseScale * 0.4 + time * 0.04, r * p.noiseScale * 0.4);
+      const orientation = (n + hash2(c, r)) % 1 > 0.5 ? 0 : 1;
+
+      ctx.beginPath();
+      if (orientation === 0) {
+        // top-right corner: midpoint-top → midpoint-right
+        ctx.arc(x + ts, y, half, Math.PI, Math.PI / 2, true);
+        // bottom-left corner: midpoint-bottom → midpoint-left
+        ctx.moveTo(x + half, y + ts);
+        ctx.arc(x, y + ts, half, 0, -Math.PI / 2, true);
+      } else {
+        // top-left corner: midpoint-top → midpoint-left
+        ctx.arc(x, y, half, 0, Math.PI / 2, false);
+        // bottom-right corner: midpoint-bottom → midpoint-right
+        ctx.moveTo(x + half, y + ts);
+        ctx.arc(x + ts, y + ts, half, Math.PI, Math.PI * 1.5, false);
+      }
+      ctx.stroke();
+    }
+  }
+}
+
+// ─── Particle Flow ────────────────────────────────────────────────────────────
+// Particles follow a noise-derived vector field, leaving fading trails.
+// Each particle has a deterministic seed position; time advances their flow.
+
+export interface ParticleFlowParams {
+  particleCount: number;
+  fieldScale: number;
+  stepLength: number;
+  trail: number;
+}
+
+export function drawParticleFlow(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  fg: string,
+  bg: string,
+  p: ParticleFlowParams,
+  time: number,
+): void {
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = fg;
+
+  const count  = Math.round(p.particleCount);
+  const trail  = Math.max(2, Math.round(p.trail));
+  const step   = Math.max(0.5, p.stepLength);
+  const fScale = p.fieldScale * 0.005;
+  const TWO_PI = Math.PI * 2;
+
+  for (let i = 0; i < count; i++) {
+    // Seeded starting position, slowly drifting with time
+    let px = (hash2(i, 3) * w + time * 4.1) % w;
+    let py = (hash2(i, 7) * h + time * 2.7) % h;
+
+    for (let s = 0; s < trail; s++) {
+      const angle = noise2D(px * fScale, py * fScale) * TWO_PI;
+      px = (px + Math.cos(angle) * step + w) % w;
+      py = (py + Math.sin(angle) * step + h) % h;
+
+      ctx.globalAlpha = ((s + 1) / trail) * 0.65;
+      ctx.fillRect(px - 0.75, py - 0.75, 1.5, 1.5);
     }
   }
   ctx.globalAlpha = 1;

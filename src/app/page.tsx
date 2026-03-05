@@ -25,7 +25,7 @@ export default function Home() {
           <p key={paragraph}>{paragraph}</p>
         ))}
 
-        <div className="flex flex-wrap items-end justify-between gap-4 pt-2">
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
           <HoverBorderGradient
             as="a"
             href={mailtoHref}

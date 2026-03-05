@@ -9,6 +9,9 @@ import {
   drawNoiseLines,
   drawPixelScatter,
   drawFluidGrid,
+  drawContourLines,
+  drawTruchetTiles,
+  drawParticleFlow,
 } from "./art-variants";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -17,6 +20,7 @@ export interface ArtConfig {
   variant: string;
   fg: string;
   bg: string;
+  animation?: { enabled: boolean; speed: number };
   layout: { count: number; columns: number };
   waveformBars: {
     waveType: string;
@@ -34,19 +38,10 @@ export interface ArtConfig {
   };
   pixelScatter: { size: number; density: number; roundness: number };
   fluidGrid: { gap: number; flowAmount: number; noiseScale: number };
+  contourLines?: { bandCount: number; noiseScale: number; contrast: number };
+  truchetTiles?: { tileSize: number; lineWidth: number; noiseScale: number };
+  particleFlow?: { particleCount: number; fieldScale: number; stepLength: number; trail: number };
 }
-
-// ─── Known content slugs ──────────────────────────────────────────────────────
-
-export const CONTENT_SLUGS = [
-  { slug: "geoformations-redesign",          type: "work"     },
-  { slug: "docs-as-product-playbook",        type: "work"     },
-  { slug: "platform-onboarding-accelerator", type: "work"     },
-  { slug: "secure-release-gates",            type: "work"     },
-  { slug: "systems-thinking-in-web-projects",type: "thinking" },
-  { slug: "documentation-as-product-surface",type: "thinking" },
-  { slug: "bridging-ux-and-engineering",     type: "thinking" },
-] as const;
 
 // ─── localStorage persistence ─────────────────────────────────────────────────
 
@@ -99,6 +94,28 @@ export function drawFromConfig(
       break;
     case "fluid-grid":
       drawFluidGrid(ctx, w, h, fg, bg, { columns, ...config.fluidGrid }, time);
+      break;
+    case "contour-lines":
+      drawContourLines(ctx, w, h, fg, bg, {
+        bandCount:  config.contourLines?.bandCount  ?? 8,
+        noiseScale: config.contourLines?.noiseScale ?? 1,
+        contrast:   config.contourLines?.contrast   ?? 0.5,
+      }, time);
+      break;
+    case "truchet-tiles":
+      drawTruchetTiles(ctx, w, h, fg, bg, {
+        tileSize:   config.truchetTiles?.tileSize   ?? 40,
+        lineWidth:  config.truchetTiles?.lineWidth  ?? 2,
+        noiseScale: config.truchetTiles?.noiseScale ?? 1,
+      }, time);
+      break;
+    case "particle-flow":
+      drawParticleFlow(ctx, w, h, fg, bg, {
+        particleCount: config.particleFlow?.particleCount ?? 200,
+        fieldScale:    config.particleFlow?.fieldScale    ?? 1,
+        stepLength:    config.particleFlow?.stepLength    ?? 3,
+        trail:         config.particleFlow?.trail         ?? 30,
+      }, time);
       break;
   }
 }
