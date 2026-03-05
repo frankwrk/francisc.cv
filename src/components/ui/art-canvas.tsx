@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { getAssignment, drawFromConfig, type ArtConfig } from "@/lib/art-assignments";
 import { DiscreteFieldPreview } from "./discrete-field-preview";
 
@@ -26,16 +26,11 @@ export function ArtCanvas({ slug, height = 110, serverConfig }: ArtCanvasProps) 
   // If serverConfig is explicitly provided (even as null) we know we're in a
   // server-driven context. Only fall back to localStorage when it's undefined.
   const isServerDriven = serverConfig !== undefined;
-  const [config, setConfig] = useState<ArtConfig | null>(
-    isServerDriven ? (serverConfig ?? null) : null,
-  );
-
-  useEffect(() => {
+  const config = useMemo<ArtConfig | null>(() => {
     if (isServerDriven) {
-      setConfig(serverConfig ?? null);
-    } else {
-      setConfig(getAssignment(slug));
+      return serverConfig ?? null;
     }
+    return getAssignment(slug);
   }, [slug, serverConfig, isServerDriven]);
 
   useEffect(() => {

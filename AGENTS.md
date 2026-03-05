@@ -125,6 +125,9 @@ Single source of truth policy:
 ### Art assignment conventions
 
 - `src/config/art-assignments.ts` exports a dynamic slug map (`Record<string, ArtConfig>`) so routes like `/work/[slug]` and `/thinking/[slug]` can index art configs without TypeScript build errors.
+- In art rendering code, keep React hooks lint-clean:
+  - Do not mutate refs during render; sync render-derived values into refs inside effects.
+  - Prefer derived config values (`useMemo`) over `setState` in effects for prop/localStorage synchronization.
 
 ### Theme conventions
 

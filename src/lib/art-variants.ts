@@ -210,7 +210,11 @@ export function drawNoiseLines(
       const disp = (noise2D(nx, ny) * 2 - 1) * p.displacement;
       const x = isH ? along : base + disp;
       const y = isH ? base + disp : along;
-      s === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      if (s === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
     }
     ctx.stroke();
   }

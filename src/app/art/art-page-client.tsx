@@ -333,11 +333,8 @@ export function ArtPageClient({ contentSlugs }: { contentSlugs: ContentSlug[] })
   // ── Hook 1: base controls (always present)
   const base = useBaseControls();
 
-  // ── Track active variant in state to drive the params panel
-  const [activeVariant, setActiveVariant] = useState("waveform-bars");
-  useEffect(() => {
-    if (base.variant !== activeVariant) setActiveVariant(base.variant);
-  }, [base.variant, activeVariant]);
+  // Drive the params panel directly from the current base variant.
+  const activeVariant = base.variant;
 
   // ── Hook 2: variant-specific params (dynamic — config changes per variant)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -345,24 +342,27 @@ export function ArtPageClient({ contentSlugs }: { contentSlugs: ContentSlug[] })
 
   // Keep a ref to the latest base + params for the RAF loop
   const stateRef = useRef({ base, params });
-  stateRef.current = { base, params };
-  needsRedraw.current = true;
+  useEffect(() => {
+    stateRef.current = { base, params };
+    needsRedraw.current = true;
+  }, [base, params]);
 
   // ── Pending load: apply params after the params panel switches to the right variant
-  const [pendingLoad, setPendingLoad] = useState<ArtConfig | null>(null);
+  const pendingLoadRef = useRef<ArtConfig | null>(null);
   useEffect(() => {
+    const pendingLoad = pendingLoadRef.current;
     if (!pendingLoad || activeVariant !== pendingLoad.variant) return;
     applyParamsToDialKit(pendingLoad);
-    setPendingLoad(null);
-  }, [activeVariant, pendingLoad]);
+    pendingLoadRef.current = null;
+    needsRedraw.current = true;
+  }, [activeVariant]);
 
   // ── Assignments state
-  const [assignedConfigs, setAssignedConfigs] = useState<Record<string, ArtConfig | null>>({});
-  useEffect(() => {
+  const [assignedConfigs, setAssignedConfigs] = useState<Record<string, ArtConfig | null>>(() => {
     const state: Record<string, ArtConfig | null> = {};
     contentSlugs.forEach(({ slug }) => { state[slug] = getAssignment(slug); });
-    setAssignedConfigs(state);
-  }, [contentSlugs]);
+    return state;
+  });
 
   function handleAssign(slug: string) {
     const cfg = buildConfig(stateRef.current.base, stateRef.current.params);
@@ -380,8 +380,9 @@ export function ArtPageClient({ contentSlugs }: { contentSlugs: ContentSlug[] })
     // Params panel may not match the new variant yet — defer until it does
     if (activeVariant === config.variant) {
       applyParamsToDialKit(config);
+      needsRedraw.current = true;
     } else {
-      setPendingLoad(config);
+      pendingLoadRef.current = config;
     }
   }
 
@@ -485,7 +486,7 @@ export function ArtPageClient({ contentSlugs }: { contentSlugs: ContentSlug[] })
 
     frameId = requestAnimationFrame(draw);
     return () => { cancelAnimationFrame(frameId); ro.disconnect(); };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   // ── Export: merge committed + localStorage
   const [exportSnippet, setExportSnippet] = useState<string | null>(null);
