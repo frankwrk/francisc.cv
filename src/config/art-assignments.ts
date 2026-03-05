@@ -8,7 +8,9 @@
 
 import type { ArtConfig } from "@/lib/art-assignments";
 
-export const artAssignments = {
+// Use a string-keyed map type so dynamic route slugs can safely index this
+// config during server builds (e.g. /work/[slug], /thinking/[slug]).
+export const artAssignments: Record<string, ArtConfig> = {
   "geoformations-redesign": {
     variant: "noise-lines",
     fg: "#e0ca8c",

@@ -122,6 +122,10 @@ Single source of truth policy:
 - Production signature source is `public/images/signature.svg`; geometry in `site-signature.ts` should match that file.
 - Place signature as supporting decoration only (default usage: right-aligned under intro copy).
 
+### Art assignment conventions
+
+- `src/config/art-assignments.ts` exports a dynamic slug map (`Record<string, ArtConfig>`) so routes like `/work/[slug]` and `/thinking/[slug]` can index art configs without TypeScript build errors.
+
 ### Theme conventions
 
 - Theme switching is handled via `next-themes`.
