@@ -13,6 +13,7 @@ import { SiteScaffold } from "@/components/layout/site-scaffold";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteUrl } from "@/config/site-url";
 import { DialRoot } from "dialkit";
+import { Analytics } from "@vercel/analytics/next";
 import "dialkit/styles.css";
 import "./globals.css";
 
@@ -101,6 +102,7 @@ export default function RootLayout({
           <SiteScaffold>{children}</SiteScaffold>
           <DialRoot />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
