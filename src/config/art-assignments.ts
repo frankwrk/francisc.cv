@@ -22,6 +22,120 @@ export const artAssignments: Record<string, ArtConfig> = {
   //   pixelScatter: { size: 6, density: 0.6, roundness: 0 },
   //   fluidGrid: { gap: 3, flowAmount: 20, noiseScale: 1 },
   // },
+  "geoformations-redesign": {
+    variant: "noise-lines",
+    fg: "#e0ca8c",
+    bg: "#4a1cca",
+    layout: {
+      count: 61,
+      columns: 17,
+    },
+    waveformBars: {
+      waveType: "sine",
+      amplitude: 0.75,
+      frequency: 1.5,
+      phaseOffset: 0,
+      fromBottom: true,
+    },
+    gridBlocks: {
+      gap: 4,
+      noiseScale: 1.5,
+      roundness: 0,
+    },
+    noiseLines: {
+      lineWidth: 1,
+      displacement: 9,
+      direction: "vertical",
+      noiseScale: 5,
+    },
+    pixelScatter: {
+      size: 6,
+      density: 0.6,
+      roundness: 0,
+    },
+    fluidGrid: {
+      gap: 3,
+      flowAmount: 20,
+      noiseScale: 1,
+    },
+  },
+
+  "platform-onboarding-accelerator": {
+    variant: "grid-blocks",
+    fg: "#000000",
+    bg: "#f5b400",
+    layout: {
+      count: 137,
+      columns: 60,
+    },
+    waveformBars: {
+      waveType: "sine",
+      amplitude: 0.75,
+      frequency: 1.5,
+      phaseOffset: 0,
+      fromBottom: true,
+    },
+    gridBlocks: {
+      gap: 1,
+      noiseScale: 5,
+      roundness: 0,
+    },
+    noiseLines: {
+      lineWidth: 1,
+      displacement: 9,
+      direction: "vertical",
+      noiseScale: 5,
+    },
+    pixelScatter: {
+      size: 5,
+      density: 0.7,
+      roundness: 20,
+    },
+    fluidGrid: {
+      gap: 9,
+      flowAmount: 0,
+      noiseScale: 1.9,
+    },
+  },
+
+  "secure-release-gates": {
+    variant: "fluid-grid",
+    fg: "#dbbdd8",
+    bg: "#ca1c50",
+    layout: {
+      count: 137,
+      columns: 29,
+    },
+    waveformBars: {
+      waveType: "sine",
+      amplitude: 0.75,
+      frequency: 1.5,
+      phaseOffset: 0,
+      fromBottom: true,
+    },
+    gridBlocks: {
+      gap: 4,
+      noiseScale: 1.5,
+      roundness: 0,
+    },
+    noiseLines: {
+      lineWidth: 1,
+      displacement: 9,
+      direction: "vertical",
+      noiseScale: 5,
+    },
+    pixelScatter: {
+      size: 5,
+      density: 0.7,
+      roundness: 20,
+    },
+    fluidGrid: {
+      gap: 9,
+      flowAmount: 0,
+      noiseScale: 1.9,
+    },
+  },
+
   "docs-as-product-playbook": {
     variant: "waveform-bars",
     fg: "#e0ca8c",
