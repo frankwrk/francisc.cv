@@ -8,6 +8,7 @@ import { Figure } from "@/components/mdx/figure";
 import { Callout } from "@/components/mdx/callout";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { ArtCanvas } from "@/components/ui/art-canvas";
+import { artAssignments } from "@/config/art-assignments";
 
 export async function generateStaticParams() {
   const projects = await getAllProjects();
@@ -47,7 +48,7 @@ export default async function WorkDetailPage({ params }: Props) {
       <header className="relative overflow-hidden border border-[var(--scaffold-line)]">
         {/* Background art canvas */}
         <div className="absolute inset-0" aria-hidden="true">
-          <ArtCanvas slug={slug} height={280} />
+          <ArtCanvas slug={slug} height={280} serverConfig={artAssignments[slug] ?? null} />
         </div>
 
         {/* Gradient overlay: dark bottom-left → transparent top-right */}

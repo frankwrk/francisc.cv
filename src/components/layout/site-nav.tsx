@@ -98,12 +98,12 @@ export function SiteNav() {
       <button
         onClick={() => {
           trigger(isOpen ? [60] : "nudge");
-          setIsOpen((v) => !v);
+          setIsOpen(!isOpen);
         }}
         aria-expanded={isOpen}
         aria-label="Toggle navigation"
         aria-controls="mobile-nav"
-        className="rounded-sm text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors [font-family:var(--font-geist-pixel-circle)] hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] md:hidden"
+        className="flex min-h-[44px] min-w-[44px] items-center rounded-sm text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors [font-family:var(--font-geist-pixel-circle)] hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] md:hidden"
       >
         {isOpen ? "CLOSE" : "MENU"}
       </button>

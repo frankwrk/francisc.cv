@@ -7,27 +7,36 @@ import { DiscreteFieldPreview } from "./discrete-field-preview";
 interface ArtCanvasProps {
   slug: string;
   height?: number;
-  /** Pass an explicit config to skip the localStorage lookup (used for forced previews). */
-  config?: ArtConfig;
+  /**
+   * Config sourced from the committed src/config/art-assignments.ts file,
+   * passed in by the server component parent. When present it takes full
+   * precedence — no localStorage read occurs. This is what makes assignments
+   * persistent across devices and deployments.
+   *
+   * When absent (e.g. on the /art lab page) the component falls back to
+   * localStorage so live preview still works while designing.
+   */
+  serverConfig?: ArtConfig | null;
 }
 
-/**
- * Client component that renders the assigned art variant for a content slug.
- * Falls back to DiscreteFieldPreview when no assignment is stored and no
- * explicit config is given.
- */
-export function ArtCanvas({ slug, height = 110, config: forcedConfig }: ArtCanvasProps) {
+export function ArtCanvas({ slug, height = 110, serverConfig }: ArtCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef    = useRef<HTMLCanvasElement>(null);
-  const [config, setConfig] = useState<ArtConfig | null>(forcedConfig ?? null);
+
+  // If serverConfig is explicitly provided (even as null) we know we're in a
+  // server-driven context. Only fall back to localStorage when it's undefined.
+  const isServerDriven = serverConfig !== undefined;
+  const [config, setConfig] = useState<ArtConfig | null>(
+    isServerDriven ? (serverConfig ?? null) : null,
+  );
 
   useEffect(() => {
-    if (forcedConfig) {
-      setConfig(forcedConfig);
-      return;
+    if (isServerDriven) {
+      setConfig(serverConfig ?? null);
+    } else {
+      setConfig(getAssignment(slug));
     }
-    setConfig(getAssignment(slug));
-  }, [slug, forcedConfig]);
+  }, [slug, serverConfig, isServerDriven]);
 
   useEffect(() => {
     const canvas    = canvasRef.current;

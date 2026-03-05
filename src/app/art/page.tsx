@@ -162,6 +162,28 @@ export default function ArtPage() {
     setAssigned((prev) => ({ ...prev, [slug]: false }));
   }
 
+  // Export: build TypeScript snippet from all localStorage assignments
+  const [exportSnippet, setExportSnippet] = useState<string | null>(null);
+
+  function buildExport() {
+    const entries: string[] = [];
+    CONTENT_SLUGS.forEach(({ slug }) => {
+      const cfg = getAssignment(slug);
+      if (!cfg) return;
+      entries.push(`  "${slug}": ${JSON.stringify(cfg, null, 4).replace(/\n/g, "\n  ")},`);
+    });
+    if (entries.length === 0) {
+      setExportSnippet("// No assignments saved yet.");
+      return;
+    }
+    setExportSnippet(`export const artAssignments = {\n${entries.join("\n")}\n};`);
+  }
+
+  function copyExport() {
+    if (!exportSnippet) return;
+    navigator.clipboard.writeText(exportSnippet);
+  }
+
   // Canvas setup + RAF loop
   useEffect(() => {
     const canvas    = canvasRef.current;
@@ -351,6 +373,46 @@ export default function ArtPage() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Export panel */}
+      <div className="space-y-3">
+        <div className="flex items-baseline gap-4">
+          <p className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]">
+            EXPORT CONFIG
+          </p>
+          <p className="text-[12px] text-[var(--scaffold-ruler)]">
+            Generate a TypeScript snippet to paste into{" "}
+            <code className="font-mono text-[11px]">src/config/art-assignments.ts</code> — makes assignments permanent across all devices.
+          </p>
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={buildExport}
+            className="border border-[var(--scaffold-line)] px-3 py-1.5 text-[11px] tracking-[0.08em] text-[var(--scaffold-toggle-text-active)] hover:border-[var(--scaffold-ruler)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
+          >
+            Generate
+          </button>
+          {exportSnippet && (
+            <button
+              onClick={copyExport}
+              className="border border-[var(--scaffold-line)] px-3 py-1.5 text-[11px] tracking-[0.08em] text-[var(--scaffold-toggle-text-active)] hover:border-[var(--scaffold-ruler)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
+            >
+              Copy
+            </button>
+          )}
+        </div>
+
+        {exportSnippet && (
+          <textarea
+            readOnly
+            value={exportSnippet}
+            onClick={(e) => (e.target as HTMLTextAreaElement).select()}
+            rows={Math.min(exportSnippet.split("\n").length + 1, 20)}
+            className="w-full resize-y border border-[var(--scaffold-line)] bg-[var(--scaffold-surface)] p-3 font-mono text-[11px] leading-relaxed text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
+          />
+        )}
       </div>
     </div>
   );

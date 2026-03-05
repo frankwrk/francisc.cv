@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllProjects } from "@/lib/content";
 import { ArtCanvas } from "@/components/ui/art-canvas";
+import { artAssignments } from "@/config/art-assignments";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -38,7 +39,7 @@ export default async function WorkPage() {
             className="group block overflow-hidden border border-[var(--scaffold-line)] transition-colors hover:border-[var(--scaffold-ruler)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)]"
           >
             <div className="border-b border-[var(--scaffold-line)] transition-opacity group-hover:opacity-90">
-              <ArtCanvas slug={project.slug} height={110} />
+              <ArtCanvas slug={project.slug} height={110} serverConfig={artAssignments[project.slug] ?? null} />
             </div>
 
             <div className="space-y-3 p-5">
