@@ -268,8 +268,10 @@ export function computeGrid(
   const noiseScale = opts.noiseScale ?? 1.0;
 
   const step = cs + gap;
-  const cols = Math.floor(width / step);
-  const rows = Math.floor(height / step);
+  // +1 ensures the grid bleeds one cell past the right/bottom edge so that
+  // overflow:hidden on the container clips it cleanly with no background strip.
+  const cols = Math.floor(width / step) + 1;
+  const rows = Math.floor(height / step) + 1;
   const shades = makeShades(cfg.hue, cfg.sat, shadeCount);
   const bgColor = hsbToCss(cfg.hue, cfg.sat * 0.55, cfg.bri * 0.12);
 

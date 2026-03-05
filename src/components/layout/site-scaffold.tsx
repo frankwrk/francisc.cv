@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { siteScaffoldConfig } from "@/config/site-scaffold";
 import { SiteNav } from "@/components/layout/site-nav";
@@ -250,6 +251,27 @@ function CornerMarkers() {
 }
 
 export function SiteScaffold({ children }: SiteScaffoldProps) {
+  // Polyfill navigator.clipboard for non-secure contexts (HTTP, network IP)
+  // so DialKit's Copy button doesn't throw "Cannot read properties of undefined".
+  useEffect(() => {
+    if (typeof navigator === "undefined" || navigator.clipboard) return;
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText(text: string): Promise<void> {
+          const el = document.createElement("textarea");
+          el.value = text;
+          el.style.cssText = "position:fixed;left:-9999px;opacity:0";
+          document.body.appendChild(el);
+          el.select();
+          try { document.execCommand("copy"); } catch { /* ignore */ }
+          el.remove();
+          return Promise.resolve();
+        },
+      },
+    });
+  }, []);
+
   const scaffoldVars: ScaffoldVars = {
     "--scaffold-bg-light": siteScaffoldConfig.palette.light.background,
     "--scaffold-bg-dark": siteScaffoldConfig.palette.dark.background,
@@ -348,7 +370,7 @@ export function SiteScaffold({ children }: SiteScaffoldProps) {
                   }}
                 >
                   {index === 0 ? (
-                    <main id="main-content" tabIndex={-1} className="h-full overflow-y-auto px-5 py-6 outline-none md:py-10 md:pl-20 md:pr-10">
+                    <main id="main-content" tabIndex={-1} className="h-full overflow-y-auto px-5 py-6 outline-none md:py-10 md:px-10">
                       {children}
                     </main>
                   ) : (

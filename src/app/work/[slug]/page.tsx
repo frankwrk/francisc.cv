@@ -7,6 +7,7 @@ import { getAllProjects, getProjectBySlug } from "@/lib/content";
 import { Figure } from "@/components/mdx/figure";
 import { Callout } from "@/components/mdx/callout";
 import { MdxContent } from "@/components/mdx/mdx-content";
+import { ArtCanvas } from "@/components/ui/art-canvas";
 
 export async function generateStaticParams() {
   const projects = await getAllProjects();
@@ -40,69 +41,100 @@ export default async function WorkDetailPage({ params }: Props) {
   const { meta, source } = await getProjectBySlug(slug);
 
   return (
-    <article className="max-w-2xl space-y-8 pt-2 [font-family:var(--font-geist-sans)]">
-      <header className="space-y-4">
-        <p className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]">
-          WORK
-        </p>
-        <h1 className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]">
-          {meta.title}
-        </h1>
-        <p className="text-[15px] leading-relaxed text-[var(--scaffold-ruler)]">
-          {meta.description}
-        </p>
+    <article className="space-y-8 pt-2 [font-family:var(--font-geist-sans)]">
 
-        <div className="flex flex-wrap items-center gap-2 border-t border-[var(--scaffold-line)] pt-4">
-          {meta.role && (
-            <span className="text-[11px] tracking-[0.1em] text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)]">
-              {meta.role}
-            </span>
-          )}
-          {meta.role && meta.stack && meta.stack.length > 0 && (
-            <span className="text-[var(--scaffold-line)]">·</span>
-          )}
-          {meta.stack?.map((item) => (
-            <span
-              key={item}
-              className="border border-[var(--scaffold-line)] px-2 py-0.5 text-[10px] tracking-[0.08em] text-[var(--scaffold-ruler)]"
-            >
-              {item}
-            </span>
-          ))}
+      {/* Hero header — art canvas background with text overlaid */}
+      <header className="relative overflow-hidden border border-[var(--scaffold-line)]">
+        {/* Background art canvas */}
+        <div className="absolute inset-0" aria-hidden="true">
+          <ArtCanvas slug={slug} height={280} />
         </div>
 
-        {meta.outcomes && meta.outcomes.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]">
-              Outcomes
-            </p>
-            <ul className="space-y-1">
-              {meta.outcomes.map((outcome) => (
-                <li
-                  key={outcome}
-                  className="flex gap-2 text-[13px] leading-relaxed text-[var(--scaffold-ruler)]"
-                >
-                  <span className="mt-0.5 shrink-0 text-[var(--scaffold-line)]">—</span>
-                  {outcome}
-                </li>
-              ))}
-            </ul>
+        {/* Gradient overlay: dark bottom-left → transparent top-right */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background:
+              "linear-gradient(to top right, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.50) 35%, rgba(0,0,0,0.18) 65%, transparent 100%)",
+          }}
+        />
+
+        {/* Text content pinned to the bottom-left */}
+        <div
+          className="relative z-10 flex flex-col justify-end px-5 pb-5 pt-32 space-y-2"
+          style={{ minHeight: 280 }}
+        >
+          <p className="text-[10px] tracking-[0.22em] text-white/60 [font-family:var(--font-geist-pixel-square)]">
+            WORK
+          </p>
+          <h1 className="text-2xl font-semibold tracking-tight text-white">
+            {meta.title}
+          </h1>
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            {meta.role && (
+              <span className="text-[10px] tracking-[0.1em] text-white/70 [font-family:var(--font-geist-pixel-square)]">
+                {meta.role}
+              </span>
+            )}
+            {meta.role && meta.stack && meta.stack.length > 0 && (
+              <span className="text-white/30">·</span>
+            )}
+            {meta.stack?.map((item) => (
+              <span
+                key={item}
+                className="border border-white/25 px-2 py-0.5 text-[10px] tracking-[0.08em] text-white/70"
+              >
+                {item}
+              </span>
+            ))}
           </div>
-        )}
+        </div>
       </header>
 
-      <MdxContent>
-        <MDXRemote
-          source={source}
-          components={{ Figure, Callout }}
-          options={{
+      {/* Prose body — constrained width, centered */}
+      <div className="mx-auto max-w-2xl space-y-8">
+        {(meta.description || (meta.outcomes && meta.outcomes.length > 0)) && (
+          <div className="space-y-4 border-b border-[var(--scaffold-line)] pb-6">
+            {meta.description && (
+              <p className="text-[15px] leading-relaxed text-[var(--scaffold-ruler)]">
+                {meta.description}
+              </p>
+            )}
+            {meta.outcomes && meta.outcomes.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]">
+                  Outcomes
+                </p>
+                <ul className="space-y-1">
+                  {meta.outcomes.map((outcome) => (
+                    <li
+                      key={outcome}
+                      className="flex gap-2 text-[13px] leading-relaxed text-[var(--scaffold-ruler)]"
+                    >
+                      <span className="mt-0.5 shrink-0 text-[var(--scaffold-line)]">—</span>
+                      {outcome}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
+        <MdxContent>
+          <MDXRemote
+            source={source}
+            components={{ Figure, Callout }}
+            options={{
               mdxOptions: {
                 remarkPlugins: [remarkGfm],
                 rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: "append" }]],
               },
             }}
-        />
-      </MdxContent>
+          />
+        </MdxContent>
+      </div>
     </article>
   );
 }

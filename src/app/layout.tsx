@@ -12,6 +12,8 @@ import {
 import { SiteScaffold } from "@/components/layout/site-scaffold";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteUrl } from "@/config/site-url";
+import { DialRoot } from "dialkit";
+import "dialkit/styles.css";
 import "./globals.css";
 
 const siteName = "francisc.cv";
@@ -97,6 +99,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SiteScaffold>{children}</SiteScaffold>
+          <DialRoot />
         </ThemeProvider>
       </body>
     </html>

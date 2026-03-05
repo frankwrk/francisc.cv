@@ -14,7 +14,7 @@ interface DiscreteFieldPreviewProps {
  */
 export function DiscreteFieldPreview({
   slug,
-  width = 600,
+  width = 1100,
   height = 130,
 }: DiscreteFieldPreviewProps) {
   const cfg = getFieldConfig(slug);
@@ -24,7 +24,7 @@ export function DiscreteFieldPreview({
   const thumbCellSize = Math.max(7, Math.floor(cfg.cellSize * 0.52));
   const thumbGap = Math.max(1, Math.floor(cfg.gap * 0.6));
 
-  const { cells, cellSize, gap, bgColor } = computeGrid(cfg, width, height, {
+  const { cells, cols, cellSize, gap, bgColor } = computeGrid(cfg, width, height, {
     cellSize: thumbCellSize,
     gap: thumbGap,
     shadeCount: 6,
@@ -37,25 +37,21 @@ export function DiscreteFieldPreview({
         height,
         backgroundColor: bgColor,
         overflow: "hidden",
-        display: "flex",
-        flexWrap: "wrap",
-        alignContent: "flex-start",
       }}
       aria-hidden="true"
     >
-      {cells.map(({ color }, i) => (
-        <div
-          key={i}
-          style={{
-            width: cellSize,
-            height: cellSize,
-            backgroundColor: color,
-            marginRight: gap,
-            marginBottom: gap,
-            flexShrink: 0,
-          }}
-        />
-      ))}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${cols}, ${cellSize}px)`,
+          gridAutoRows: `${cellSize}px`,
+          gap: `${gap}px`,
+        }}
+      >
+        {cells.map(({ color }, i) => (
+          <div key={i} style={{ backgroundColor: color }} />
+        ))}
+      </div>
     </div>
   );
 }
