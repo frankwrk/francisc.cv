@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/utils/cn";
 
@@ -16,6 +16,10 @@ export function SpotlightPanel({
   spotlightClassName,
 }: SpotlightPanelProps) {
   const prefersReducedMotion = useReducedMotion();
+  const [isHovered, setIsHovered] = useState(false);
+
+  const spotlightAnimate =
+    prefersReducedMotion ? { y: 0, opacity: 0.2 } : isHovered ? { y: -6, opacity: 0.34 } : { y: -18, opacity: 0.2 };
 
   return (
     <div
@@ -23,6 +27,8 @@ export function SpotlightPanel({
         "group relative overflow-hidden border border-[var(--scaffold-line)] bg-[var(--scaffold-surface)]",
         className
       )}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <motion.div
         aria-hidden
@@ -30,8 +36,8 @@ export function SpotlightPanel({
           "pointer-events-none absolute inset-x-8 top-0 h-32 rounded-full opacity-45 blur-3xl",
           spotlightClassName
         )}
-        initial={{ y: prefersReducedMotion ? 0 : -18, opacity: 0.2 }}
-        whileHover={prefersReducedMotion ? undefined : { y: -6, opacity: 0.34 }}
+        initial={prefersReducedMotion ? { y: 0, opacity: 0.2 } : { y: -18, opacity: 0.2 }}
+        animate={spotlightAnimate}
         transition={{ duration: 0.35, ease: "easeOut" }}
         style={{
           background:

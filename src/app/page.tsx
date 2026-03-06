@@ -113,7 +113,7 @@ export default function Home() {
                     capability.href ? (
                       <Link
                         href={capability.href}
-                        className="inline-flex w-fit items-center gap-2 border border-[var(--scaffold-line)] px-2.5 py-1 text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)]"
+                        className="inline-flex w-fit items-center gap-2 border border-[var(--scaffold-line)] px-2.5 py-1 text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)]"
                       >
                         <span>{capability.evidenceLabel}</span>
                         <span aria-hidden>↗</span>
