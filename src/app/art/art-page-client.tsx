@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { useDialKit, DialStore } from "dialkit";
+import { useDialKit, DialStore, type DialConfig } from "dialkit";
 import {
   drawWaveformBars,
   drawGridBlocks,
@@ -462,10 +462,9 @@ export function ArtPageClient({
   const activeVariant = base.variant;
 
   // ── Hook 2: variant-specific params (dynamic — config changes per variant)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const params = useDialKit(
     PANEL_PARAMS,
-    getVariantConfig(activeVariant) as any,
+    getVariantConfig(activeVariant) as DialConfig,
   ) as unknown as AnyParams;
 
   // Keep a ref to the latest base + params for the RAF loop

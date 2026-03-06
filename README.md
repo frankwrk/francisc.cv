@@ -21,6 +21,8 @@ The site now includes a fixed viewport switch that swaps between:
 
 The machine surface is rendered as an overlay so the human version remains the default implementation underneath. Internal links inside the machine view return the user to the human version before navigating, which keeps the interaction readable instead of turning the machine layer into a second visual shell.
 
+The scaffold layout was also corrected to stay single-column on mobile. The central frame now uses a responsive grid definition instead of a hardcoded multi-column width, and the scaffold container uses a minimum viewport height so long pages can expand without collapsing into a narrow strip.
+
 ## Machine-Readable Surfaces
 
 - A single `Person` JSON-LD block is rendered in the root layout.

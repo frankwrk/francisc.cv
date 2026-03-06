@@ -89,16 +89,7 @@ const ButtonGroupItem = React.forwardRef<
   const { item } = buttonGroupVariants({ size });
 
   return (
-    <Component
-      ref={forwardedRef}
-      className={item(
-        { class: className },
-        "bg-[#0A0A0A]",
-        "bg-[rgba(0,_0,_0,_0)]",
-      )}
-      {...rest}
-      data-oid=":koke.7"
-    >
+    <Component ref={forwardedRef} {...rest} data-oid=":koke.7">
       {children}
     </Component>
   );

@@ -389,11 +389,11 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
         />
 
         <div
-          className="mx-auto grid w-full grid-rows-[1fr] px-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0 grid-cols-[245.406px_371.773px_245.406px_245.414px]"
+          className="mx-auto grid w-full grid-cols-1 grid-rows-[1fr] px-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0"
           style={{
             maxWidth: siteScaffoldConfig.canvasMaxWidth + 128,
             paddingTop: siteScaffoldConfig.pageTopPadding,
-            height: "100dvh",
+            minHeight: "100dvh",
           }}
           data-oid="99hwvs7"
         >
