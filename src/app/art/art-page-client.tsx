@@ -170,6 +170,27 @@ function getVariantConfig(variant: string) {
 
 const PANEL_BASE = "Art Generator";
 const PANEL_PARAMS = "Parameters";
+const ART_PANEL_GAP = 12;
+const ART_PANEL_PADDING = 16;
+
+function clampArtPanelPosition(
+  wrapper: HTMLElement,
+  position: { left: number; top: number },
+) {
+  const maxLeft = Math.max(
+    ART_PANEL_PADDING,
+    window.innerWidth - wrapper.offsetWidth - ART_PANEL_PADDING,
+  );
+  const maxTop = Math.max(
+    ART_PANEL_PADDING,
+    window.innerHeight - wrapper.offsetHeight - ART_PANEL_PADDING,
+  );
+
+  return {
+    left: Math.min(Math.max(ART_PANEL_PADDING, position.left), maxLeft),
+    top: Math.min(Math.max(ART_PANEL_PADDING, position.top), maxTop),
+  };
+}
 
 function useBaseControls() {
   return useDialKit(PANEL_BASE, {
@@ -466,6 +487,230 @@ export function ArtPageClient({
     PANEL_PARAMS,
     getVariantConfig(activeVariant) as DialConfig,
   ) as unknown as AnyParams;
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    document.body.dataset.artLab = "true";
+
+    const positions = new Map<
+      string,
+      { left: number; top: number; userMoved: boolean }
+    >();
+    const attachedWrappers = new WeakSet<HTMLElement>();
+    const dragCleanup = new Map<HTMLElement, () => void>();
+
+    const getPanelEntries = () => {
+      const panelRoot = document.querySelector<HTMLElement>(
+        ".dialkit-root > .dialkit-panel",
+      );
+      if (!panelRoot) return [];
+
+      panelRoot.dataset.artLabPanels = "true";
+
+      return Array.from(
+        panelRoot.querySelectorAll<HTMLElement>(":scope > .dialkit-panel-wrapper"),
+      )
+        .map((wrapper) => {
+          const title = wrapper
+            .querySelector<HTMLElement>(".dialkit-folder-title-root")
+            ?.textContent?.trim();
+
+          if (!title) return null;
+
+          return {
+            title,
+            wrapper,
+            handle: wrapper.querySelector<HTMLElement>(
+              ".dialkit-folder-header-top",
+            ),
+          };
+        })
+        .filter(
+          (
+            entry,
+          ): entry is {
+            title: string;
+            wrapper: HTMLElement;
+            handle: HTMLElement | null;
+          } => entry !== null,
+        )
+        .sort((a, b) => {
+          const order = [PANEL_BASE, PANEL_PARAMS];
+          const aIndex = order.indexOf(a.title);
+          const bIndex = order.indexOf(b.title);
+
+          return (aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex) -
+            (bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex);
+        });
+    };
+
+    const attachDrag = (
+      wrapper: HTMLElement,
+      title: string,
+      handle: HTMLElement | null,
+    ) => {
+      if (!handle || attachedWrappers.has(wrapper)) return;
+
+      attachedWrappers.add(wrapper);
+      wrapper.dataset.artDialPanel = title.toLowerCase().replace(/\s+/g, "-");
+
+      let pointerId: number | null = null;
+      let startX = 0;
+      let startY = 0;
+      let originLeft = 0;
+      let originTop = 0;
+      let dragging = false;
+      let suppressClick = false;
+
+      const stopDrag = () => {
+        if (pointerId !== null) {
+          try {
+            handle.releasePointerCapture(pointerId);
+          } catch {
+            /* ignore */
+          }
+        }
+
+        pointerId = null;
+        dragging = false;
+        wrapper.dataset.dragging = "false";
+      };
+
+      const handlePointerMove = (event: PointerEvent) => {
+        if (pointerId !== event.pointerId) return;
+
+        const deltaX = event.clientX - startX;
+        const deltaY = event.clientY - startY;
+
+        if (!dragging && Math.hypot(deltaX, deltaY) < 4) return;
+
+        if (!dragging) {
+          dragging = true;
+          suppressClick = true;
+          wrapper.dataset.dragging = "true";
+          handle.setPointerCapture(event.pointerId);
+        }
+
+        const next = clampArtPanelPosition(wrapper, {
+          left: originLeft + deltaX,
+          top: originTop + deltaY,
+        });
+
+        positions.set(title, { ...next, userMoved: true });
+        wrapper.style.left = `${next.left}px`;
+        wrapper.style.top = `${next.top}px`;
+        wrapper.style.zIndex = "10020";
+      };
+
+      const handlePointerEnd = (event: PointerEvent) => {
+        if (pointerId !== event.pointerId) return;
+        stopDrag();
+      };
+
+      const handlePointerDown = (event: PointerEvent) => {
+        if (event.button !== 0) return;
+
+        pointerId = event.pointerId;
+        startX = event.clientX;
+        startY = event.clientY;
+
+        const current =
+          positions.get(title) ??
+          clampArtPanelPosition(wrapper, {
+            left: wrapper.getBoundingClientRect().left,
+            top: wrapper.getBoundingClientRect().top,
+          });
+
+        originLeft = current.left;
+        originTop = current.top;
+        wrapper.style.zIndex = "10020";
+      };
+
+      const handleClickCapture = (event: MouseEvent) => {
+        if (!suppressClick) return;
+
+        suppressClick = false;
+        event.preventDefault();
+        event.stopPropagation();
+      };
+
+      handle.addEventListener("pointerdown", handlePointerDown);
+      handle.addEventListener("pointermove", handlePointerMove);
+      handle.addEventListener("pointerup", handlePointerEnd);
+      handle.addEventListener("pointercancel", handlePointerEnd);
+      handle.addEventListener("lostpointercapture", stopDrag);
+      handle.addEventListener("click", handleClickCapture, true);
+
+      dragCleanup.set(wrapper, () => {
+        handle.removeEventListener("pointerdown", handlePointerDown);
+        handle.removeEventListener("pointermove", handlePointerMove);
+        handle.removeEventListener("pointerup", handlePointerEnd);
+        handle.removeEventListener("pointercancel", handlePointerEnd);
+        handle.removeEventListener("lostpointercapture", stopDrag);
+        handle.removeEventListener("click", handleClickCapture, true);
+      });
+    };
+
+    const syncPanels = () => {
+      const entries = getPanelEntries();
+      if (entries.length === 0) return;
+
+      const baseEntry =
+        entries.find((entry) => entry.title === PANEL_BASE) ?? entries[0];
+      const stackLeft = baseEntry.wrapper.getBoundingClientRect().left;
+      let stackTop = baseEntry.wrapper.getBoundingClientRect().top;
+
+      entries.forEach(({ title, wrapper, handle }) => {
+        attachDrag(wrapper, title, handle);
+
+        if (!positions.has(title)) {
+          positions.set(title, {
+            left: stackLeft,
+            top: stackTop,
+            userMoved: false,
+          });
+
+          stackTop += wrapper.offsetHeight + ART_PANEL_GAP;
+        }
+      });
+
+      entries.forEach(({ title, wrapper }) => {
+        const current = positions.get(title);
+        if (!current) return;
+
+        const next = clampArtPanelPosition(wrapper, current);
+        positions.set(title, { ...next, userMoved: current.userMoved });
+
+        wrapper.style.left = `${next.left}px`;
+        wrapper.style.top = `${next.top}px`;
+        wrapper.style.position = "fixed";
+        wrapper.style.margin = "0";
+        wrapper.style.pointerEvents = "auto";
+        wrapper.style.zIndex = current.userMoved ? "10020" : "10010";
+        wrapper.dataset.dragging = wrapper.dataset.dragging ?? "false";
+      });
+    };
+
+    let frameId = 0;
+    const scheduleSync = () => {
+      cancelAnimationFrame(frameId);
+      frameId = requestAnimationFrame(syncPanels);
+    };
+
+    const observer = new MutationObserver(scheduleSync);
+    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("resize", scheduleSync);
+    scheduleSync();
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      observer.disconnect();
+      window.removeEventListener("resize", scheduleSync);
+      dragCleanup.forEach((cleanup) => cleanup());
+      delete document.body.dataset.artLab;
+    };
+  }, []);
 
   // Keep a ref to the latest base + params for the RAF loop
   const stateRef = useRef({ base, params });

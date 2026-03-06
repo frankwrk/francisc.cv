@@ -358,15 +358,23 @@ export function drawContourLines(
   const bands = Math.max(2, Math.round(p.bandCount));
   const scale = p.noiseScale * 0.006;
   const contrast = Math.max(0, Math.min(1, p.contrast));
+  const transform = ctx.getTransform();
+  const scaleX = Math.abs(transform.a) || 1;
+  const scaleY = Math.abs(transform.d) || 1;
+  const pixelW = Math.max(1, Math.round(w * scaleX));
+  const pixelH = Math.max(1, Math.round(h * scaleY));
 
-  // Sample at step=2 for performance; fill 2×2 blocks per sample
+  // putImageData ignores the current transform, so render at backing-store size.
   const step = 2;
-  const imageData = ctx.createImageData(w, h);
+  const imageData = ctx.createImageData(pixelW, pixelH);
   const data = imageData.data;
 
-  for (let y = 0; y < h; y += step) {
-    for (let x = 0; x < w; x += step) {
-      const n = noise2D(x * scale + time * 0.07, y * scale);
+  for (let y = 0; y < pixelH; y += step) {
+    for (let x = 0; x < pixelW; x += step) {
+      const logicalX = x / scaleX;
+      const logicalY = y / scaleY;
+
+      const n = noise2D(logicalX * scale + time * 0.07, logicalY * scale);
       const bandF   = n * bands;
       const bandIdx = Math.floor(bandF);
       const bandFrac = bandF - bandIdx;
@@ -376,9 +384,9 @@ export function drawContourLines(
       const g = Math.round(bgRgb[1] + (fgRgb[1] - bgRgb[1]) * t);
       const b = Math.round(bgRgb[2] + (fgRgb[2] - bgRgb[2]) * t);
 
-      for (let dy = 0; dy < step && y + dy < h; dy++) {
-        for (let dx = 0; dx < step && x + dx < w; dx++) {
-          const i = ((y + dy) * w + (x + dx)) * 4;
+      for (let dy = 0; dy < step && y + dy < pixelH; dy++) {
+        for (let dx = 0; dx < step && x + dx < pixelW; dx++) {
+          const i = ((y + dy) * pixelW + (x + dx)) * 4;
           data[i] = r; data[i + 1] = g; data[i + 2] = b; data[i + 3] = 255;
         }
       }

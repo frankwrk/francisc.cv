@@ -12,6 +12,12 @@ The homepage intentionally preserves the original intro copy as the primary narr
 
 This creates a clearer scan path without discarding the existing tone or first-person framing.
 
+## Art Lab
+
+The `/art` page now takes over DialKit's default fixed panel layout only while the art lab is mounted. The `Art Generator` panel is initialized above the `Parameters` panel, and both panels can be dragged independently by their headers with explicit `grab` and `grabbing` cursors. This is implemented as an art-page DOM takeover instead of a DialKit fork so the rest of the site keeps the stock portal behavior.
+
+The `contour-lines` renderer also now writes at backing-store resolution before calling `putImageData()`. That avoids the old device-pixel-ratio mismatch where the topographic texture rendered as a small block in the canvas corner and leaked over the previous frame.
+
 ## Human / Machine Mode
 
 The site now includes a fixed viewport switch that swaps between:
