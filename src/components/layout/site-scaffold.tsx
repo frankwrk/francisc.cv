@@ -4,11 +4,13 @@ import type { CSSProperties, ReactNode } from "react";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { siteScaffoldConfig } from "@/config/site-scaffold";
+import { MachineModeController } from "@/components/machine/machine-mode-controller";
 import { SiteNav } from "@/components/layout/site-nav";
 import { cn } from "@/utils/cn";
 
 type SiteScaffoldProps = {
   children: ReactNode;
+  machineContent: ReactNode;
 };
 
 const ThemeToggle = dynamic(
@@ -53,6 +55,8 @@ type ScaffoldVars = CSSProperties & {
   "--scaffold-toggle-text-inactive-light": string;
   "--scaffold-toggle-text-inactive-dark": string;
   "--scaffold-section-divider-width": string;
+  "--machine-surface-bg-light": string;
+  "--machine-surface-bg-dark": string;
 };
 
 function SideRuler({ align }: { align: "left" | "right" }) {
@@ -250,7 +254,7 @@ function CornerMarkers() {
   );
 }
 
-export function SiteScaffold({ children }: SiteScaffoldProps) {
+export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
   // Polyfill navigator.clipboard for non-secure contexts (HTTP, network IP)
   // so DialKit's Copy button doesn't throw "Cannot read properties of undefined".
   useEffect(() => {
@@ -298,97 +302,101 @@ export function SiteScaffold({ children }: SiteScaffoldProps) {
     "--scaffold-toggle-text-inactive-dark":
       siteScaffoldConfig.palette.dark.toggleTextInactive,
     "--scaffold-section-divider-width": `${siteScaffoldConfig.fullBleedSectionDividerWidth}px`,
+    "--machine-surface-bg-light": "#FAFAFA",
+    "--machine-surface-bg-dark": "#0A0A0A",
   };
 
   return (
-    <div
-      className="site-scaffold relative min-h-screen w-full"
-      style={scaffoldVars}
-    >
+    <MachineModeController machineContent={machineContent}>
       <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 -z-10 bg-[var(--scaffold-bg)]"
-      />
-
-      <div
-        className="mx-auto grid w-full grid-cols-[1fr] grid-rows-[1fr] px-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0"
-        style={{
-          maxWidth: siteScaffoldConfig.canvasMaxWidth + 128,
-          paddingTop: siteScaffoldConfig.pageTopPadding,
-          height: "100dvh",
-        }}
+        className="site-scaffold relative min-h-screen w-full"
+        style={scaffoldVars}
       >
-        <SideRuler align="left" />
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 -z-10 bg-[var(--scaffold-bg)]"
+        />
 
         <div
-          className="relative flex h-full flex-col overflow-visible"
+          className="mx-auto grid w-full grid-cols-[1fr] grid-rows-[1fr] px-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0"
           style={{
-            background: "var(--scaffold-surface)",
-            borderStyle: "solid",
-            borderWidth: siteScaffoldConfig.borderWidth,
-            borderColor: "var(--scaffold-line)",
+            maxWidth: siteScaffoldConfig.canvasMaxWidth + 128,
+            paddingTop: siteScaffoldConfig.pageTopPadding,
+            height: "100dvh",
           }}
         >
-          <CornerMarkers />
-          <TopOuterRuler />
-          <BorderExtensions />
-          <a
-            href="#main-content"
-            className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-[54px] focus-visible:z-[100] focus-visible:rounded focus-visible:bg-[var(--scaffold-surface)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-[var(--scaffold-toggle-text-active)] focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)]"
+          <SideRuler align="left" />
+
+          <div
+            className="relative flex h-full flex-col overflow-visible"
+            style={{
+              background: "var(--scaffold-surface)",
+              borderStyle: "solid",
+              borderWidth: siteScaffoldConfig.borderWidth,
+              borderColor: "var(--scaffold-line)",
+            }}
           >
-            Skip to main content
-          </a>
-          <TopRuler />
+            <CornerMarkers />
+            <TopOuterRuler />
+            <BorderExtensions />
+            <a
+              href="#main-content"
+              className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-[54px] focus-visible:z-[100] focus-visible:rounded focus-visible:bg-[var(--scaffold-surface)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-[var(--scaffold-toggle-text-active)] focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)]"
+            >
+              Skip to main content
+            </a>
+            <TopRuler />
 
-          <div className="flex flex-1 flex-col">
-            {siteScaffoldConfig.sections.map((section, index) => (
-              <section
-                key={section.id}
-                className={cn(
-                  "relative",
-                  index === 0 ? "flex-1 p-0" : "px-4 py-4 md:px-6 md:py-6"
-                )}
-                style={{
-                  minHeight: section.minHeight,
-                }}
-              >
-                {index > 0 ? (
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute left-1/2 top-0 w-screen -translate-x-1/2"
-                    style={{
-                      height: "var(--scaffold-section-divider-width)",
-                      background: "var(--scaffold-section-divider)",
-                    }}
-                  />
-                ) : null}
-
-                <div
-                  className="mx-auto h-full"
+            <div className="flex flex-1 flex-col">
+              {siteScaffoldConfig.sections.map((section, index) => (
+                <section
+                  key={section.id}
+                  className={cn(
+                    "relative",
+                    index === 0 ? "flex-1 p-0" : "px-4 py-4 md:px-6 md:py-6"
+                  )}
                   style={{
-                    maxWidth: section.maxInnerWidth ?? undefined,
+                    minHeight: section.minHeight,
                   }}
                 >
-                  {index === 0 ? (
-                    <main id="main-content" tabIndex={-1} className="h-full overflow-y-auto px-5 py-6 outline-none md:py-10 md:px-10">
-                      {children}
-                    </main>
-                  ) : (
-                    <div className="h-full min-h-24 p-4 md:p-8">
-                      <div
-                        className="h-px w-full"
-                        style={{ background: "var(--scaffold-line)" }}
-                      />
-                    </div>
-                  )}
-                </div>
-              </section>
-            ))}
-          </div>
-        </div>
+                  {index > 0 ? (
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute left-1/2 top-0 w-screen -translate-x-1/2"
+                      style={{
+                        height: "var(--scaffold-section-divider-width)",
+                        background: "var(--scaffold-section-divider)",
+                      }}
+                    />
+                  ) : null}
 
-        <SideRuler align="right" />
+                  <div
+                    className="mx-auto h-full"
+                    style={{
+                      maxWidth: section.maxInnerWidth ?? undefined,
+                    }}
+                  >
+                    {index === 0 ? (
+                      <main id="main-content" tabIndex={-1} className="h-full overflow-y-auto px-5 py-6 outline-none md:px-10 md:py-10">
+                        {children}
+                      </main>
+                    ) : (
+                      <div className="h-full min-h-24 p-4 md:p-8">
+                        <div
+                          className="h-px w-full"
+                          style={{ background: "var(--scaffold-line)" }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </div>
+
+          <SideRuler align="right" />
+        </div>
       </div>
-    </div>
+    </MachineModeController>
   );
 }

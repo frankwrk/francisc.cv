@@ -12,6 +12,15 @@ The homepage intentionally preserves the original intro copy as the primary narr
 
 This creates a clearer scan path without discarding the existing tone or first-person framing.
 
+## Human / Machine Mode
+
+The site now includes a fixed viewport switch that swaps between:
+
+- `Human`: the full portfolio interface with scaffold, navigation, and motion treatments
+- `Machine`: a generated MDX-style site index focused on text, links, and ASCII layout artifacts
+
+The machine surface is rendered as an overlay so the human version remains the default implementation underneath. Internal links inside the machine view return the user to the human version before navigating, which keeps the interaction readable instead of turning the machine layer into a second visual shell.
+
 ## Machine-Readable Surfaces
 
 - A single `Person` JSON-LD block is rendered in the root layout.

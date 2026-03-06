@@ -10,6 +10,7 @@ import {
   GeistPixelLine,
 } from "geist/font/pixel";
 import { SiteScaffold } from "@/components/layout/site-scaffold";
+import { MachineVersionContent } from "@/components/machine/machine-version-content";
 import { createPersonSchema, homepageIdentitySupport } from "@/config/site-home";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteUrl } from "@/config/site-url";
@@ -92,7 +93,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <SiteScaffold>{children}</SiteScaffold>
+          <SiteScaffold machineContent={<MachineVersionContent />}>{children}</SiteScaffold>
           <DialRoot />
         </ThemeProvider>
         <Analytics />

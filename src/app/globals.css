@@ -1002,6 +1002,7 @@ body {
   --scaffold-toggle-thumb: var(--scaffold-toggle-thumb-light);
   --scaffold-toggle-text-active: var(--scaffold-toggle-text-active-light);
   --scaffold-toggle-text-inactive: var(--scaffold-toggle-text-inactive-light);
+  --machine-surface-bg: var(--machine-surface-bg-light);
 }
 
 .dark .site-scaffold {
@@ -1015,4 +1016,5 @@ body {
   --scaffold-toggle-thumb: var(--scaffold-toggle-thumb-dark);
   --scaffold-toggle-text-active: var(--scaffold-toggle-text-active-dark);
   --scaffold-toggle-text-inactive: var(--scaffold-toggle-text-inactive-dark);
+  --machine-surface-bg: var(--machine-surface-bg-dark);
 }
