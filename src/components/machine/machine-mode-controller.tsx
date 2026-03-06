@@ -34,13 +34,13 @@ function MachineVersionToggle() {
 
   return (
     <div
-      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-[90] bg-[#0A0A0A]"
+      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-[90]"
       data-oid="74ojnxl"
     >
       <ButtonGroup.Root
         size="xsmall"
         aria-label="Site version"
-        className="rounded-xl shadow-[0_12px_30px_-18px_rgba(14,18,27,0.35)]"
+        className="rounded-xl border border-[oklch(0.9128_0_89.88)] bg-[color-mix(in_oklab,var(--scaffold-surface)_90%,var(--scaffold-bg))] p-0.5 shadow-[0_12px_30px_-18px_rgba(14,18,27,0.35)] backdrop-blur-md dark:border-[oklch(0.3052_0_89.88)]"
         data-oid="qkk6qqv"
       >
         <ButtonGroup.Item
@@ -48,6 +48,7 @@ function MachineVersionToggle() {
           data-state={ctx.displayMode === "human" ? "on" : "off"}
           aria-pressed={ctx.displayMode === "human"}
           onClick={() => ctx.switchMode("human")}
+          className="border-transparent bg-[color-mix(in_oklab,var(--scaffold-surface)_94%,var(--scaffold-bg))] text-[oklch(0.5521_0_89.88)] hover:text-[oklch(0.5521_0_89.88)] data-[state=on]:text-[oklch(0.5521_0_89.88)] dark:text-[oklch(0.65_0_89.88)] dark:hover:text-[oklch(0.65_0_89.88)] dark:data-[state=on]:text-[oklch(0.65_0_89.88)]"
           data-oid="gcvt9g1"
         >
           <ButtonGroup.Icon as={UserRound} aria-hidden data-oid="1dv_qdb" />
@@ -58,6 +59,7 @@ function MachineVersionToggle() {
           data-state={ctx.displayMode === "machine" ? "on" : "off"}
           aria-pressed={ctx.displayMode === "machine"}
           onClick={() => ctx.switchMode("machine")}
+          className="border-transparent bg-[color-mix(in_oklab,var(--scaffold-surface)_94%,var(--scaffold-bg))] text-[oklch(0.5521_0_89.88)] hover:text-[oklch(0.5521_0_89.88)] data-[state=on]:text-[oklch(0.5521_0_89.88)] dark:text-[oklch(0.65_0_89.88)] dark:hover:text-[oklch(0.65_0_89.88)] dark:data-[state=on]:text-[oklch(0.65_0_89.88)]"
           data-oid="zi4vrwk"
         >
           <ButtonGroup.Icon as={Cpu} aria-hidden data-oid=":g6:mk9" />

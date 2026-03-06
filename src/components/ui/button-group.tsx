@@ -89,7 +89,12 @@ const ButtonGroupItem = React.forwardRef<
   const { item } = buttonGroupVariants({ size });
 
   return (
-    <Component ref={forwardedRef} {...rest} data-oid=":koke.7">
+    <Component
+      ref={forwardedRef}
+      className={item({ class: className })}
+      {...rest}
+      data-oid=":koke.7"
+    >
       {children}
     </Component>
   );
