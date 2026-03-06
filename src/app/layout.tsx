@@ -10,6 +10,7 @@ import {
   GeistPixelLine,
 } from "geist/font/pixel";
 import { SiteScaffold } from "@/components/layout/site-scaffold";
+import { createPersonSchema, homepageIdentitySupport } from "@/config/site-home";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteUrl } from "@/config/site-url";
 import { DialRoot } from "dialkit";
@@ -19,7 +20,7 @@ import "dialkit/styles.css";
 import "./globals.css";
 
 const siteName = "francisc.cv";
-const siteDescription = "Portfolio and systems-thinking artifact by Francisc Furdui.";
+const siteDescription = homepageIdentitySupport.description;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -67,16 +68,7 @@ export const viewport: Viewport = {
   ],
 };
 
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Francisc Furdui",
-  url: siteUrl,
-  email: "francisc.frd@gmail.com",
-  image: `${siteUrl}/images/francisc-furdui.jpg`,
-  jobTitle: "Technical Product Manager",
-  description: siteDescription,
-};
+const personSchema = createPersonSchema();
 
 export default function RootLayout({
   children,

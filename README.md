@@ -1,4 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# francisc.cv
+
+Portfolio and structured narrative site for Francisc Furdui. The implementation prioritizes evidence-backed positioning, readable systems framing, and restrained visual polish over hype.
+
+## Homepage Structure
+
+The homepage intentionally preserves the original intro copy as the primary narrative block. New sections below the hero are ordered for fast recruiter and AI-tool scanning:
+
+1. Identity support
+2. Systems I build
+3. Selected work
+
+This creates a clearer scan path without discarding the existing tone or first-person framing.
+
+## Machine-Readable Surfaces
+
+- A single `Person` JSON-LD block is rendered in the root layout.
+- `/profile.json` exposes a public machine-readable summary for tooling and discovery workflows.
+
+Both surfaces are backed by shared config in `src/config/site-home.ts` so metadata, homepage positioning, and proof artifacts stay aligned.
+
+## Positioning Rules
+
+- Keep AI-forward claims tied to named work or published evidence.
+- Treat Aceternity as reference material for selective card and spotlight patterns, not as the primary design system.
+- Preserve the scaffold’s existing palette, border language, and motion restraint when introducing new UI treatments.
 
 ## Getting Started
 

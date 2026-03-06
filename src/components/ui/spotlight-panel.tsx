@@ -1,0 +1,52 @@
+"use client";
+
+import type { ReactNode } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { cn } from "@/utils/cn";
+
+type SpotlightPanelProps = {
+  children: ReactNode;
+  className?: string;
+  spotlightClassName?: string;
+};
+
+export function SpotlightPanel({
+  children,
+  className,
+  spotlightClassName,
+}: SpotlightPanelProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <div
+      className={cn(
+        "group relative overflow-hidden border border-[var(--scaffold-line)] bg-[var(--scaffold-surface)]",
+        className
+      )}
+    >
+      <motion.div
+        aria-hidden
+        className={cn(
+          "pointer-events-none absolute inset-x-8 top-0 h-32 rounded-full opacity-45 blur-3xl",
+          spotlightClassName
+        )}
+        initial={{ y: prefersReducedMotion ? 0 : -18, opacity: 0.2 }}
+        whileHover={prefersReducedMotion ? undefined : { y: -6, opacity: 0.34 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        style={{
+          background:
+            "radial-gradient(circle at center, color-mix(in oklab, var(--scaffold-ruler) 24%, transparent) 0%, transparent 72%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background:
+            "linear-gradient(180deg, color-mix(in oklab, var(--scaffold-line) 50%, transparent), transparent 28%)",
+        }}
+      />
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
+}
