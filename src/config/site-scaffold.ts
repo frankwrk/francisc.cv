@@ -59,24 +59,24 @@ export const siteScaffoldConfig: SiteScaffoldConfig = {
   edgeExtensions: {},
   palette: {
     light: {
-      background: "oklch(97.6139% 0 89.88)",
-      surface: "oklch(100% 0 89.88)",
+      background: "oklch(0.9851 0 0)",
+      surface: "oklch(0.9851 0 0)",
       line: "oklch(91.279% 0 89.88)",
-      ruler: "oklch(55% 0 89.88)",          // was 84.83% → 4.86:1 vs white ✓ WCAG AA
+      ruler: "oklch(55% 0 89.88)", // was 84.83% → 4.86:1 vs white ✓ WCAG AA
       toggleTrack: "oklch(97.6139% 0 89.88)",
       toggleThumb: "oklch(95.3435% 0 89.88)",
-      toggleTextActive: "oklch(42% 0 89.88)",      // was 55.34% → 8.46:1 vs white ✓
-      toggleTextInactive: "oklch(55% 0 89.88)",    // was 71.35% → 4.86:1 vs white ✓
+      toggleTextActive: "oklch(42% 0 89.88)", // was 55.34% → 8.46:1 vs white ✓
+      toggleTextInactive: "oklch(55% 0 89.88)", // was 71.35% → 4.86:1 vs white ✓
     },
     dark: {
-      background: "oklch(20.4627% 0 89.88)",
-      surface: "oklch(26.0325% 0 89.88)",
+      background: "oklch(0.1448 0 0)",
+      surface: "oklch(0.1448 0 0)",
       line: "oklch(30.3278% 0 89.88)",
-      ruler: "oklch(65% 0 89.88)",          // was 51.61% → 4.94:1 vs dark surface ✓ WCAG AA
+      ruler: "oklch(65% 0 89.88)", // was 51.61% → 4.94:1 vs dark surface ✓ WCAG AA
       toggleTrack: "oklch(20.4627% 0 89.88)",
       toggleThumb: "oklch(26.0325% 0 89.88)",
       toggleTextActive: "oklch(86.2348% 0 89.88)",
-      toggleTextInactive: "oklch(65% 0 89.88)",    // was 61.05% → 4.94:1 vs dark surface ✓
+      toggleTextInactive: "oklch(65% 0 89.88)", // was 61.05% → 4.94:1 vs dark surface ✓
     },
   },
   rulerTopValues: [0, 120, 240, 360, 480, 600, 720, 840, 960],
