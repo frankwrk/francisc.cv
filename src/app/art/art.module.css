@@ -1,0 +1,103 @@
+/* Art lab layout: 15 canvases + props panel (algo-art style). Uses scaffold tokens where present. */
+
+.root {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  background: var(--scaffold-bg, #efefef);
+  font-family: ui-monospace, monospace;
+}
+
+.canvases {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  flex-wrap: wrap;
+}
+
+.canvasContainer {
+  margin: 0 auto;
+  width: 100%;
+  height: 63vw;
+  position: relative;
+  outline: 1px solid var(--scaffold-line, rgba(0, 0, 0, 0.08));
+}
+
+@media (min-width: 820px) {
+  .canvasContainer {
+    width: 19%;
+    height: 15.78vw;
+  }
+}
+
+.grid {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.canvas {
+  margin: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.props {
+  position: fixed;
+  left: 0;
+  top: 0;
+  font-family: ui-monospace, monospace;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: var(--scaffold-surface, #fff);
+  border: 1px solid var(--scaffold-line, rgba(0, 0, 0, 0.1));
+  border-radius: 4px;
+  margin: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+}
+
+.prop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--scaffold-ruler, #555);
+}
+
+.propCurrent {
+  background: var(--scaffold-line, rgba(0, 0, 0, 0.08));
+  border-radius: 2px;
+  padding: 2px 4px;
+}
+
+.propLabel {
+  flex-shrink: 0;
+}
+
+.propValue {
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  font-size: 11px;
+  color: var(--scaffold-ruler, #555);
+  z-index: 10;
+}

@@ -1,1237 +1,235 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { useDialKit, DialStore, type DialConfig } from "dialkit";
 import {
-  drawWaveformBars,
-  drawGridBlocks,
-  drawNoiseLines,
-  drawPixelScatter,
-  drawFluidGrid,
-  drawContourLines,
-  drawTruchetTiles,
-  drawParticleFlow,
-} from "@/lib/art-variants";
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
-  saveAssignment,
-  removeAssignment,
-  getAssignment,
-  drawFromConfig,
-  type ArtConfig,
-} from "@/lib/art-assignments";
+  ALGO_ART_PROPS_META,
+  clampAlgoArtConfig,
+  DEFAULT_ALGO_ART_CONFIG,
+  type AlgoArtAxis,
+  type AlgoArtConfig,
+  type AlgoArtPropMeta,
+} from "@/lib/art-algo-config";
+import { drawAlgoArtFrame } from "@/lib/art-algo-draw";
+import styles from "./art.module.css";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+const LOGICAL_WIDTH = 340;
+const LOGICAL_HEIGHT = 270;
+const CANVAS_COUNT = 15;
 
-export type ContentSlug = { slug: string; type: "work" | "thinking" };
-
-// All possible flat variant param values (shared key names reuse across variants)
-interface AnyParams {
-  // waveform-bars
-  waveType?: string;
-  amplitude?: number;
-  frequency?: number;
-  phaseOffset?: number;
-  fromBottom?: boolean;
-  // grid-blocks / noise-lines / fluid-grid / contour-lines / truchet-tiles
-  gap?: number;
-  noiseScale?: number;
-  roundness?: number;
-  // noise-lines / truchet-tiles
-  lineWidth?: number;
-  displacement?: number;
-  direction?: string;
-  // pixel-scatter
-  size?: number;
-  density?: number;
-  // fluid-grid
-  flowAmount?: number;
-  // contour-lines
-  bandCount?: number;
-  contrast?: number;
-  // truchet-tiles
-  tileSize?: number;
-  // particle-flow
-  particleCount?: number;
-  fieldScale?: number;
-  stepLength?: number;
-  trail?: number;
+function getPropValue(config: AlgoArtConfig, key: keyof AlgoArtConfig): number | boolean | string {
+  return config[key] as number | boolean | string;
 }
 
-// ─── Hex → OKLCH display ─────────────────────────────────────────────────────
-
-function hexToOklch(hex: string): string {
-  if (!hex?.startsWith("#") || hex.length < 7) return hex;
-  const r = parseInt(hex.slice(1, 3), 16) / 255;
-  const g = parseInt(hex.slice(3, 5), 16) / 255;
-  const b = parseInt(hex.slice(5, 7), 16) / 255;
-  const lin = (c: number) =>
-    c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-  const lr = lin(r),
-    lg = lin(g),
-    lb = lin(b);
-  const lc = Math.cbrt(
-    0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb,
-  );
-  const mc = Math.cbrt(
-    0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb,
-  );
-  const sc = Math.cbrt(
-    0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb,
-  );
-  const L = 0.2104542553 * lc + 0.793617785 * mc - 0.0040720468 * sc;
-  const a = 1.9779984951 * lc - 2.428592205 * mc + 0.4505937099 * sc;
-  const bv = 0.0259040371 * lc + 0.7827717662 * mc - 0.808675766 * sc;
-  const C = Math.sqrt(a * a + bv * bv);
-  const H = (Math.atan2(bv, a) * 180) / Math.PI;
-  return `oklch(${(L * 100).toFixed(1)}% ${C.toFixed(4)} ${(H < 0 ? H + 360 : H).toFixed(1)})`;
-}
-
-// ─── Variant param configs (drives the dynamic "Parameters" panel) ────────────
-
-const ALL_VARIANTS = [
-  "waveform-bars",
-  "grid-blocks",
-  "noise-lines",
-  "pixel-scatter",
-  "fluid-grid",
-  "contour-lines",
-  "truchet-tiles",
-  "particle-flow",
-] as const;
-
-function getVariantConfig(variant: string) {
-  switch (variant) {
-    case "waveform-bars":
-      return {
-        waveType: {
-          type: "select" as const,
-          options: ["sine", "square", "sawtooth", "triangle", "noise"],
-          default: "sine",
-        },
-        amplitude: [0.75, 0.05, 1.0, 0.01] as [number, number, number, number],
-        frequency: [1.5, 0.1, 8.0, 0.1] as [number, number, number, number],
-        phaseOffset: [0, 0, 6.28, 0.01] as [number, number, number, number],
-        fromBottom: true as boolean,
-      };
-    case "grid-blocks":
-      return {
-        gap: [4, 0, 30, 1] as [number, number, number, number],
-        noiseScale: [1.5, 0.1, 5, 0.1] as [number, number, number, number],
-        roundness: [0, 0, 20, 1] as [number, number, number, number],
-      };
-    case "noise-lines":
-      return {
-        lineWidth: [2, 1, 12, 1] as [number, number, number, number],
-        displacement: [30, 0, 200, 1] as [number, number, number, number],
-        direction: {
-          type: "select" as const,
-          options: ["horizontal", "vertical"],
-          default: "horizontal",
-        },
-        noiseScale: [1.5, 0.1, 5, 0.1] as [number, number, number, number],
-      };
-    case "pixel-scatter":
-      return {
-        size: [6, 1, 30, 1] as [number, number, number, number],
-        density: [0.6, 0.1, 1.0, 0.01] as [number, number, number, number],
-        roundness: [0, 0, 20, 1] as [number, number, number, number],
-      };
-    case "fluid-grid":
-      return {
-        gap: [3, 0, 20, 1] as [number, number, number, number],
-        flowAmount: [20, 0, 80, 1] as [number, number, number, number],
-        noiseScale: [1.0, 0.1, 4, 0.1] as [number, number, number, number],
-      };
-    case "contour-lines":
-      return {
-        bandCount: [8, 2, 24, 1] as [number, number, number, number],
-        noiseScale: [1.0, 0.2, 4, 0.1] as [number, number, number, number],
-        contrast: [0.5, 0, 1, 0.01] as [number, number, number, number],
-      };
-    case "truchet-tiles":
-      return {
-        tileSize: [40, 8, 120, 4] as [number, number, number, number],
-        lineWidth: [2, 0.5, 10, 0.5] as [number, number, number, number],
-        noiseScale: [1.0, 0.1, 3, 0.1] as [number, number, number, number],
-      };
-    case "particle-flow":
-      return {
-        particleCount: [200, 20, 800, 10] as [number, number, number, number],
-        fieldScale: [1.0, 0.1, 5, 0.1] as [number, number, number, number],
-        stepLength: [3, 0.5, 15, 0.5] as [number, number, number, number],
-        trail: [30, 5, 100, 5] as [number, number, number, number],
-      };
-    default:
-      return {};
+function clampNumber(value: number, meta: AlgoArtPropMeta): number {
+  if (meta.range !== undefined) {
+    return Math.min(Math.max(value, meta.range[0]), meta.range[1]);
   }
+  const min = meta.min ?? -Infinity;
+  const max = meta.max ?? Infinity;
+  return Math.min(Math.max(value, min), max);
 }
 
-// ─── Base controls hook ───────────────────────────────────────────────────────
-
-const PANEL_BASE = "Art Generator";
-const PANEL_PARAMS = "Parameters";
-const ART_PANEL_GAP = 12;
-const ART_PANEL_PADDING = 16;
-
-function clampArtPanelPosition(
-  wrapper: HTMLElement,
-  position: { left: number; top: number },
-) {
-  const maxLeft = Math.max(
-    ART_PANEL_PADDING,
-    window.innerWidth - wrapper.offsetWidth - ART_PANEL_PADDING,
-  );
-  const maxTop = Math.max(
-    ART_PANEL_PADDING,
-    window.innerHeight - wrapper.offsetHeight - ART_PANEL_PADDING,
-  );
-
-  return {
-    left: Math.min(Math.max(ART_PANEL_PADDING, position.left), maxLeft),
-    top: Math.min(Math.max(ART_PANEL_PADDING, position.top), maxTop),
-  };
-}
-
-function useBaseControls() {
-  return useDialKit(PANEL_BASE, {
-    variant: {
-      type: "select" as const,
-      options: ALL_VARIANTS as unknown as string[],
-      default: "waveform-bars",
-    },
-    colors: {
-      foreground: { type: "color" as const, default: "#e0ca8c" },
-      background: { type: "color" as const, default: "#c94c1c" },
-    },
-    animation: {
-      enabled: false as boolean,
-      speed: [1, 0.1, 5, 0.1] as [number, number, number, number],
-    },
-    layout: {
-      count: [24, 2, 200, 1] as [number, number, number, number],
-      columns: [12, 1, 60, 1] as [number, number, number, number],
-    },
-  });
-}
-
-type BaseControls = ReturnType<typeof useBaseControls>;
-
-// ─── Config builder ───────────────────────────────────────────────────────────
-
-function buildConfig(base: BaseControls, p: AnyParams): ArtConfig {
-  return {
-    variant: base.variant,
-    fg: base.colors.foreground,
-    bg: base.colors.background,
-    animation: { enabled: base.animation.enabled, speed: base.animation.speed },
-    layout: { count: base.layout.count, columns: base.layout.columns },
-    waveformBars: {
-      waveType: p.waveType ?? "sine",
-      amplitude: p.amplitude ?? 0.75,
-      frequency: p.frequency ?? 1.5,
-      phaseOffset: p.phaseOffset ?? 0,
-      fromBottom: p.fromBottom ?? true,
-    },
-    gridBlocks: {
-      gap: p.gap ?? 4,
-      noiseScale: p.noiseScale ?? 1.5,
-      roundness: p.roundness ?? 0,
-    },
-    noiseLines: {
-      lineWidth: p.lineWidth ?? 2,
-      displacement: p.displacement ?? 30,
-      direction: p.direction ?? "horizontal",
-      noiseScale: p.noiseScale ?? 1.5,
-    },
-    pixelScatter: {
-      size: p.size ?? 6,
-      density: p.density ?? 0.6,
-      roundness: p.roundness ?? 0,
-    },
-    fluidGrid: {
-      gap: p.gap ?? 3,
-      flowAmount: p.flowAmount ?? 20,
-      noiseScale: p.noiseScale ?? 1,
-    },
-    contourLines: {
-      bandCount: p.bandCount ?? 8,
-      noiseScale: p.noiseScale ?? 1,
-      contrast: p.contrast ?? 0.5,
-    },
-    truchetTiles: {
-      tileSize: p.tileSize ?? 40,
-      lineWidth: p.lineWidth ?? 2,
-      noiseScale: p.noiseScale ?? 1,
-    },
-    particleFlow: {
-      particleCount: p.particleCount ?? 200,
-      fieldScale: p.fieldScale ?? 1,
-      stepLength: p.stepLength ?? 3,
-      trail: p.trail ?? 30,
-    },
-  };
-}
-
-// ─── Load config back into DialKit ────────────────────────────────────────────
-
-function applyBaseToDialKit(config: ArtConfig) {
-  DialStore.updateValue(PANEL_BASE, "variant", config.variant);
-  DialStore.updateValue(PANEL_BASE, "colors.foreground", config.fg);
-  DialStore.updateValue(PANEL_BASE, "colors.background", config.bg);
-  if (config.animation) {
-    DialStore.updateValue(
-      PANEL_BASE,
-      "animation.enabled",
-      config.animation.enabled,
-    );
-    DialStore.updateValue(
-      PANEL_BASE,
-      "animation.speed",
-      config.animation.speed,
-    );
+function incrementProp(config: AlgoArtConfig, meta: AlgoArtPropMeta, delta: number): AlgoArtConfig {
+  if (meta.type === "number") {
+    const current = (config[meta.key as keyof AlgoArtConfig] as number) + delta;
+    return { ...config, [meta.key]: clampNumber(current, meta) };
   }
-  DialStore.updateValue(PANEL_BASE, "layout.count", config.layout.count);
-  DialStore.updateValue(PANEL_BASE, "layout.columns", config.layout.columns);
-}
-
-function applyParamsToDialKit(config: ArtConfig) {
-  const v = config.variant;
-  if (v === "waveform-bars") {
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "waveType",
-      config.waveformBars.waveType,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "amplitude",
-      config.waveformBars.amplitude,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "frequency",
-      config.waveformBars.frequency,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "phaseOffset",
-      config.waveformBars.phaseOffset,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "fromBottom",
-      config.waveformBars.fromBottom,
-    );
-  } else if (v === "grid-blocks") {
-    DialStore.updateValue(PANEL_PARAMS, "gap", config.gridBlocks.gap);
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "noiseScale",
-      config.gridBlocks.noiseScale,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "roundness",
-      config.gridBlocks.roundness,
-    );
-  } else if (v === "noise-lines") {
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "lineWidth",
-      config.noiseLines.lineWidth,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "displacement",
-      config.noiseLines.displacement,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "direction",
-      config.noiseLines.direction,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "noiseScale",
-      config.noiseLines.noiseScale,
-    );
-  } else if (v === "pixel-scatter") {
-    DialStore.updateValue(PANEL_PARAMS, "size", config.pixelScatter.size);
-    DialStore.updateValue(PANEL_PARAMS, "density", config.pixelScatter.density);
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "roundness",
-      config.pixelScatter.roundness,
-    );
-  } else if (v === "fluid-grid") {
-    DialStore.updateValue(PANEL_PARAMS, "gap", config.fluidGrid.gap);
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "flowAmount",
-      config.fluidGrid.flowAmount,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "noiseScale",
-      config.fluidGrid.noiseScale,
-    );
-  } else if (v === "contour-lines" && config.contourLines) {
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "bandCount",
-      config.contourLines.bandCount,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "noiseScale",
-      config.contourLines.noiseScale,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "contrast",
-      config.contourLines.contrast,
-    );
-  } else if (v === "truchet-tiles" && config.truchetTiles) {
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "tileSize",
-      config.truchetTiles.tileSize,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "lineWidth",
-      config.truchetTiles.lineWidth,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "noiseScale",
-      config.truchetTiles.noiseScale,
-    );
-  } else if (v === "particle-flow" && config.particleFlow) {
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "particleCount",
-      config.particleFlow.particleCount,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "fieldScale",
-      config.particleFlow.fieldScale,
-    );
-    DialStore.updateValue(
-      PANEL_PARAMS,
-      "stepLength",
-      config.particleFlow.stepLength,
-    );
-    DialStore.updateValue(PANEL_PARAMS, "trail", config.particleFlow.trail);
+  if (meta.type === "axis" && meta.enums && meta.enums.length > 0) {
+    const current = config[meta.key as keyof AlgoArtConfig] as string;
+    const idx = meta.enums.indexOf(current);
+    const nextIdx = Math.max(0, Math.min(meta.enums.length - 1, idx + (delta > 0 ? 1 : -1)));
+    return { ...config, [meta.key]: meta.enums[nextIdx] as AlgoArtAxis };
   }
+  if (meta.type === "boolean") {
+    return { ...config, [meta.key]: delta > 0 };
+  }
+  return config;
 }
 
-// ─── Assignment thumbnail ─────────────────────────────────────────────────────
+export function ArtPageClient() {
+  const [config, setConfig] = useState<AlgoArtConfig>(() =>
+    clampAlgoArtConfig({ ...DEFAULT_ALGO_ART_CONFIG }),
+  );
+  const [currentPropIndex, setCurrentPropIndex] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      : false,
+  );
 
-function AssignmentThumbnail({ config }: { config: ArtConfig }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const configRef = useRef(config);
+  const pointerRef = useRef({ x: 0.5, y: 0.5 });
+  const frameRef = useRef(0);
+  const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-    const dpr = window.devicePixelRatio || 1;
-    const w = container.clientWidth;
-    const h = container.clientHeight;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    drawFromConfig(ctx, w, h, config, 0);
+    configRef.current = config;
   }, [config]);
 
-  return (
-    <div
-      ref={containerRef}
-      className="border-b border-[var(--scaffold-line)]"
-      style={{ height: 48 }}
-      aria-hidden="true"
-      data-oid="n348cui"
-    >
-      <canvas
-        ref={canvasRef}
-        style={{ width: "100%", height: "100%", display: "block" }}
-        data-oid="ivx9rur"
-      />
-    </div>
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handler = () => setReducedMotion(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const handlePointerMove = (e: PointerEvent) => {
+      pointerRef.current = {
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
+      };
+    };
+    window.addEventListener("pointermove", handlePointerMove);
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, []);
+
+  useEffect(() => {
+    let rafId = 0;
+    const dpr = typeof window === "undefined" ? 1 : window.devicePixelRatio || 1;
+    const velocityMultiplier = reducedMotion ? 0 : 1;
+
+    const tick = () => {
+      frameRef.current += 1;
+      const effectiveConfig: AlgoArtConfig = {
+        ...configRef.current,
+        mouseX: pointerRef.current.x,
+        mouseY: pointerRef.current.y,
+      };
+
+      for (let i = 0; i < CANVAS_COUNT; i++) {
+        const canvas = canvasRefs.current[i];
+        if (!canvas) continue;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) continue;
+
+        const w = LOGICAL_WIDTH * dpr;
+        const h = LOGICAL_HEIGHT * dpr;
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+        }
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        drawAlgoArtFrame({
+          ctx,
+          canvas,
+          logicalWidth: LOGICAL_WIDTH,
+          logicalHeight: LOGICAL_HEIGHT,
+          config: effectiveConfig,
+          frame: frameRef.current,
+          canvasIndex: i,
+          velocityMultiplier,
+        });
+      }
+
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [reducedMotion]);
+
+  const handleWheel = useCallback(
+    (e: React.WheelEvent) => {
+      e.preventDefault();
+      const meta = ALGO_ART_PROPS_META[currentPropIndex];
+      if (!meta) return;
+      const inc = meta.type === "number" && meta.increment ? meta.increment : 0.01;
+      const delta = e.deltaY > 0 ? -inc : inc;
+      setConfig((prev) => incrementProp(prev, meta, delta));
+    },
+    [currentPropIndex],
   );
-}
-
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
-export function ArtPageClient({
-  contentSlugs,
-}: {
-  contentSlugs: ContentSlug[];
-}) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const needsRedraw = useRef(true);
-
-  // ── Hook 1: base controls (always present)
-  const base = useBaseControls();
-
-  // Drive the params panel directly from the current base variant.
-  const activeVariant = base.variant;
-
-  // ── Hook 2: variant-specific params (dynamic — config changes per variant)
-  const params = useDialKit(
-    PANEL_PARAMS,
-    getVariantConfig(activeVariant) as DialConfig,
-  ) as unknown as AnyParams;
 
   useEffect(() => {
-    if (typeof document === "undefined") return;
-
-    document.body.dataset.artLab = "true";
-
-    const positions = new Map<
-      string,
-      { left: number; top: number; userMoved: boolean }
-    >();
-    const attachedWrappers = new WeakSet<HTMLElement>();
-    const dragCleanup = new Map<HTMLElement, () => void>();
-
-    const getPanelEntries = () => {
-      const panelRoot = document.querySelector<HTMLElement>(
-        ".dialkit-root > .dialkit-panel",
-      );
-      if (!panelRoot) return [];
-
-      panelRoot.dataset.artLabPanels = "true";
-
-      return Array.from(
-        panelRoot.querySelectorAll<HTMLElement>(":scope > .dialkit-panel-wrapper"),
-      )
-        .map((wrapper) => {
-          const title = wrapper
-            .querySelector<HTMLElement>(".dialkit-folder-title-root")
-            ?.textContent?.trim();
-
-          if (!title) return null;
-
-          return {
-            title,
-            wrapper,
-            handle: wrapper.querySelector<HTMLElement>(
-              ".dialkit-folder-header-top",
-            ),
-          };
-        })
-        .filter(
-          (
-            entry,
-          ): entry is {
-            title: string;
-            wrapper: HTMLElement;
-            handle: HTMLElement | null;
-          } => entry !== null,
-        )
-        .sort((a, b) => {
-          const order = [PANEL_BASE, PANEL_PARAMS];
-          const aIndex = order.indexOf(a.title);
-          const bIndex = order.indexOf(b.title);
-
-          return (aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex) -
-            (bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex);
-        });
-    };
-
-    const attachDrag = (
-      wrapper: HTMLElement,
-      title: string,
-      handle: HTMLElement | null,
-    ) => {
-      if (!handle || attachedWrappers.has(wrapper)) return;
-
-      attachedWrappers.add(wrapper);
-      wrapper.dataset.artDialPanel = title.toLowerCase().replace(/\s+/g, "-");
-
-      let pointerId: number | null = null;
-      let startX = 0;
-      let startY = 0;
-      let originLeft = 0;
-      let originTop = 0;
-      let dragging = false;
-      let suppressClick = false;
-
-      const stopDrag = () => {
-        if (pointerId !== null) {
-          try {
-            handle.releasePointerCapture(pointerId);
-          } catch {
-            /* ignore */
-          }
-        }
-
-        pointerId = null;
-        dragging = false;
-        wrapper.dataset.dragging = "false";
-      };
-
-      const handlePointerMove = (event: PointerEvent) => {
-        if (pointerId !== event.pointerId) return;
-
-        const deltaX = event.clientX - startX;
-        const deltaY = event.clientY - startY;
-
-        if (!dragging && Math.hypot(deltaX, deltaY) < 4) return;
-
-        if (!dragging) {
-          dragging = true;
-          suppressClick = true;
-          wrapper.dataset.dragging = "true";
-          handle.setPointerCapture(event.pointerId);
-        }
-
-        const next = clampArtPanelPosition(wrapper, {
-          left: originLeft + deltaX,
-          top: originTop + deltaY,
-        });
-
-        positions.set(title, { ...next, userMoved: true });
-        wrapper.style.left = `${next.left}px`;
-        wrapper.style.top = `${next.top}px`;
-        wrapper.style.zIndex = "10020";
-      };
-
-      const handlePointerEnd = (event: PointerEvent) => {
-        if (pointerId !== event.pointerId) return;
-        stopDrag();
-      };
-
-      const handlePointerDown = (event: PointerEvent) => {
-        if (event.button !== 0) return;
-
-        pointerId = event.pointerId;
-        startX = event.clientX;
-        startY = event.clientY;
-
-        const current =
-          positions.get(title) ??
-          clampArtPanelPosition(wrapper, {
-            left: wrapper.getBoundingClientRect().left,
-            top: wrapper.getBoundingClientRect().top,
-          });
-
-        originLeft = current.left;
-        originTop = current.top;
-        wrapper.style.zIndex = "10020";
-      };
-
-      const handleClickCapture = (event: MouseEvent) => {
-        if (!suppressClick) return;
-
-        suppressClick = false;
-        event.preventDefault();
-        event.stopPropagation();
-      };
-
-      handle.addEventListener("pointerdown", handlePointerDown);
-      handle.addEventListener("pointermove", handlePointerMove);
-      handle.addEventListener("pointerup", handlePointerEnd);
-      handle.addEventListener("pointercancel", handlePointerEnd);
-      handle.addEventListener("lostpointercapture", stopDrag);
-      handle.addEventListener("click", handleClickCapture, true);
-
-      dragCleanup.set(wrapper, () => {
-        handle.removeEventListener("pointerdown", handlePointerDown);
-        handle.removeEventListener("pointermove", handlePointerMove);
-        handle.removeEventListener("pointerup", handlePointerEnd);
-        handle.removeEventListener("pointercancel", handlePointerEnd);
-        handle.removeEventListener("lostpointercapture", stopDrag);
-        handle.removeEventListener("click", handleClickCapture, true);
-      });
-    };
-
-    const syncPanels = () => {
-      const entries = getPanelEntries();
-      if (entries.length === 0) return;
-
-      const baseEntry =
-        entries.find((entry) => entry.title === PANEL_BASE) ?? entries[0];
-      const stackLeft = baseEntry.wrapper.getBoundingClientRect().left;
-      let stackTop = baseEntry.wrapper.getBoundingClientRect().top;
-
-      entries.forEach(({ title, wrapper, handle }) => {
-        attachDrag(wrapper, title, handle);
-
-        if (!positions.has(title)) {
-          positions.set(title, {
-            left: stackLeft,
-            top: stackTop,
-            userMoved: false,
-          });
-
-          stackTop += wrapper.offsetHeight + ART_PANEL_GAP;
-        }
-      });
-
-      entries.forEach(({ title, wrapper }) => {
-        const current = positions.get(title);
-        if (!current) return;
-
-        const next = clampArtPanelPosition(wrapper, current);
-        positions.set(title, { ...next, userMoved: current.userMoved });
-
-        wrapper.style.left = `${next.left}px`;
-        wrapper.style.top = `${next.top}px`;
-        wrapper.style.position = "fixed";
-        wrapper.style.margin = "0";
-        wrapper.style.pointerEvents = "auto";
-        wrapper.style.zIndex = current.userMoved ? "10020" : "10010";
-        wrapper.dataset.dragging = wrapper.dataset.dragging ?? "false";
-      });
-    };
-
-    let frameId = 0;
-    const scheduleSync = () => {
-      cancelAnimationFrame(frameId);
-      frameId = requestAnimationFrame(syncPanels);
-    };
-
-    const observer = new MutationObserver(scheduleSync);
-    observer.observe(document.body, { childList: true, subtree: true });
-    window.addEventListener("resize", scheduleSync);
-    scheduleSync();
-
-    return () => {
-      cancelAnimationFrame(frameId);
-      observer.disconnect();
-      window.removeEventListener("resize", scheduleSync);
-      dragCleanup.forEach((cleanup) => cleanup());
-      delete document.body.dataset.artLab;
-    };
-  }, []);
-
-  // Keep a ref to the latest base + params for the RAF loop
-  const stateRef = useRef({ base, params });
-  useEffect(() => {
-    stateRef.current = { base, params };
-    needsRedraw.current = true;
-  }, [base, params]);
-
-  // ── Pending load: apply params after the params panel switches to the right variant
-  const pendingLoadRef = useRef<ArtConfig | null>(null);
-  useEffect(() => {
-    const pendingLoad = pendingLoadRef.current;
-    if (!pendingLoad || activeVariant !== pendingLoad.variant) return;
-    applyParamsToDialKit(pendingLoad);
-    pendingLoadRef.current = null;
-    needsRedraw.current = true;
-  }, [activeVariant]);
-
-  // ── Assignments state
-  const [assignedConfigs, setAssignedConfigs] = useState<
-    Record<string, ArtConfig | null>
-  >(() => {
-    const state: Record<string, ArtConfig | null> = {};
-    contentSlugs.forEach(({ slug }) => {
-      state[slug] = getAssignment(slug);
-    });
-    return state;
-  });
-
-  function handleAssign(slug: string) {
-    const cfg = buildConfig(stateRef.current.base, stateRef.current.params);
-    saveAssignment(slug, cfg);
-    setAssignedConfigs((prev) => ({ ...prev, [slug]: cfg }));
-  }
-
-  function handleRemove(slug: string) {
-    removeAssignment(slug);
-    setAssignedConfigs((prev) => ({ ...prev, [slug]: null }));
-  }
-
-  function handleLoad(config: ArtConfig) {
-    applyBaseToDialKit(config);
-    // Params panel may not match the new variant yet — defer until it does
-    if (activeVariant === config.variant) {
-      applyParamsToDialKit(config);
-      needsRedraw.current = true;
-    } else {
-      pendingLoadRef.current = config;
-    }
-  }
-
-  // ── Canvas RAF loop
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-
-    const dpr = window.devicePixelRatio || 1;
-
-    function resize() {
-      const cw = container!.clientWidth;
-      const ch = container!.clientHeight;
-      canvas!.width = cw * dpr;
-      canvas!.height = ch * dpr;
-      needsRedraw.current = true;
-    }
-
-    const ro = new ResizeObserver(resize);
-    ro.observe(container);
-    resize();
-
-    let frameId: number;
-    let time = 0;
-    let lastTs = 0;
-
-    function draw(ts: number) {
-      const dt = Math.min(ts - lastTs, 100);
-      lastTs = ts;
-
-      const { base: b, params: p } = stateRef.current;
-      const cw = container!.clientWidth;
-      const ch = container!.clientHeight;
-
-      if (b.animation.enabled) {
-        time += (dt / 1000) * b.animation.speed;
-        needsRedraw.current = true;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setCurrentPropIndex((i) => Math.max(0, i - 1));
       }
-
-      if (needsRedraw.current) {
-        needsRedraw.current = false;
-        const ctx = canvas!.getContext("2d");
-        if (ctx) {
-          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-          const fg = b.colors.foreground;
-          const bg = b.colors.background;
-          const count = b.layout.count;
-          const columns = b.layout.columns;
-
-          switch (b.variant) {
-            case "waveform-bars":
-              drawWaveformBars(
-                ctx,
-                cw,
-                ch,
-                fg,
-                bg,
-                {
-                  count,
-                  waveType: p.waveType ?? "sine",
-                  amplitude: p.amplitude ?? 0.75,
-                  frequency: p.frequency ?? 1.5,
-                  phaseOffset: p.phaseOffset ?? 0,
-                  fromBottom: p.fromBottom ?? true,
-                },
-                time,
-              );
-              break;
-            case "grid-blocks":
-              drawGridBlocks(
-                ctx,
-                cw,
-                ch,
-                fg,
-                bg,
-                {
-                  columns,
-                  gap: p.gap ?? 4,
-                  noiseScale: p.noiseScale ?? 1.5,
-                  roundness: p.roundness ?? 0,
-                },
-                time,
-              );
-              break;
-            case "noise-lines":
-              drawNoiseLines(
-                ctx,
-                cw,
-                ch,
-                fg,
-                bg,
-                {
-                  count,
-                  lineWidth: p.lineWidth ?? 2,
-                  displacement: p.displacement ?? 30,
-                  direction: p.direction ?? "horizontal",
-                  noiseScale: p.noiseScale ?? 1.5,
-                },
-                time,
-              );
-              break;
-            case "pixel-scatter":
-              drawPixelScatter(
-                ctx,
-                cw,
-                ch,
-                fg,
-                bg,
-                {
-                  count: count * 20,
-                  size: p.size ?? 6,
-                  density: p.density ?? 0.6,
-                  roundness: p.roundness ?? 0,
-                },
-                time,
-              );
-              break;
-            case "fluid-grid":
-              drawFluidGrid(
-                ctx,
-                cw,
-                ch,
-                fg,
-                bg,
-                {
-                  columns,
-                  gap: p.gap ?? 3,
-                  flowAmount: p.flowAmount ?? 20,
-                  noiseScale: p.noiseScale ?? 1,
-                },
-                time,
-              );
-              break;
-            case "contour-lines":
-              drawContourLines(
-                ctx,
-                cw,
-                ch,
-                fg,
-                bg,
-                {
-                  bandCount: p.bandCount ?? 8,
-                  noiseScale: p.noiseScale ?? 1,
-                  contrast: p.contrast ?? 0.5,
-                },
-                time,
-              );
-              break;
-            case "truchet-tiles":
-              drawTruchetTiles(
-                ctx,
-                cw,
-                ch,
-                fg,
-                bg,
-                {
-                  tileSize: p.tileSize ?? 40,
-                  lineWidth: p.lineWidth ?? 2,
-                  noiseScale: p.noiseScale ?? 1,
-                },
-                time,
-              );
-              break;
-            case "particle-flow":
-              drawParticleFlow(
-                ctx,
-                cw,
-                ch,
-                fg,
-                bg,
-                {
-                  particleCount: p.particleCount ?? 200,
-                  fieldScale: p.fieldScale ?? 1,
-                  stepLength: p.stepLength ?? 3,
-                  trail: p.trail ?? 30,
-                },
-                time,
-              );
-              break;
-          }
-        }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setCurrentPropIndex((i) =>
+          Math.min(ALGO_ART_PROPS_META.length - 1, i + 1),
+        );
       }
-      frameId = requestAnimationFrame(draw);
-    }
-
-    frameId = requestAnimationFrame(draw);
-    return () => {
-      cancelAnimationFrame(frameId);
-      ro.disconnect();
+      if (e.key === "0") {
+        e.preventDefault();
+        const meta = ALGO_ART_PROPS_META[currentPropIndex];
+        if (!meta) return;
+        setConfig((prev) => ({
+          ...prev,
+          [meta.key]: meta.default,
+        }));
+      }
     };
-  }, []);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentPropIndex]);
 
-  // ── Export: merge committed + localStorage
-  const [exportSnippet, setExportSnippet] = useState<string | null>(null);
-
-  async function buildExport() {
-    const committed = await fetch("/api/art-assignments")
-      .then((r) => r.json() as Promise<Record<string, ArtConfig>>)
-      .catch(() => ({}) as Record<string, ArtConfig>);
-
-    const merged: Record<string, ArtConfig> = { ...committed };
-    contentSlugs.forEach(({ slug }) => {
-      const cfg = getAssignment(slug);
-      if (cfg) merged[slug] = cfg;
-    });
-
-    if (Object.keys(merged).length === 0) {
-      setExportSnippet("// No assignments saved yet.");
-      return;
-    }
-    const entries = Object.entries(merged).map(
-      ([slug, cfg]) =>
-        `  "${slug}": ${JSON.stringify(cfg, null, 4).replace(/\n/g, "\n  ")},`,
-    );
-    setExportSnippet(
-      `export const artAssignments = {\n${entries.join("\n")}\n};`,
-    );
-  }
-
-  function copyExport() {
-    if (exportSnippet) navigator.clipboard.writeText(exportSnippet);
-  }
-
-  const fgOklch = hexToOklch(base.colors.foreground);
-  const bgOklch = hexToOklch(base.colors.background);
+  const propList = useMemo(() => ALGO_ART_PROPS_META, []);
 
   return (
-    <div
-      className="flex flex-col gap-5 pb-12 pt-2 [font-family:var(--font-geist-sans)]"
-      data-oid="__lv3k6"
-    >
-      <header className="space-y-1" data-oid="0kc3oq6">
-        <p
-          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="fyqjf9-"
-        >
-          ART / PATTERN LAB
-        </p>
-        <h1
-          className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]"
-          data-oid="3x0ibr9"
-        >
-          Pattern lab
-        </h1>
-        <p
-          className="text-[14px] leading-relaxed text-[var(--scaffold-ruler)]"
-          data-oid="ulfyzm7"
-        >
-          Pick a variant — the Parameters panel updates to show only its
-          controls. OKLCH values update live as you pick colors.
-        </p>
-      </header>
-
-      {/* Main canvas */}
-      <div
-        ref={containerRef}
-        className="overflow-hidden border border-[var(--scaffold-line)]"
-        style={{ height: 420 }}
-        aria-hidden="true"
-        data-oid="k4gkl0d"
+    <div className={styles.root} data-oid="art-lab-root">
+      <aside
+        className={styles.props}
+        onWheel={handleWheel}
+        role="group"
+        aria-label="Art parameters"
       >
-        <canvas
-          ref={canvasRef}
-          style={{ width: "100%", height: "100%", display: "block" }}
-          data-oid="x28c7ev"
-        />
-      </div>
-
-      {/* Color readout */}
-      <div
-        className="border border-[var(--scaffold-line)] p-3 space-y-2.5"
-        data-oid="krg0iwk"
-      >
-        <p
-          className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="5i9hlxx"
-        >
-          COLOR — OKLCH
-        </p>
-        {(
-          [
-            { label: "FG", hex: base.colors.foreground, oklch: fgOklch },
-            { label: "BG", hex: base.colors.background, oklch: bgOklch },
-          ] as const
-        ).map(({ label, hex, oklch }) => (
-          <div
-            key={label}
-            className="flex items-center gap-3"
-            data-oid="s985m7a"
-          >
+        {propList.map((meta, index) => {
+          const value = getPropValue(config, meta.key);
+          const isCurrent = index === currentPropIndex;
+          return (
             <div
-              className="h-5 w-5 shrink-0 border border-[var(--scaffold-line)]"
-              style={{ backgroundColor: hex }}
-              data-oid="0dzop0j"
-            />
-
-            <div
-              className="flex min-w-0 flex-wrap items-baseline gap-x-4 gap-y-0.5"
-              data-oid="08dg3jo"
+              key={meta.key}
+              className={isCurrent ? `${styles.prop} ${styles.propCurrent}` : styles.prop}
             >
-              <span
-                className="font-mono text-[11px] font-medium text-[var(--scaffold-toggle-text-active)]"
-                data-oid="7nxc7hc"
-              >
-                {label}
-              </span>
-              <span
-                className="font-mono text-[11px] text-[var(--scaffold-ruler)]"
-                data-oid="5tejhy5"
-              >
-                {hex}
-              </span>
-              <span
-                className="select-all font-mono text-[11px] text-[var(--scaffold-toggle-text-active)]"
-                data-oid="n15ye1j"
-              >
-                {oklch}
+              <span className={styles.propLabel}>{meta.label}</span>
+              <span className={styles.propValue}>
+                {typeof value === "boolean" ? (value ? "on" : "off") : String(value)}
               </span>
             </div>
+          );
+        })}
+      </aside>
+
+      <div className={styles.canvases}>
+        {Array.from({ length: CANVAS_COUNT }, (_, i) => (
+          <div key={i} className={styles.canvasContainer}>
+            <div
+              className={styles.grid}
+              style={{
+                backgroundImage: "url(/art/grid.svg)",
+                backgroundSize: "contain",
+              }}
+              aria-hidden="true"
+            />
+            <canvas
+              ref={(el) => {
+                canvasRefs.current[i] = el;
+              }}
+              className={styles.canvas}
+              width={LOGICAL_WIDTH}
+              height={LOGICAL_HEIGHT}
+              aria-hidden="true"
+            />
           </div>
         ))}
       </div>
 
-      {/* Assignment panel */}
-      <div className="space-y-3" data-oid=".q02_8q">
-        <div className="flex items-baseline gap-4" data-oid="zk8fj8w">
-          <p
-            className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-            data-oid="ecr-7fb"
-          >
-            ASSIGN TO CONTENT
-          </p>
-          <p
-            className="text-[12px] text-[var(--scaffold-ruler)]"
-            data-oid="oroo:ov"
-          >
-            Assign the current design to an article or project. Load resumes
-            editing a saved design.
-          </p>
-        </div>
-
-        <div
-          className="grid grid-cols-1 gap-2 sm:grid-cols-2"
-          data-oid="liv02p9"
-        >
-          {contentSlugs.map(({ slug, type }) => {
-            const cfg = assignedConfigs[slug] ?? null;
-            return (
-              <div
-                key={slug}
-                className="overflow-hidden border border-[var(--scaffold-line)]"
-                data-oid="pf4u9v9"
-              >
-                {cfg && <AssignmentThumbnail config={cfg} data-oid="y3f9e2t" />}
-
-                <div
-                  className="flex items-center justify-between gap-3 px-3 py-2.5"
-                  data-oid="yode6hq"
-                >
-                  <div className="min-w-0 space-y-0.5" data-oid="xatl-5f">
-                    <p
-                      className="truncate text-[13px] text-[var(--scaffold-toggle-text-active)]"
-                      data-oid="airqrdm"
-                    >
-                      {slug}
-                    </p>
-                    <div className="flex items-center gap-2" data-oid="45fj22m">
-                      <span
-                        className="text-[9px] tracking-[0.14em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-                        data-oid="n6xwx1-"
-                      >
-                        {type.toUpperCase()}
-                      </span>
-                      {cfg && (
-                        <span
-                          className="text-[9px] tracking-[0.14em] text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)]"
-                          data-oid="dlq4kig"
-                        >
-                          ✦ ASSIGNED
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div
-                    className="flex shrink-0 items-center gap-2"
-                    data-oid="6hp:th8"
-                  >
-                    {cfg && (
-                      <>
-                        <button
-                          onClick={() => handleLoad(cfg)}
-                          className="text-[11px] text-[var(--scaffold-ruler)] underline hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
-                          data-oid="ig41e3b"
-                        >
-                          Load
-                        </button>
-                        <button
-                          onClick={() => handleRemove(slug)}
-                          className="text-[11px] text-[var(--scaffold-ruler)] underline hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
-                          data-oid="lhi3wc:"
-                        >
-                          Remove
-                        </button>
-                      </>
-                    )}
-                    <button
-                      onClick={() => handleAssign(slug)}
-                      className="border border-[var(--scaffold-line)] px-3 py-1 text-[11px] tracking-[0.08em] text-[var(--scaffold-toggle-text-active)] hover:border-[var(--scaffold-ruler)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
-                      data-oid="zchhgoe"
-                    >
-                      {cfg ? "Update" : "Assign"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Export panel */}
-      <div className="space-y-3" data-oid="_d4tf4e">
-        <div className="flex items-baseline gap-4" data-oid="xxk-5p-">
-          <p
-            className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-            data-oid="74kk31:"
-          >
-            EXPORT CONFIG
-          </p>
-          <p
-            className="text-[12px] text-[var(--scaffold-ruler)]"
-            data-oid="34_p9vh"
-          >
-            Merges committed and local assignments. Paste into{" "}
-            <code className="font-mono text-[11px]" data-oid="vr471br">
-              src/config/art-assignments.ts
-            </code>
-            .
-          </p>
-        </div>
-
-        <div className="flex gap-2" data-oid="iwa0_yr">
-          <button
-            onClick={buildExport}
-            className="border border-[var(--scaffold-line)] px-3 py-1.5 text-[11px] tracking-[0.08em] text-[var(--scaffold-toggle-text-active)] hover:border-[var(--scaffold-ruler)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
-            data-oid="0ufv1q2"
-          >
-            Generate
-          </button>
-          {exportSnippet && (
-            <button
-              onClick={copyExport}
-              className="border border-[var(--scaffold-line)] px-3 py-1.5 text-[11px] tracking-[0.08em] text-[var(--scaffold-toggle-text-active)] hover:border-[var(--scaffold-ruler)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
-              data-oid="2lztxye"
-            >
-              Copy
-            </button>
-          )}
-        </div>
-
-        {exportSnippet && (
-          <textarea
-            readOnly
-            value={exportSnippet}
-            onClick={(e) => (e.target as HTMLTextAreaElement).select()}
-            rows={Math.min(exportSnippet.split("\n").length + 1, 20)}
-            className="w-full resize-y border border-[var(--scaffold-line)] bg-[var(--scaffold-surface)] p-3 font-mono text-[11px] leading-relaxed text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
-            data-oid="9w8v33-"
-          />
-        )}
-      </div>
+      <p className={styles.hint}>
+        Scroll on the panel to adjust the selected parameter. Arrows: change
+        parameter. 0: reset to default.
+      </p>
     </div>
   );
 }

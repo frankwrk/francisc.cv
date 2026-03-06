@@ -52,11 +52,12 @@ export default async function WorkDetailPage({ params }: Props) {
         data-oid="kmxd7:x"
       >
         {/* Background art canvas */}
-        <div className="absolute inset-0" aria-hidden="true" data-oid="smd8p.j">
+        <div className="absolute inset-0" data-oid="smd8p.j">
           <ArtCanvas
             slug={slug}
             height={280}
             serverConfig={artAssignments[slug] ?? null}
+            showEditorLink
             data-oid="l8yjw-w"
           />
         </div>
@@ -74,7 +75,7 @@ export default async function WorkDetailPage({ params }: Props) {
 
         {/* Text content pinned to the bottom-left */}
         <div
-          className="relative z-10 flex flex-col justify-end px-5 pb-5 pt-32 space-y-2"
+          className="pointer-events-none relative z-10 flex flex-col justify-end px-5 pb-5 pt-32 space-y-2"
           style={{ minHeight: 280 }}
           data-oid="xxsedc_"
         >

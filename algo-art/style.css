@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  background: #efefef;
+  font-family: monospace;
+  position: fixed;
+}
+
+.isTouchDevice .message {
+  font-size: calc(20px + 2vw);
+}
+
+.message {
+  position: fixed;
+  z-index: 3;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  padding: 14px 22px;
+  background-color: #ffdddd99;
+  opacity: 0;
+  transition: opacity 300ms;
+  border-radius: 2px;
+}
+
+.isMessage .message {
+  opacity: 1;
+}
+
+.pointer {
+  pointer-events: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background: pink;
+  border-radius: 50%;
+  transform: translateX(-30px);
+}
+.props {
+  pointer-events: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  font-family: monospace;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  backdrop-filter: blur(3px);
+  padding: 8px;
+}
+.prop {
+  display: flex;
+  justify-content: space-between;
+}
+.prop.isCurrent {
+  background: pink;
+}
+.prop.isActive {
+  background: highlight;
+}
+hr {
+  width: 100%;
+}
+canvas {
+  margin: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.canvases {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  flex-wrap: wrap;
+}
+
+.canvasContainer {
+  margin: 0 auto;
+  width: 100%;
+  height: 63vw;
+  position: relative;
+  outline: 1px solid #ff000022;
+}
+
+@media (min-width: 820px) {
+  .canvasContainer {
+    margin: 0 auto;
+    width: 19%;
+    height: 15.78vw;
+    position: relative;
+  }
+}
+
+.grid {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+}
+
+.icon {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  width: 85px;
+  height: 42px;
+}
+.ellipseCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 42px;
+  height: 42px;
+  background: transparent;
+}

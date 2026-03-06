@@ -18,7 +18,6 @@ export type ScaffoldPalette = {
 export type SiteScaffoldConfig = {
   canvasMaxWidth: number;
   pageTopPadding: number;
-  pageBottomPadding: number;
   sideRailWidth: number;
   borderWidth: number;
   cornerMarkers: {
@@ -27,8 +26,10 @@ export type SiteScaffoldConfig = {
     borderWidth: number;
   };
   fullBleedSectionDividerWidth: number;
-  /** Horizontal/vertical lengths are computed from viewport in the layout; no hardcoded values. */
-  edgeExtensions: Record<string, never>;
+  edgeExtensions: {
+    horizontalLength: string;
+    verticalLength: string;
+  };
   palette: {
     light: ScaffoldPalette;
     dark: ScaffoldPalette;
@@ -47,7 +48,6 @@ export type SiteScaffoldConfig = {
 export const siteScaffoldConfig: SiteScaffoldConfig = {
   canvasMaxWidth: 980,
   pageTopPadding: 52,
-  pageBottomPadding: 52,
   sideRailWidth: 40,
   borderWidth: 1,
   cornerMarkers: {
@@ -56,27 +56,30 @@ export const siteScaffoldConfig: SiteScaffoldConfig = {
     borderWidth: 1,
   },
   fullBleedSectionDividerWidth: 1,
-  edgeExtensions: {},
+  edgeExtensions: {
+    horizontalLength: "50vw",
+    verticalLength: "42vh",
+  },
   palette: {
     light: {
-      background: "oklch(0.9851 0 0)",
-      surface: "oklch(0.9851 0 0)",
+      background: "oklch(97.6139% 0 89.88)",
+      surface: "oklch(100% 0 89.88)",
       line: "oklch(91.279% 0 89.88)",
-      ruler: "oklch(55% 0 89.88)", // was 84.83% → 4.86:1 vs white ✓ WCAG AA
+      ruler: "oklch(55% 0 89.88)",          // was 84.83% → 4.86:1 vs white ✓ WCAG AA
       toggleTrack: "oklch(97.6139% 0 89.88)",
       toggleThumb: "oklch(95.3435% 0 89.88)",
-      toggleTextActive: "oklch(42% 0 89.88)", // was 55.34% → 8.46:1 vs white ✓
-      toggleTextInactive: "oklch(55% 0 89.88)", // was 71.35% → 4.86:1 vs white ✓
+      toggleTextActive: "oklch(42% 0 89.88)",      // was 55.34% → 8.46:1 vs white ✓
+      toggleTextInactive: "oklch(55% 0 89.88)",    // was 71.35% → 4.86:1 vs white ✓
     },
     dark: {
-      background: "oklch(0.1448 0 0)",
-      surface: "oklch(0.1448 0 0)",
+      background: "oklch(20.4627% 0 89.88)",
+      surface: "oklch(26.0325% 0 89.88)",
       line: "oklch(30.3278% 0 89.88)",
-      ruler: "oklch(65% 0 89.88)", // was 51.61% → 4.94:1 vs dark surface ✓ WCAG AA
+      ruler: "oklch(65% 0 89.88)",          // was 51.61% → 4.94:1 vs dark surface ✓ WCAG AA
       toggleTrack: "oklch(20.4627% 0 89.88)",
       toggleThumb: "oklch(26.0325% 0 89.88)",
       toggleTextActive: "oklch(86.2348% 0 89.88)",
-      toggleTextInactive: "oklch(65% 0 89.88)", // was 61.05% → 4.94:1 vs dark surface ✓
+      toggleTextInactive: "oklch(65% 0 89.88)",    // was 61.05% → 4.94:1 vs dark surface ✓
     },
   },
   rulerTopValues: [0, 120, 240, 360, 480, 600, 720, 840, 960],

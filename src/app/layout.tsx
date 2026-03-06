@@ -9,7 +9,7 @@ import {
   GeistPixelTriangle,
   GeistPixelLine,
 } from "geist/font/pixel";
-import { SiteScaffold } from "@/components/layout/site-scaffold";
+import { AppShell } from "@/components/layout/app-shell";
 import { MachineVersionContent } from "@/components/machine/machine-version-content";
 import {
   createPersonSchema,
@@ -17,10 +17,8 @@ import {
 } from "@/config/site-home";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteUrl } from "@/config/site-url";
-import { DialRoot } from "dialkit";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import "dialkit/styles.css";
 import "./globals.css";
 const siteName = "francisc.cv";
 const siteDescription = homepageIdentitySupport.description;
@@ -100,13 +98,12 @@ export default function RootLayout({
           disableTransitionOnChange
           data-oid="x08uk99"
         >
-          <SiteScaffold
+          <AppShell
             machineContent={<MachineVersionContent data-oid="nrgiw42" />}
             data-oid="dd_hx.4"
           >
             {children}
-          </SiteScaffold>
-          <DialRoot data-oid="ckr32k2" />
+          </AppShell>
         </ThemeProvider>
         <Analytics data-oid=".vpe1uj" />
         <SpeedInsights data-oid="3f2dzp:" />

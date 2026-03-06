@@ -98,7 +98,7 @@ Customize scaffold behavior in `site-scaffold.ts`:
 - Border and divider color/thickness
 - Corner marker circles (`cornerMarkers.size`, `cornerMarkers.offset`, `cornerMarkers.borderWidth`)
 - Full-bleed major section divider thickness
-- Bleed section divider (edge extensions): horizontal length reaches viewport edges via `calc((100vw - 100%) / 2)`; vertical top uses `pageTopPadding`, bottom uses `pageBottomPadding` or extends to viewport bottom when canvas is shorter (`max(pageBottomPadding, calc(100dvh - 100%))`)
+- Corner border extension fade lengths (`edgeExtensions.horizontalLength`, `edgeExtensions.verticalLength`)
 - Canvas width and side ruler spacing
 - Top ruler numbers rendered outside the top bar, with downward ticks
 - Vertical ruler range/step + unit mapping (`rulerSide.start/end/step/unitPx`; default major marks at `50`-unit increments with pixel-based spacing and opacity fade toward bottom)
@@ -122,12 +122,16 @@ Single source of truth policy:
 - Production signature source is `public/images/signature.svg`; geometry in `site-signature.ts` should match that file.
 - Place signature as supporting decoration only (default usage: right-aligned under intro copy).
 
-### Art assignment conventions
+### Art Lab (`/art`)
 
-- `src/config/art-assignments.ts` exports a dynamic slug map (`Record<string, ArtConfig>`) so routes like `/work/[slug]` and `/thinking/[slug]` can index art configs without TypeScript build errors.
-- In art rendering code, keep React hooks lint-clean:
-  - Do not mutate refs during render; sync render-derived values into refs inside effects.
-  - Prefer derived config values (`useMemo`) over `setState` in effects for prop/localStorage synchronization.
+- The Art Lab is a standalone route that bypasses the scaffold. It renders a 15-canvas grid (squares, circles, lines) driven by one shared config.
+- Config and metadata: `src/lib/art-algo-config.ts`. Drawing: `src/lib/art-algo-draw.ts`. Page client: `src/app/art/art-page-client.tsx`.
+- The lab has no URL config or content slug; it is self-contained. Hero art on work/thinking pages uses `src/config/art-assignments.ts` and `ArtCanvas` separately.
+
+### Art assignment conventions (work/thinking hero art)
+
+- `src/config/art-assignments.ts` exports a slug map (`Record<string, ArtConfig>`) used by `/work` and `/thinking` (list and slug pages) to pass `serverConfig` into `ArtCanvas`.
+- In art-related React code, keep hooks lint-clean: do not mutate refs during render (sync in effects); prefer derived config (`useMemo`) over `setState` in effects for prop/localStorage sync.
 
 ### Theme conventions
 

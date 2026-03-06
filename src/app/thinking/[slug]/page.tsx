@@ -76,15 +76,12 @@ export default async function ThinkingDetailPage({ params }: Props) {
           data-oid="bsa9zad"
         >
           {/* Background art canvas */}
-          <div
-            className="absolute inset-0"
-            aria-hidden="true"
-            data-oid="ivtv9fl"
-          >
+          <div className="absolute inset-0" data-oid="ivtv9fl">
             <ArtCanvas
               slug={slug}
               height={280}
               serverConfig={artAssignments[slug] ?? null}
+              showEditorLink
               data-oid="un6n2a4"
             />
           </div>
@@ -102,7 +99,7 @@ export default async function ThinkingDetailPage({ params }: Props) {
 
           {/* Text content pinned to the bottom-left */}
           <div
-            className="relative z-10 flex flex-col justify-end px-5 pb-5 pt-32 space-y-2"
+            className="pointer-events-none relative z-10 flex flex-col justify-end px-5 pb-5 pt-32 space-y-2"
             style={{ minHeight: 280 }}
             data-oid="-7jn2bv"
           >

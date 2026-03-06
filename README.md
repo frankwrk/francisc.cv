@@ -14,9 +14,13 @@ This creates a clearer scan path without discarding the existing tone or first-p
 
 ## Art Lab
 
-The `/art` page now takes over DialKit's default fixed panel layout only while the art lab is mounted. The `Art Generator` panel is initialized above the `Parameters` panel, and both panels can be dragged independently by their headers with explicit `grab` and `grabbing` cursors. This is implemented as an art-page DOM takeover instead of a DialKit fork so the rest of the site keeps the stock portal behavior.
+The `/art` page is a standalone tool route: it keeps the site theme tokens but bypasses the regular scaffold and navigation so the page behaves as a full-bleed instrument surface.
 
-The `contour-lines` renderer also now writes at backing-store resolution before calling `putImageData()`. That avoids the old device-pixel-ratio mismatch where the topographic texture rendered as a small block in the canvas corner and leaked over the previous frame.
+The route renders a fifteen-canvas preview grid driven by a single shared instrument model. The grid is organized as three rows of five: squares (indices 0–4), circles (5–9), and lines (10–14), with element count stepping up from left to right so comparisons stay within one shape family. The renderer uses a restrained sine/cosine core and explicit shape branches; the square row is closest to the ring-based reference look, while the circle and line rows stay simpler.
+
+Control is a single parameters panel on the left: each row shows a prop label and its current value. One prop is selected at a time. Scroll over the panel to adjust the selected parameter; arrow keys change which parameter is selected; press `0` to reset the selected parameter to its default. Config and drawing live in `src/lib/art-algo-config.ts` and `src/lib/art-algo-draw.ts`. The lab does not use URL state or article/work assignments; it is self-contained.
+
+Hero art on work and thinking pages is still supplied by `src/config/art-assignments.ts` and rendered via `ArtCanvas`; that pipeline is separate from the Art Lab.
 
 ## Human / Machine Mode
 
@@ -52,6 +56,8 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+The Next config now pins Turbopack and output tracing to this repository root. That prevents local parent-folder lockfiles from confusing Next's workspace detection and breaking `bun dev` module resolution.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

@@ -1,16 +1,16 @@
-import { getAllProjects, getAllArticles } from "@/lib/content";
+import type { Metadata } from "next";
 import { ArtPageClient } from "./art-page-client";
 
-export default async function ArtPage() {
-  const [projects, articles] = await Promise.all([
-    getAllProjects(),
-    getAllArticles(),
-  ]);
+export const metadata: Metadata = {
+  title: "Art Lab",
+  description:
+    "Standalone instrument lab for generating and tuning article art assignments.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
-  const contentSlugs = [
-    ...projects.map((p) => ({ slug: p.slug, type: "work" as const })),
-    ...articles.map((a) => ({ slug: a.slug, type: "thinking" as const })),
-  ];
-
-  return <ArtPageClient contentSlugs={contentSlugs} data-oid="d6a2gv7" />;
+export default function ArtPage() {
+  return <ArtPageClient />;
 }
