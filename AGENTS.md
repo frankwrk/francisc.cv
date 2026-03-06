@@ -98,7 +98,7 @@ Customize scaffold behavior in `site-scaffold.ts`:
 - Border and divider color/thickness
 - Corner marker circles (`cornerMarkers.size`, `cornerMarkers.offset`, `cornerMarkers.borderWidth`)
 - Full-bleed major section divider thickness
-- Corner border extension fade lengths (`edgeExtensions.horizontalLength`, `edgeExtensions.verticalLength`)
+- Bleed section divider (edge extensions): horizontal length reaches viewport edges via `calc((100vw - 100%) / 2)`; vertical top uses `pageTopPadding`, bottom uses `pageBottomPadding` or extends to viewport bottom when canvas is shorter (`max(pageBottomPadding, calc(100dvh - 100%))`)
 - Canvas width and side ruler spacing
 - Top ruler numbers rendered outside the top bar, with downward ticks
 - Vertical ruler range/step + unit mapping (`rulerSide.start/end/step/unitPx`; default major marks at `50`-unit increments with pixel-based spacing and opacity fade toward bottom)

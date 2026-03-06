@@ -156,8 +156,12 @@ function TopRuler() {
   );
 }
 
+/** Horizontal extension reaches viewport edge; vertical top uses pageTopPadding, bottom uses pageBottomPadding or extends to viewport bottom when canvas is shorter. */
 function BorderExtensions() {
-  const { horizontalLength, verticalLength } = siteScaffoldConfig.edgeExtensions;
+  const { pageTopPadding, pageBottomPadding } = siteScaffoldConfig;
+  const horizontalLength = "calc((100vw - 100%) / 2)";
+  const verticalLengthTop = `${pageTopPadding}px`;
+  const verticalLengthBottom = `max(${pageBottomPadding}px, calc(100dvh - 100%))`;
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 z-10 hidden md:block">
@@ -193,28 +197,28 @@ function BorderExtensions() {
       <div
         className="absolute left-0 top-0 w-px -translate-y-full"
         style={{
-          height: verticalLength,
+          height: verticalLengthTop,
           background: "linear-gradient(to top, var(--scaffold-line), transparent)",
         }}
       />
       <div
         className="absolute right-0 top-0 w-px -translate-y-full"
         style={{
-          height: verticalLength,
+          height: verticalLengthTop,
           background: "linear-gradient(to top, var(--scaffold-line), transparent)",
         }}
       />
       <div
         className="absolute bottom-0 left-0 w-px translate-y-full"
         style={{
-          height: verticalLength,
+          height: verticalLengthBottom,
           background: "linear-gradient(to bottom, var(--scaffold-line), transparent)",
         }}
       />
       <div
         className="absolute bottom-0 right-0 w-px translate-y-full"
         style={{
-          height: verticalLength,
+          height: verticalLengthBottom,
           background: "linear-gradient(to bottom, var(--scaffold-line), transparent)",
         }}
       />

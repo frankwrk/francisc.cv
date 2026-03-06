@@ -18,6 +18,7 @@ export type ScaffoldPalette = {
 export type SiteScaffoldConfig = {
   canvasMaxWidth: number;
   pageTopPadding: number;
+  pageBottomPadding: number;
   sideRailWidth: number;
   borderWidth: number;
   cornerMarkers: {
@@ -26,10 +27,8 @@ export type SiteScaffoldConfig = {
     borderWidth: number;
   };
   fullBleedSectionDividerWidth: number;
-  edgeExtensions: {
-    horizontalLength: string;
-    verticalLength: string;
-  };
+  /** Horizontal/vertical lengths are computed from viewport in the layout; no hardcoded values. */
+  edgeExtensions: Record<string, never>;
   palette: {
     light: ScaffoldPalette;
     dark: ScaffoldPalette;
@@ -48,6 +47,7 @@ export type SiteScaffoldConfig = {
 export const siteScaffoldConfig: SiteScaffoldConfig = {
   canvasMaxWidth: 980,
   pageTopPadding: 52,
+  pageBottomPadding: 52,
   sideRailWidth: 40,
   borderWidth: 1,
   cornerMarkers: {
@@ -56,10 +56,7 @@ export const siteScaffoldConfig: SiteScaffoldConfig = {
     borderWidth: 1,
   },
   fullBleedSectionDividerWidth: 1,
-  edgeExtensions: {
-    horizontalLength: "50vw",
-    verticalLength: "42vh",
-  },
+  edgeExtensions: {},
   palette: {
     light: {
       background: "oklch(97.6139% 0 89.88)",
