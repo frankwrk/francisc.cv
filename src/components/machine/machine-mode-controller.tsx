@@ -8,6 +8,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
   type ReactNode,
 } from "react";
 import Link from "next/link";
@@ -16,6 +17,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Cpu, UserRound } from "lucide-react";
 import { useWebHaptics } from "web-haptics/react";
 import * as ButtonGroup from "@/components/ui/button-group";
+import { siteScaffoldConfig } from "@/config/site-scaffold";
 import { EncryptedText } from "@/components/machine/encrypted-text";
 import { cn } from "@/utils/cn";
 
@@ -28,6 +30,37 @@ type MachineModeContextValue = {
 };
 
 const MachineModeContext = createContext<MachineModeContextValue | null>(null);
+
+type MachineThemeCssVars = CSSProperties & {
+  "--scaffold-bg": string;
+  "--scaffold-surface": string;
+  "--scaffold-line": string;
+  "--scaffold-ruler": string;
+  "--scaffold-toggle-text-active": string;
+};
+
+function getMachineThemeTokens(resolvedTheme: string | undefined) {
+  const isDark = resolvedTheme === "dark";
+  const palette = isDark
+    ? siteScaffoldConfig.palette.dark
+    : siteScaffoldConfig.palette.light;
+  const backgroundColor = isDark ? "#0A0A0A" : "#FAFAFA";
+  const overlayBackgroundColor = isDark
+    ? "rgba(10, 10, 10, 0.92)"
+    : "rgba(250, 250, 250, 0.92)";
+
+  return {
+    backgroundColor,
+    overlayBackgroundColor,
+    cssVars: {
+      "--scaffold-bg": backgroundColor,
+      "--scaffold-surface": backgroundColor,
+      "--scaffold-line": palette.line,
+      "--scaffold-ruler": palette.ruler,
+      "--scaffold-toggle-text-active": palette.toggleTextActive,
+    } satisfies MachineThemeCssVars,
+  };
+}
 
 function MachineVersionToggle() {
   const ctx = useMachineMode();
@@ -77,6 +110,7 @@ function MachineLoadingOverlay({
 }) {
   const prefersReducedMotion = useReducedMotion();
   const { resolvedTheme } = useTheme();
+  const tokens = getMachineThemeTokens(resolvedTheme);
   const label =
     loadingTarget === "machine"
       ? "Loading Machine version"
@@ -96,10 +130,8 @@ function MachineLoadingOverlay({
             ease: "easeOut",
           }}
           style={{
-            backgroundColor:
-              resolvedTheme === "dark"
-                ? "rgba(10, 10, 10, 0.92)"
-                : "rgba(250, 250, 250, 0.92)",
+            ...tokens.cssVars,
+            backgroundColor: tokens.overlayBackgroundColor,
           }}
           data-oid="8h.lvd-"
         >
@@ -117,8 +149,7 @@ function MachineLoadingOverlay({
 function MachineSurface({ children }: { children: ReactNode }) {
   const prefersReducedMotion = useReducedMotion();
   const { resolvedTheme } = useTheme();
-  const machineSurfaceBackground =
-    resolvedTheme === "dark" ? "#0A0A0A" : "#FAFAFA";
+  const tokens = getMachineThemeTokens(resolvedTheme);
 
   return (
     <motion.div
@@ -127,12 +158,15 @@ function MachineSurface({ children }: { children: ReactNode }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: prefersReducedMotion ? 0 : 8 }}
       transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
-      style={{ backgroundColor: machineSurfaceBackground }}
+      style={{
+        ...tokens.cssVars,
+        backgroundColor: tokens.backgroundColor,
+      }}
       data-oid="7h8m6p5"
     >
       <div
         className="mx-auto max-w-[980px] border border-[var(--scaffold-line)] p-5 md:p-8"
-        style={{ backgroundColor: machineSurfaceBackground }}
+        style={{ backgroundColor: tokens.backgroundColor }}
         data-oid="4j4wa:j"
       >
         {children}
