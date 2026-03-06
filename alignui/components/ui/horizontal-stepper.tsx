@@ -18,15 +18,14 @@ function HorizontalStepperRoot({
   children,
   className,
   ...rest
-}: React.HTMLAttributes<HTMLDivElement> & {
-  asChild?: boolean;
-}) {
+}: React.HTMLAttributes<HTMLDivElement> & { asChild?: boolean }) {
   const Component = asChild ? Slot : 'div';
 
   return (
     <Component
       className={cn('flex flex-wrap justify-center gap-4', className)}
       {...rest}
+      data-oid='2foqb6u'
     >
       {children}
     </Component>
@@ -45,6 +44,7 @@ function HorizontalStepperSeparatorIcon<T extends React.ElementType>({
     <Component
       className={cn('size-5 shrink-0 text-text-soft-400', className)}
       {...rest}
+      data-oid='d6quhny'
     />
   );
 }
@@ -56,6 +56,7 @@ const horizontalStepperItemVariants = tv({
       // base
       'flex items-center gap-2 text-paragraph-sm',
     ],
+
     indicator: [
       // base
       'flex size-5 shrink-0 items-center justify-center rounded-full text-label-xs',
@@ -118,6 +119,7 @@ const HorizontalStepperItem = React.forwardRef<
       ref={forwardedRef}
       className={root({ class: className })}
       {...rest}
+      data-oid='s1bej77'
     >
       {extendedChildren}
     </Component>
@@ -135,11 +137,21 @@ function HorizontalStepperItemIndicator({
 
   if (state === 'completed') {
     return (
-      <div className={indicator({ class: className })} {...rest}>
-        <svg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' fill='none'>
+      <div
+        className={indicator({ class: className })}
+        {...rest}
+        data-oid='9liamg5'
+      >
+        <svg
+          viewBox='0 0 20 20'
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          data-oid='2o1_b.e'
+        >
           <path
             fill='currentColor'
             d='M15.1 7.453 8.726 13.82 4.9 10l1.275-1.274 2.55 2.548 5.1-5.094L15.1 7.453Z'
+            data-oid='003azha'
           />
         </svg>
       </div>
@@ -147,7 +159,11 @@ function HorizontalStepperItemIndicator({
   }
 
   return (
-    <div className={indicator({ class: className })} {...rest}>
+    <div
+      className={indicator({ class: className })}
+      {...rest}
+      data-oid='3hy4q7u'
+    >
       {children}
     </div>
   );

@@ -10,7 +10,11 @@ type FlipWordsProps = {
   className?: string;
 };
 
-export function FlipWords({ words, duration = 2500, className }: FlipWordsProps) {
+export function FlipWords({
+  words,
+  duration = 2500,
+  className,
+}: FlipWordsProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
@@ -24,14 +28,19 @@ export function FlipWords({ words, duration = 2500, className }: FlipWordsProps)
   }, [currentIndex, duration, startAnimation]);
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" data-oid="i9tq7o_">
       <motion.span
         key={words[currentIndex]}
         initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
-        transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.2, ease: "easeInOut" }}
+        transition={
+          prefersReducedMotion
+            ? { duration: 0 }
+            : { duration: 0.2, ease: "easeInOut" }
+        }
         className={cn("inline-block", className)}
+        data-oid="3k0i0_7"
       >
         {words[currentIndex]}
       </motion.span>

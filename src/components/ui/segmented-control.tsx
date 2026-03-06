@@ -29,16 +29,17 @@ const SegmentedControlList = React.forwardRef<
       ref={mergeRefs(forwardedRef, listRef)}
       className={cn(
         "relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-10 bg-bg-weak-50 p-1",
-        className
+        className,
       )}
       {...rest}
+      data-oid="s4zn4nz"
     >
-      <Slottable>{children}</Slottable>
+      <Slottable data-oid="a_zzx9z">{children}</Slottable>
 
       <div
         className={cn(
           "absolute inset-y-1 left-0 -z-10 rounded-md bg-bg-white-0 shadow-toggle-switch transition-transform duration-300 motion-reduce:transition-none",
-          floatingBgClassName
+          floatingBgClassName,
         )}
         style={{
           transform: `translate3d(${lineStyle.left}px, 0, 0)`,
@@ -46,6 +47,7 @@ const SegmentedControlList = React.forwardRef<
           transitionTimingFunction: "cubic-bezier(0.65, 0, 0.35, 1)",
         }}
         aria-hidden="true"
+        data-oid="pv.1vsf"
       />
     </TabsPrimitive.List>
   );
@@ -66,9 +68,10 @@ const SegmentedControlTrigger = React.forwardRef<
         "transition duration-300 ease-out",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[var(--scaffold-ruler)]",
         "data-[state=active]:text-text-strong-950",
-        className
+        className,
       )}
       {...rest}
+      data-oid="yji:jn9"
     />
   );
 });
@@ -78,7 +81,9 @@ const SegmentedControlContent = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
 >((props, forwardedRef) => {
-  return <TabsPrimitive.Content ref={forwardedRef} {...props} />;
+  return (
+    <TabsPrimitive.Content ref={forwardedRef} {...props} data-oid="l7dxg3w" />
+  );
 });
 SegmentedControlContent.displayName = "SegmentedControlContent";
 

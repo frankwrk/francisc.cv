@@ -8,11 +8,11 @@ const NotificationProvider = () => {
   const { notifications } = useNotification();
 
   return (
-    <Notification.Provider>
+    <Notification.Provider data-oid='3__9r46'>
       {notifications.map(({ id, ...rest }) => {
-        return <Notification.Root key={id} {...rest} />;
+        return <Notification.Root key={id} {...rest} data-oid='t5bqv:x' />;
       })}
-      <Notification.Viewport />
+      <Notification.Viewport data-oid='g_lqlvn' />
     </Notification.Provider>
   );
 };

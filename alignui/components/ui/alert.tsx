@@ -17,6 +17,7 @@ export const alertVariants = tv({
       'grid w-full auto-cols-auto grid-flow-col grid-cols-1 items-start has-[>svg:first-child]:grid-cols-[auto,minmax(0,1fr)]',
       'transition duration-200 ease-out group-data-[expanded=false]/toast:group-data-[front=false]/toast:opacity-0',
     ],
+
     icon: 'shrink-0',
     closeIcon: '',
   },
@@ -256,8 +257,16 @@ const AlertRoot = React.forwardRef<HTMLDivElement, AlertProps>(
     );
 
     return (
-      <div ref={forwardedRef} className={root({ class: className })} {...rest}>
-        <div className={wrapper({ class: wrapperClassName })}>
+      <div
+        ref={forwardedRef}
+        className={root({ class: className })}
+        {...rest}
+        data-oid='u7fqr4k'
+      >
+        <div
+          className={wrapper({ class: wrapperClassName })}
+          data-oid='_80:dqj'
+        >
           {extendedChildren}
         </div>
       </div>
@@ -276,7 +285,9 @@ function AlertIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = alertVariants({ size, variant, status });
 
-  return <Component className={icon({ class: className })} />;
+  return (
+    <Component className={icon({ class: className })} data-oid='8udioka' />
+  );
 }
 AlertIcon.displayName = ALERT_ICON_NAME;
 
@@ -290,7 +301,9 @@ function AlertCloseIcon<T extends React.ElementType>({
   const Component = as || RiCloseLine;
   const { closeIcon } = alertVariants({ size, variant, status });
 
-  return <Component className={closeIcon({ class: className })} />;
+  return (
+    <Component className={closeIcon({ class: className })} data-oid='8yrcy_.' />
+  );
 }
 AlertCloseIcon.displayName = ALERT_CLOSE_ICON_NAME;
 

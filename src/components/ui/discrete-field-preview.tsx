@@ -24,11 +24,16 @@ export function DiscreteFieldPreview({
   const thumbCellSize = Math.max(7, Math.floor(cfg.cellSize * 0.52));
   const thumbGap = Math.max(1, Math.floor(cfg.gap * 0.6));
 
-  const { cells, cols, cellSize, gap, bgColor } = computeGrid(cfg, width, height, {
-    cellSize: thumbCellSize,
-    gap: thumbGap,
-    shadeCount: 6,
-  });
+  const { cells, cols, cellSize, gap, bgColor } = computeGrid(
+    cfg,
+    width,
+    height,
+    {
+      cellSize: thumbCellSize,
+      gap: thumbGap,
+      shadeCount: 6,
+    },
+  );
 
   return (
     <div
@@ -39,6 +44,7 @@ export function DiscreteFieldPreview({
         overflow: "hidden",
       }}
       aria-hidden="true"
+      data-oid="yj-8xe_"
     >
       <div
         style={{
@@ -47,9 +53,10 @@ export function DiscreteFieldPreview({
           gridAutoRows: `${cellSize}px`,
           gap: `${gap}px`,
         }}
+        data-oid="plgolt1"
       >
         {cells.map(({ color }, i) => (
-          <div key={i} style={{ backgroundColor: color }} />
+          <div key={i} style={{ backgroundColor: color }} data-oid="29dmvza" />
         ))}
       </div>
     </div>

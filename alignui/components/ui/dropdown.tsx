@@ -22,7 +22,7 @@ const DropdownMenuContent = React.forwardRef<
   React.ComponentRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
 >(({ className, sideOffset = 8, ...rest }, forwardedRef) => (
-  <DropdownMenuPrimitive.Portal>
+  <DropdownMenuPrimitive.Portal data-oid='h3lgkq8'>
     <DropdownMenuPrimitive.Content
       ref={forwardedRef}
       sideOffset={sideOffset}
@@ -39,6 +39,7 @@ const DropdownMenuContent = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='ajfledd'
     />
   </DropdownMenuPrimitive.Portal>
 ));
@@ -67,6 +68,7 @@ const DropdownMenuItem = React.forwardRef<
       className,
     )}
     {...rest}
+    data-oid='mu48o9t'
   />
 ));
 DropdownMenuItem.displayName = 'DropdownMenuItem';
@@ -88,6 +90,7 @@ function DropdownItemIcon<T extends React.ElementType>({
         className,
       )}
       {...rest}
+      data-oid='b742xp:'
     />
   );
 }
@@ -101,6 +104,7 @@ const DropdownMenuGroup = React.forwardRef<
     ref={forwardedRef}
     className={cn('flex flex-col gap-1', className)}
     {...rest}
+    data-oid='5h.4mb8'
   />
 ));
 DropdownMenuGroup.displayName = 'DropdownMenuGroup';
@@ -116,6 +120,7 @@ const DropdownMenuLabel = React.forwardRef<
       className,
     )}
     {...rest}
+    data-oid='xkdhd9u'
   />
 ));
 DropdownMenuLabel.displayName = 'DropdownMenuLabel';
@@ -141,10 +146,11 @@ const DropdownMenuSubTrigger = React.forwardRef<
       className,
     )}
     {...rest}
+    data-oid='vcydo03'
   >
     {children}
-    <span className='flex-1' />
-    <DropdownItemIcon as={RiArrowRightSLine} />
+    <span className='flex-1' data-oid='9b-a39_' />
+    <DropdownItemIcon as={RiArrowRightSLine} data-oid='84osh:b' />
   </DropdownMenuPrimitive.SubTrigger>
 ));
 DropdownMenuSubTrigger.displayName = 'DropdownMenuSubTrigger';
@@ -166,6 +172,7 @@ const DropdownMenuSubContent = React.forwardRef<
       className,
     )}
     {...rest}
+    data-oid='r3:a:3f'
   />
 ));
 DropdownMenuSubContent.displayName = 'DropdownMenuSubContent';

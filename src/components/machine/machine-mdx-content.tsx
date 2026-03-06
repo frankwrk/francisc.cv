@@ -20,6 +20,7 @@ export function MachineMdxContent({ children }: { children: ReactNode }) {
         [&_td]:border [&_td]:border-[var(--scaffold-line)] [&_td]:p-2
         [&_hr]:my-8 [&_hr]:border-[var(--scaffold-line)]
       "
+      data-oid="zmeg3px"
     >
       {children}
     </div>

@@ -26,6 +26,7 @@ const ModalOverlay = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='97ce5xz'
     />
   );
 });
@@ -43,8 +44,8 @@ const ModalContent = React.forwardRef<
     forwardedRef,
   ) => {
     return (
-      <ModalPortal>
-        <ModalOverlay className={overlayClassName}>
+      <ModalPortal data-oid='u.2w8oj'>
+        <ModalOverlay className={overlayClassName} data-oid='c_i8ykc'>
           <DialogPrimitive.Content
             ref={forwardedRef}
             className={cn(
@@ -60,16 +61,18 @@ const ModalContent = React.forwardRef<
               className,
             )}
             {...rest}
+            data-oid='f83u29o'
           >
             {children}
             {showClose && (
-              <ModalClose asChild>
+              <ModalClose asChild data-oid='qp2r9_a'>
                 <CompactButton.Root
                   variant='ghost'
                   size='large'
                   className='absolute right-4 top-4'
+                  data-oid='srp4fhj'
                 >
-                  <CompactButton.Icon as={RiCloseLine} />
+                  <CompactButton.Icon as={RiCloseLine} data-oid='07_l4zy' />
                 </CompactButton.Root>
               </ModalClose>
             )}
@@ -100,19 +103,25 @@ function ModalHeader({
         className,
       )}
       {...rest}
+      data-oid='nl7:3l3'
     >
       {children || (
         <>
           {Icon && (
-            <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200'>
-              <Icon className='size-5 text-text-sub-600' />
+            <div
+              className='flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200'
+              data-oid='r592rsc'
+            >
+              <Icon className='size-5 text-text-sub-600' data-oid='xqd.lre' />
             </div>
           )}
           {(title || description) && (
-            <div className='flex-1 space-y-1'>
-              {title && <ModalTitle>{title}</ModalTitle>}
+            <div className='flex-1 space-y-1' data-oid='1kmfo1z'>
+              {title && <ModalTitle data-oid='pu7q2g3'>{title}</ModalTitle>}
               {description && (
-                <ModalDescription>{description}</ModalDescription>
+                <ModalDescription data-oid='apzfc01'>
+                  {description}
+                </ModalDescription>
               )}
             </div>
           )}
@@ -132,6 +141,7 @@ const ModalTitle = React.forwardRef<
       ref={forwardedRef}
       className={cn('text-label-sm text-text-strong-950', className)}
       {...rest}
+      data-oid='_53-yu.'
     />
   );
 });
@@ -146,6 +156,7 @@ const ModalDescription = React.forwardRef<
       ref={forwardedRef}
       className={cn('text-paragraph-xs text-text-sub-600', className)}
       {...rest}
+      data-oid='gkrsr7u'
     />
   );
 });
@@ -155,7 +166,7 @@ function ModalBody({
   className,
   ...rest
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('p-5', className)} {...rest} />;
+  return <div className={cn('p-5', className)} {...rest} data-oid='snqq.zk' />;
 }
 ModalBody.displayName = 'ModalBody';
 
@@ -170,6 +181,7 @@ function ModalFooter({
         className,
       )}
       {...rest}
+      data-oid='1mkj1gr'
     />
   );
 }

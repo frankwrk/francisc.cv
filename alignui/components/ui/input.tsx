@@ -31,6 +31,7 @@ export const inputVariants = tv({
       // disabled
       'has-[input:disabled]:shadow-none has-[input:disabled]:before:ring-transparent',
     ],
+
     wrapper: [
       // base
       'group/input-wrapper flex w-full cursor-text items-center bg-bg-white-0',
@@ -40,6 +41,7 @@ export const inputVariants = tv({
       // disabled
       'has-[input:disabled]:pointer-events-none has-[input:disabled]:bg-bg-weak-50',
     ],
+
     input: [
       // base
       'w-full bg-transparent bg-none text-paragraph-sm text-text-strong-950 outline-none',
@@ -55,6 +57,7 @@ export const inputVariants = tv({
       // disabled
       'disabled:text-text-disabled-300 disabled:placeholder:text-text-disabled-300',
     ],
+
     icon: [
       // base
       'flex size-5 shrink-0 select-none items-center justify-center',
@@ -70,6 +73,7 @@ export const inputVariants = tv({
       // disabled
       'group-has-[input:disabled]/input-wrapper:text-text-disabled-300',
     ],
+
     affix: [
       // base
       'shrink-0 bg-bg-white-0 text-paragraph-sm text-text-sub-600',
@@ -80,6 +84,7 @@ export const inputVariants = tv({
       // focus state
       'group-has-[:placeholder-shown]:group-has-[input:focus]:text-text-sub-600',
     ],
+
     inlineAffix: [
       // base
       'text-paragraph-sm text-text-sub-600',
@@ -157,9 +162,7 @@ function InputRoot({
   asChild,
   ...rest
 }: React.HTMLAttributes<HTMLDivElement> &
-  InputSharedProps & {
-    asChild?: boolean;
-  }) {
+  InputSharedProps & { asChild?: boolean }) {
   const uniqueId = React.useId();
   const Component = asChild ? Slot : 'div';
 
@@ -183,12 +186,17 @@ function InputRoot({
       INPUT_AFFIX_NAME,
       INPUT_INLINE_AFFIX_NAME,
     ],
+
     uniqueId,
     asChild,
   );
 
   return (
-    <Component className={root({ class: className })} {...rest}>
+    <Component
+      className={root({ class: className })}
+      {...rest}
+      data-oid='8.mpm5-'
+    >
       {extendedChildren}
     </Component>
   );
@@ -203,9 +211,7 @@ function InputWrapper({
   asChild,
   ...rest
 }: React.HTMLAttributes<HTMLLabelElement> &
-  InputSharedProps & {
-    asChild?: boolean;
-  }) {
+  InputSharedProps & { asChild?: boolean }) {
   const Component = asChild ? Slot : 'label';
 
   const { wrapper } = inputVariants({
@@ -214,7 +220,11 @@ function InputWrapper({
   });
 
   return (
-    <Component className={wrapper({ class: className })} {...rest}>
+    <Component
+      className={wrapper({ class: className })}
+      {...rest}
+      data-oid='rs0p774'
+    >
       {children}
     </Component>
   );
@@ -245,6 +255,7 @@ const Input = React.forwardRef<
         className={input({ class: className })}
         ref={forwardedRef}
         {...rest}
+        data-oid='_u0paep'
       />
     );
   },
@@ -261,7 +272,13 @@ function InputIcon<T extends React.ElementType = 'div'>({
   const Component = as || 'div';
   const { icon } = inputVariants({ size, hasError });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid='t583cdl'
+    />
+  );
 }
 InputIcon.displayName = INPUT_ICON_NAME;
 
@@ -278,7 +295,7 @@ function InputAffix({
   });
 
   return (
-    <div className={affix({ class: className })} {...rest}>
+    <div className={affix({ class: className })} {...rest} data-oid='5hao6q-'>
       {children}
     </div>
   );
@@ -298,7 +315,11 @@ function InputInlineAffix({
   });
 
   return (
-    <span className={inlineAffix({ class: className })} {...rest}>
+    <span
+      className={inlineAffix({ class: className })}
+      {...rest}
+      data-oid='zwz5tv8'
+    >
       {children}
     </span>
   );

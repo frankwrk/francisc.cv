@@ -26,25 +26,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang='en'
       suppressHydrationWarning
       className={cn(inter.variable, geistMono.variable, 'antialiased')}
+      data-oid='q0juv64'
     >
-      <body className='bg-bg-white-0 text-text-strong-950'>
-        <ThemeProvider attribute='class'>
-          <TooltipProvider>
-            <div className='flex min-h-screen flex-col'>
-              <Header />
-              <main className='flex flex-1 flex-col'>{children}</main>
+      <body className='bg-bg-white-0 text-text-strong-950' data-oid='mtoooo0'>
+        <ThemeProvider attribute='class' data-oid='r.u5q3x'>
+          <TooltipProvider data-oid='7wkb3rh'>
+            <div className='flex min-h-screen flex-col' data-oid='kte63p7'>
+              <Header data-oid='58n_ur6' />
+              <main className='flex flex-1 flex-col' data-oid='kiw05a8'>
+                {children}
+              </main>
             </div>
           </TooltipProvider>
         </ThemeProvider>
-        <NotificationProvider />
+        <NotificationProvider data-oid='c_kgsad' />
       </body>
     </html>
   );

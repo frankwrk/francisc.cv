@@ -20,6 +20,7 @@ export const buttonGroupVariants = tv({
       "disabled:pointer-events-none disabled:opacity-50",
       "[font-family:var(--font-geist-pixel-circle)]",
     ],
+
     icon: "shrink-0",
   },
   variants: {
@@ -56,18 +57,22 @@ const ButtonGroupRoot = React.forwardRef<HTMLDivElement, ButtonGroupRootProps>(
     const { root } = buttonGroupVariants({ size });
 
     const sharedProps: ButtonGroupSharedProps = { size };
-    const extendedChildren = recursiveCloneChildren(
-      children,
-      sharedProps,
-      [BUTTON_GROUP_ITEM_NAME, BUTTON_GROUP_ICON_NAME]
-    );
+    const extendedChildren = recursiveCloneChildren(children, sharedProps, [
+      BUTTON_GROUP_ITEM_NAME,
+      BUTTON_GROUP_ICON_NAME,
+    ]);
 
     return (
-      <Component ref={forwardedRef} className={root({ class: className })} {...rest}>
+      <Component
+        ref={forwardedRef}
+        className={root({ class: className })}
+        {...rest}
+        data-oid="hg:essy"
+      >
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 ButtonGroupRoot.displayName = BUTTON_GROUP_ROOT_NAME;
 
@@ -76,18 +81,28 @@ type ButtonGroupItemProps = ButtonGroupSharedProps &
     asChild?: boolean;
   };
 
-const ButtonGroupItem = React.forwardRef<HTMLButtonElement, ButtonGroupItemProps>(
-  ({ children, className, size, asChild, ...rest }, forwardedRef) => {
-    const Component = asChild ? Slot : "button";
-    const { item } = buttonGroupVariants({ size });
+const ButtonGroupItem = React.forwardRef<
+  HTMLButtonElement,
+  ButtonGroupItemProps
+>(({ children, className, size, asChild, ...rest }, forwardedRef) => {
+  const Component = asChild ? Slot : "button";
+  const { item } = buttonGroupVariants({ size });
 
-    return (
-      <Component ref={forwardedRef} className={item({ class: className })} {...rest}>
-        {children}
-      </Component>
-    );
-  }
-);
+  return (
+    <Component
+      ref={forwardedRef}
+      className={item(
+        { class: className },
+        "bg-[#0A0A0A]",
+        "bg-[rgba(0,_0,_0,_0)]",
+      )}
+      {...rest}
+      data-oid=":koke.7"
+    >
+      {children}
+    </Component>
+  );
+});
 ButtonGroupItem.displayName = BUTTON_GROUP_ITEM_NAME;
 
 type ButtonGroupIconProps = ButtonGroupSharedProps & {
@@ -104,7 +119,13 @@ function ButtonGroupIcon({
   const Component = as ?? "div";
   const { icon } = buttonGroupVariants({ size });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid="6_gmr8q"
+    />
+  );
 }
 ButtonGroupIcon.displayName = BUTTON_GROUP_ICON_NAME;
 

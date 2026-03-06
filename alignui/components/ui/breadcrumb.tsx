@@ -23,7 +23,11 @@ function BreadcrumbRoot({
   const Component = asChild ? Slot : 'div';
 
   return (
-    <Component className={cn('flex flex-wrap gap-1.5', className)} {...rest}>
+    <Component
+      className={cn('flex flex-wrap gap-1.5', className)}
+      {...rest}
+      data-oid='foyykro'
+    >
       {children}
     </Component>
   );
@@ -57,6 +61,7 @@ const BreadcrumbItem = React.forwardRef<HTMLDivElement, BreadcrumbItemProps>(
           className,
         )}
         {...rest}
+        data-oid='i0grec0'
       >
         {children}
       </Component>
@@ -72,7 +77,13 @@ function BreadcrumbItemIcon<T extends React.ElementType>({
 }: PolymorphicComponentProps<T>) {
   const Component = as || 'div';
 
-  return <Component className={cn('size-5', className)} {...rest} />;
+  return (
+    <Component
+      className={cn('size-5', className)}
+      {...rest}
+      data-oid='3ez0tm.'
+    />
+  );
 }
 BreadcrumbItemIcon.displayName = BREADCRUMB_ICON_NAME;
 
@@ -90,6 +101,7 @@ function BreadcrumbItemArrowIcon<T extends React.ElementType>({
         className,
       )}
       {...rest}
+      data-oid='yedr50_'
     />
   );
 }

@@ -29,6 +29,7 @@ export const buttonGroupVariants = tv({
       'disabled:pointer-events-none disabled:bg-bg-weak-50',
       'disabled:text-text-disabled-300',
     ],
+
     icon: 'shrink-0',
   },
   variants: {
@@ -40,6 +41,7 @@ export const buttonGroupVariants = tv({
           // radius
           'first:rounded-l-lg last:rounded-r-lg',
         ],
+
         icon: [
           // base
           '-mx-2 size-5',
@@ -52,6 +54,7 @@ export const buttonGroupVariants = tv({
           // radius
           'first:rounded-l-lg last:rounded-r-lg',
         ],
+
         icon: [
           // base
           '-mx-2 size-5',
@@ -64,6 +67,7 @@ export const buttonGroupVariants = tv({
           // radius
           'first:rounded-l-md last:rounded-r-md',
         ],
+
         icon: [
           // base
           '-mx-2 size-4',
@@ -106,6 +110,7 @@ const ButtonGroupRoot = React.forwardRef<HTMLDivElement, ButtonGroupRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
+        data-oid='zifl9fc'
       >
         {extendedChildren}
       </Component>
@@ -131,6 +136,7 @@ const ButtonGroupItem = React.forwardRef<
       ref={forwardedRef}
       className={item({ class: className })}
       {...rest}
+      data-oid='iks-y.d'
     >
       {children}
     </Component>
@@ -147,7 +153,13 @@ function ButtonGroupIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = buttonGroupVariants({ size });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid='vik429j'
+    />
+  );
 }
 ButtonGroupIcon.displayName = BUTTON_GROUP_ICON_NAME;
 

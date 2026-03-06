@@ -12,5 +12,5 @@ export default async function ArtPage() {
     ...articles.map((a) => ({ slug: a.slug, type: "thinking" as const })),
   ];
 
-  return <ArtPageClient contentSlugs={contentSlugs} />;
+  return <ArtPageClient contentSlugs={contentSlugs} data-oid="d6a2gv7" />;
 }

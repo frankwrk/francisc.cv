@@ -50,9 +50,10 @@ export function Signature({ className }: SignatureProps) {
       aria-label="Hand-drawn signature"
       className={cn("h-auto", className)}
       style={{ width: siteSignatureConfig.width }}
+      data-oid="icl-q-_"
     >
-      <defs>
-        <mask id={MASK_ID}>
+      <defs data-oid="al6mnf4">
+        <mask id={MASK_ID} data-oid="o97211u">
           <motion.path
             d={maskPath}
             fill="none"
@@ -63,10 +64,11 @@ export function Signature({ className }: SignatureProps) {
             initial={{ pathLength: prefersReducedMotion ? 1 : 0 }}
             animate={{ pathLength: 1 }}
             transition={drawTransition}
+            data-oid="qux7h4e"
           />
         </mask>
       </defs>
-      <g mask={`url(#${MASK_ID})`}>
+      <g mask={`url(#${MASK_ID})`} data-oid=".0tq8am">
         {siteSignatureConfig.strokes.map((stroke, index) =>
           stroke.kind === "rect" ? (
             <rect
@@ -79,6 +81,7 @@ export function Signature({ className }: SignatureProps) {
               transform={stroke.transform}
               fill="currentColor"
               stroke="none"
+              data-oid=":ud-e-s"
             />
           ) : (
             <path
@@ -86,8 +89,9 @@ export function Signature({ className }: SignatureProps) {
               d={stroke.d}
               fill="currentColor"
               stroke="none"
+              data-oid="o56:e4x"
             />
-          )
+          ),
         )}
       </g>
     </motion.svg>

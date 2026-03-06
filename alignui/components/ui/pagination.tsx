@@ -30,6 +30,7 @@ const paginationVariants = tv({
           // hover
           'hover:bg-bg-weak-50 hover:ring-transparent',
         ],
+
         navButton: [
           // base
           'size-8 rounded-lg',
@@ -45,6 +46,7 @@ const paginationVariants = tv({
           // hover
           'hover:bg-bg-weak-50 hover:ring-transparent',
         ],
+
         navButton: [
           // base
           'size-8 rounded-full',
@@ -60,6 +62,7 @@ const paginationVariants = tv({
           // hover
           'hover:bg-bg-weak-50',
         ],
+
         navButton: [
           // base
           'h-8 w-10 px-1.5',
@@ -104,12 +107,17 @@ function PaginationRoot({
       PAGINATION_NAV_BUTTON_NAME,
       PAGINATION_NAV_ICON_NAME,
     ],
+
     uniqueId,
     asChild,
   );
 
   return (
-    <Component className={root({ class: className })} {...rest}>
+    <Component
+      className={root({ class: className })}
+      {...rest}
+      data-oid='7pz21ad'
+    >
       {extendedChildren}
     </Component>
   );
@@ -137,6 +145,7 @@ const PaginationItem = React.forwardRef<HTMLButtonElement, PaginationItemProps>(
           'text-text-strong-950': current,
         })}
         {...rest}
+        data-oid='ortg845'
       >
         {children}
       </Component>
@@ -162,6 +171,7 @@ const PaginationNavButton = React.forwardRef<
       ref={forwardedRef}
       className={navButton({ class: className })}
       {...rest}
+      data-oid='sq66bzw'
     >
       {children}
     </Component>
@@ -178,7 +188,13 @@ function PaginationNavIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { navIcon } = paginationVariants({ variant });
 
-  return <Component className={navIcon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={navIcon({ class: className })}
+      {...rest}
+      data-oid='540ebu7'
+    />
+  );
 }
 PaginationNavIcon.displayName = PAGINATION_NAV_ICON_NAME;
 

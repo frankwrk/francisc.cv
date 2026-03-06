@@ -29,6 +29,7 @@ export const selectVariants = tv({
       // placeholder state
       'data-[placeholder]:text-text-sub-600',
     ],
+
     triggerArrow: [
       // base
       'ml-auto size-5 shrink-0',
@@ -46,6 +47,7 @@ export const selectVariants = tv({
       // open
       'group-data-[state=open]/trigger:rotate-180',
     ],
+
     triggerIcon: [
       // base
       'h-5 w-auto min-w-0 shrink-0 object-contain text-text-sub-600',
@@ -58,6 +60,7 @@ export const selectVariants = tv({
       'group-disabled/trigger:text-text-disabled-300 group-data-[placeholder]/trigger:group-disabled/trigger:text-text-disabled-300',
       'group-disabled/trigger:[&:not(.remixicon)]:opacity-[.48]',
     ],
+
     selectItemIcon: [
       'size-5 shrink-0 bg-[length:1.25rem] text-text-sub-600',
       // 'group-has-[&]-ml-0.5',
@@ -97,6 +100,7 @@ export const selectVariants = tv({
           // open
           'data-[state=open]:text-text-strong-950',
         ],
+
         triggerIcon: [
           // base
           'mr-1.5 text-text-soft-400',
@@ -105,6 +109,7 @@ export const selectVariants = tv({
           // open
           'group-data-[state=open]/trigger:text-text-sub-600',
         ],
+
         triggerArrow: [
           // base
           'ml-0.5',
@@ -113,6 +118,7 @@ export const selectVariants = tv({
           // open
           'group-data-[state=open]/trigger:text-text-strong-950',
         ],
+
         selectItemIcon:
           'text-text-soft-400 group-hover/trigger:text-text-sub-600',
       },
@@ -240,8 +246,11 @@ const SelectRoot = ({
   ...rest
 }: React.ComponentProps<typeof SelectPrimitives.Root> & SelectContextType) => {
   return (
-    <SelectContext.Provider value={{ size, variant, hasError }}>
-      <SelectPrimitives.Root {...rest} />
+    <SelectContext.Provider
+      value={{ size, variant, hasError }}
+      data-oid='b0lmy1p'
+    >
+      <SelectPrimitives.Root {...rest} data-oid='a.sc8j0' />
     </SelectContext.Provider>
   );
 };
@@ -278,10 +287,11 @@ const SelectTrigger = React.forwardRef<
       ref={forwardedRef}
       className={triggerRoot({ class: className })}
       {...rest}
+      data-oid='gvhqzmv'
     >
-      <Slottable>{children}</Slottable>
-      <SelectPrimitives.Icon asChild>
-        <RiArrowDownSLine className={triggerArrow()} />
+      <Slottable data-oid='e4i1p-o'>{children}</Slottable>
+      <SelectPrimitives.Icon asChild data-oid='gjkv437'>
+        <RiArrowDownSLine className={triggerArrow()} data-oid=':nk3j49' />
       </SelectPrimitives.Icon>
     </SelectPrimitives.Trigger>
   );
@@ -299,7 +309,13 @@ function TriggerIcon<T extends React.ElementType = 'div'>({
   const { size, variant, hasError } = useSelectContext();
   const { triggerIcon } = selectVariants({ size, variant, hasError });
 
-  return <Component className={triggerIcon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={triggerIcon({ class: className })}
+      {...rest}
+      data-oid='1ej_7_d'
+    />
+  );
 }
 TriggerIcon.displayName = SELECT_TRIGGER_ICON_NAME;
 
@@ -318,7 +334,7 @@ const SelectContent = React.forwardRef<
     },
     forwardedRef,
   ) => (
-    <SelectPrimitives.Portal>
+    <SelectPrimitives.Portal data-oid='gjhe0jf'>
       <SelectPrimitives.Content
         ref={forwardedRef}
         className={cn(
@@ -339,18 +355,26 @@ const SelectContent = React.forwardRef<
         position={position}
         collisionPadding={collisionPadding}
         {...rest}
+        data-oid='40o52_g'
       >
-        <ScrollAreaPrimitives.Root type='auto'>
-          <SelectPrimitives.Viewport asChild>
+        <ScrollAreaPrimitives.Root type='auto' data-oid='v-asod_'>
+          <SelectPrimitives.Viewport asChild data-oid='pdm-l0v'>
             <ScrollAreaPrimitives.Viewport
               style={{ overflowY: undefined }}
               className='max-h-[196px] w-full scroll-py-2 overflow-auto p-2'
+              data-oid='9rax5e5'
             >
               {children}
             </ScrollAreaPrimitives.Viewport>
           </SelectPrimitives.Viewport>
-          <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
-            <ScrollAreaPrimitives.Thumb className='!w-1 rounded bg-bg-soft-200' />
+          <ScrollAreaPrimitives.Scrollbar
+            orientation='vertical'
+            data-oid='k0cx_mx'
+          >
+            <ScrollAreaPrimitives.Thumb
+              className='!w-1 rounded bg-bg-soft-200'
+              data-oid='taynuoi'
+            />
           </ScrollAreaPrimitives.Scrollbar>
         </ScrollAreaPrimitives.Root>
       </SelectPrimitives.Content>
@@ -383,8 +407,9 @@ const SelectItem = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='oddj:nz'
     >
-      <SelectPrimitives.ItemText asChild>
+      <SelectPrimitives.ItemText asChild data-oid='qf-kgbu'>
         <span
           className={cn(
             // base
@@ -395,16 +420,22 @@ const SelectItem = React.forwardRef<
               'gap-1.5': size === 'xsmall',
             },
           )}
+          data-oid='.8ay_px'
         >
           {typeof children === 'string' ? (
-            <span className='line-clamp-1'>{children}</span>
+            <span className='line-clamp-1' data-oid='327p30_'>
+              {children}
+            </span>
           ) : (
             children
           )}
         </span>
       </SelectPrimitives.ItemText>
-      <SelectPrimitives.ItemIndicator asChild>
-        <RiCheckLine className='absolute right-2 top-1/2 size-5 shrink-0 -translate-y-1/2 text-text-sub-600' />
+      <SelectPrimitives.ItemIndicator asChild data-oid='8:8sw7_'>
+        <RiCheckLine
+          className='absolute right-2 top-1/2 size-5 shrink-0 -translate-y-1/2 text-text-sub-600'
+          data-oid='.q4phq0'
+        />
       </SelectPrimitives.ItemIndicator>
     </SelectPrimitives.Item>
   );
@@ -423,7 +454,11 @@ function SelectItemIcon<T extends React.ElementType>({
   const Component = as || 'div';
 
   return (
-    <Component className={selectItemIcon({ class: className })} {...rest} />
+    <Component
+      className={selectItemIcon({ class: className })}
+      {...rest}
+      data-oid='8o21.so'
+    />
   );
 }
 

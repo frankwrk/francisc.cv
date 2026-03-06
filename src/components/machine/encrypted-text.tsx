@@ -11,7 +11,9 @@ type EncryptedTextProps = {
 };
 
 function randomChar(index: number) {
-  return SCRAMBLE_CHARS[(Math.abs(index * 17 + Date.now()) % SCRAMBLE_CHARS.length)];
+  return SCRAMBLE_CHARS[
+    Math.abs(index * 17 + Date.now()) % SCRAMBLE_CHARS.length
+  ];
 }
 
 export function EncryptedText({ text, className }: EncryptedTextProps) {
@@ -35,7 +37,9 @@ export function EncryptedText({ text, className }: EncryptedTextProps) {
           .split("")
           .map((char, index) => {
             if (char === " ") return " ";
-            const revealAt = Math.floor((index / Math.max(normalizedText.length, 1)) * totalFrames);
+            const revealAt = Math.floor(
+              (index / Math.max(normalizedText.length, 1)) * totalFrames,
+            );
             return frame >= revealAt ? char : randomChar(index + frame);
           })
           .join("");
@@ -57,5 +61,9 @@ export function EncryptedText({ text, className }: EncryptedTextProps) {
     };
   }, [normalizedText, prefersReducedMotion]);
 
-  return <span className={className}>{prefersReducedMotion ? normalizedText : displayText}</span>;
+  return (
+    <span className={className} data-oid="1wty8v:">
+      {prefersReducedMotion ? normalizedText : displayText}
+    </span>
+  );
 }

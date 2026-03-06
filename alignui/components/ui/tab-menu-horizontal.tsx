@@ -23,6 +23,7 @@ const TabMenuHorizontalRoot = React.forwardRef<
       orientation='horizontal'
       className={cn('w-full', className)}
       {...rest}
+      data-oid='tgw0a_3'
     />
   );
 });
@@ -62,6 +63,7 @@ const TabMenuHorizontalList = React.forwardRef<
         'relative grid overflow-x-auto overflow-y-hidden overscroll-contain',
         wrapperClassName,
       )}
+      data-oid='9m7op3k'
     >
       <TabsPrimitive.List
         ref={mergeRefs(forwardedRef, listRef)}
@@ -70,8 +72,9 @@ const TabMenuHorizontalList = React.forwardRef<
           className,
         )}
         {...rest}
+        data-oid='xpnd_j-'
       >
-        <Slottable>{children}</Slottable>
+        <Slottable data-oid='5y5h.7b'>{children}</Slottable>
 
         {/* Floating Bg */}
         <div
@@ -87,6 +90,7 @@ const TabMenuHorizontalList = React.forwardRef<
             transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
           }}
           aria-hidden='true'
+          data-oid='85lzfwv'
         />
       </TabsPrimitive.List>
     </div>
@@ -113,6 +117,7 @@ const TabMenuHorizontalTrigger = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='pqi1xdc'
     />
   );
 });
@@ -136,6 +141,7 @@ function TabMenuHorizontalIcon<T extends React.ElementType>({
         className,
       )}
       {...rest}
+      data-oid='n3x_1:v'
     />
   );
 }
@@ -152,6 +158,7 @@ function TabMenuHorizontalArrowIcon<T extends React.ElementType>({
     <Component
       className={cn('size-5 text-text-sub-600', className)}
       {...rest}
+      data-oid='677w0zh'
     />
   );
 }

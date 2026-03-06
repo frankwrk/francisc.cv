@@ -23,6 +23,7 @@ export const linkButtonVariants = tv({
       // disabled
       'disabled:pointer-events-none disabled:text-text-disabled-300 disabled:no-underline',
     ],
+
     icon: 'shrink-0',
   },
   variants: {
@@ -112,6 +113,7 @@ const LinkButtonRoot = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
+        data-oid='tr6z9qo'
       >
         {extendedChildren}
       </Component>
@@ -130,7 +132,13 @@ function LinkButtonIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = linkButtonVariants({ variant, size });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid='e.ikmx.'
+    />
+  );
 }
 LinkButtonIcon.displayName = LINK_BUTTON_ICON_NAME;
 

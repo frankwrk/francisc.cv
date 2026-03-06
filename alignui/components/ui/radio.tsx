@@ -21,6 +21,7 @@ const RadioGroupItem = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='sfiw3ct'
     >
       <svg
         width='20'
@@ -31,6 +32,7 @@ const RadioGroupItem = React.forwardRef<
         className={cn([
           'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
         ])}
+        data-oid=':t.y:mu'
       >
         <circle
           cx='10'
@@ -47,8 +49,10 @@ const RadioGroupItem = React.forwardRef<
             // disabled chcked
             'group-data-[state=checked]/radio:fill-bg-white-0',
           )}
+          data-oid='msjgjhf'
         />
-        <g filter={`url(#${filterId})`}>
+
+        <g filter={`url(#${filterId})`} data-oid='6da3a6n'>
           <circle
             cx='10'
             cy='10'
@@ -58,9 +62,10 @@ const RadioGroupItem = React.forwardRef<
               // disabled
               'group-disabled/radio:hidden',
             )}
+            data-oid='u04-3z0'
           />
         </g>
-        <defs>
+        <defs data-oid='v_ubx2g'>
           <filter
             id={filterId}
             x='1.5'
@@ -69,36 +74,48 @@ const RadioGroupItem = React.forwardRef<
             height='17'
             filterUnits='userSpaceOnUse'
             colorInterpolationFilters='sRGB'
+            data-oid='y7._s9_'
           >
-            <feFlood floodOpacity='0' result='BackgroundImageFix' />
+            <feFlood
+              floodOpacity='0'
+              result='BackgroundImageFix'
+              data-oid='7wuhrtp'
+            />
             <feColorMatrix
               in='SourceAlpha'
               type='matrix'
               values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
               result='hardAlpha'
+              data-oid='tmfyeg8'
             />
-            <feOffset dy='2' />
-            <feGaussianBlur stdDeviation='1' />
+
+            <feOffset dy='2' data-oid='24_d::s' />
+            <feGaussianBlur stdDeviation='1' data-oid='-rd06._' />
             <feColorMatrix
               type='matrix'
               values='0 0 0 0 0.105882 0 0 0 0 0.109804 0 0 0 0 0.113725 0 0 0 0.12 0'
+              data-oid='r87x8-t'
             />
+
             <feBlend
               mode='normal'
               in2='BackgroundImageFix'
               result='effect1_dropShadow_515_4243'
+              data-oid='ej7gwmk'
             />
+
             <feBlend
               mode='normal'
               in='SourceGraphic'
               in2='effect1_dropShadow_515_4243'
               result='shape'
+              data-oid='32_7rau'
             />
           </filter>
         </defs>
       </svg>
 
-      <RadioGroupPrimitive.Indicator asChild>
+      <RadioGroupPrimitive.Indicator asChild data-oid='f72wirt'>
         <svg
           width='20'
           height='20'
@@ -106,6 +123,7 @@ const RadioGroupItem = React.forwardRef<
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
           className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
+          data-oid='gpu1xmg'
         >
           <circle
             cx='10'
@@ -121,6 +139,7 @@ const RadioGroupItem = React.forwardRef<
               // disabled
               'group-disabled/radio:stroke-bg-soft-200',
             )}
+            data-oid='3d-6f85'
           />
         </svg>
       </RadioGroupPrimitive.Indicator>

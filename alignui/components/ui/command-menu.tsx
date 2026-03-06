@@ -18,12 +18,9 @@ const CommandDialog = ({
   className,
   overlayClassName,
   ...rest
-}: DialogProps & {
-  className?: string;
-  overlayClassName?: string;
-}) => {
+}: DialogProps & { className?: string; overlayClassName?: string }) => {
   return (
-    <Modal.Root {...rest}>
+    <Modal.Root {...rest} data-oid='i0qqwdy'>
       <Modal.Content
         overlayClassName={cn('justify-start pt-20', overlayClassName)}
         showClose={false}
@@ -31,6 +28,7 @@ const CommandDialog = ({
           'flex max-h-full max-w-[600px] flex-col overflow-hidden rounded-2xl',
           className,
         )}
+        data-oid='7ffuo48'
       >
         <Command
           className={cn(
@@ -38,6 +36,7 @@ const CommandDialog = ({
             'grid min-h-0 auto-cols-auto grid-flow-row',
             '[&>[cmdk-label]+*]:!border-t-0',
           )}
+          data-oid='jkm_l51'
         >
           {children}
         </Command>
@@ -67,6 +66,7 @@ const CommandInput = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='2s_a7i-'
     />
   );
 });
@@ -86,6 +86,7 @@ const CommandList = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='irep:at'
     />
   );
 });
@@ -106,6 +107,7 @@ const CommandGroup = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='xee7wkb'
     />
   );
 });
@@ -119,6 +121,7 @@ const commandItemVariants = tv({
     // hover/selected
     'data-[selected=true]:bg-bg-weak-50',
   ],
+
   variants: {
     size: {
       small: 'px-3 py-2.5',
@@ -142,6 +145,7 @@ const CommandItem = React.forwardRef<
       ref={forwardedRef}
       className={commandItemVariants({ size, class: className })}
       {...rest}
+      data-oid='xi4ve2s'
     />
   );
 });
@@ -158,6 +162,7 @@ function CommandItemIcon<T extends React.ElementType>({
     <Component
       className={cn('size-5 shrink-0 text-text-sub-600', className)}
       {...rest}
+      data-oid='td0t7n9'
     />
   );
 }
@@ -173,6 +178,7 @@ function CommandFooter({
         className,
       )}
       {...rest}
+      data-oid='ms4i4ug'
     />
   );
 }
@@ -188,6 +194,7 @@ function CommandFooterKeyBox({
         className,
       )}
       {...rest}
+      data-oid='9gbe7it'
     />
   );
 }

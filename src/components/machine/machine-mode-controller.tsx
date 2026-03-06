@@ -33,43 +33,55 @@ function MachineVersionToggle() {
   const ctx = useMachineMode();
 
   return (
-    <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-[90]">
+    <div
+      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-[90] bg-[#0A0A0A]"
+      data-oid="74ojnxl"
+    >
       <ButtonGroup.Root
         size="xsmall"
         aria-label="Site version"
         className="rounded-xl shadow-[0_12px_30px_-18px_rgba(14,18,27,0.35)]"
+        data-oid="qkk6qqv"
       >
         <ButtonGroup.Item
           type="button"
           data-state={ctx.displayMode === "human" ? "on" : "off"}
           aria-pressed={ctx.displayMode === "human"}
           onClick={() => ctx.switchMode("human")}
+          data-oid="gcvt9g1"
         >
-          <ButtonGroup.Icon as={UserRound} aria-hidden />
-          <span>HUMAN</span>
+          <ButtonGroup.Icon as={UserRound} aria-hidden data-oid="1dv_qdb" />
+          <span data-oid="aitur5j">HUMAN</span>
         </ButtonGroup.Item>
         <ButtonGroup.Item
           type="button"
           data-state={ctx.displayMode === "machine" ? "on" : "off"}
           aria-pressed={ctx.displayMode === "machine"}
           onClick={() => ctx.switchMode("machine")}
+          data-oid="zi4vrwk"
         >
-          <ButtonGroup.Icon as={Cpu} aria-hidden />
-          <span>MACHINE</span>
+          <ButtonGroup.Icon as={Cpu} aria-hidden data-oid=":g6:mk9" />
+          <span data-oid="st7aj9o">MACHINE</span>
         </ButtonGroup.Item>
       </ButtonGroup.Root>
     </div>
   );
 }
 
-function MachineLoadingOverlay({ loadingTarget }: { loadingTarget: SiteVersion | null }) {
+function MachineLoadingOverlay({
+  loadingTarget,
+}: {
+  loadingTarget: SiteVersion | null;
+}) {
   const prefersReducedMotion = useReducedMotion();
   const { resolvedTheme } = useTheme();
   const label =
-    loadingTarget === "machine" ? "Loading Machine version" : "Loading Human version";
+    loadingTarget === "machine"
+      ? "Loading Machine version"
+      : "Loading Human version";
 
   return (
-    <AnimatePresence>
+    <AnimatePresence data-oid="ygcy.y1">
       {loadingTarget ? (
         <motion.div
           key={loadingTarget}
@@ -77,17 +89,22 @@ function MachineLoadingOverlay({ loadingTarget }: { loadingTarget: SiteVersion |
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.18, ease: "easeOut" }}
+          transition={{
+            duration: prefersReducedMotion ? 0 : 0.18,
+            ease: "easeOut",
+          }}
           style={{
             backgroundColor:
               resolvedTheme === "dark"
                 ? "rgba(10, 10, 10, 0.92)"
                 : "rgba(250, 250, 250, 0.92)",
           }}
+          data-oid="8h.lvd-"
         >
           <EncryptedText
             text={label}
             className="text-[11px] tracking-[0.2em] text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-circle)]"
+            data-oid="hgei2.l"
           />
         </motion.div>
       ) : null}
@@ -98,7 +115,8 @@ function MachineLoadingOverlay({ loadingTarget }: { loadingTarget: SiteVersion |
 function MachineSurface({ children }: { children: ReactNode }) {
   const prefersReducedMotion = useReducedMotion();
   const { resolvedTheme } = useTheme();
-  const machineSurfaceBackground = resolvedTheme === "dark" ? "#0A0A0A" : "#FAFAFA";
+  const machineSurfaceBackground =
+    resolvedTheme === "dark" ? "#0A0A0A" : "#FAFAFA";
 
   return (
     <motion.div
@@ -108,10 +126,12 @@ function MachineSurface({ children }: { children: ReactNode }) {
       exit={{ opacity: 0, y: prefersReducedMotion ? 0 : 8 }}
       transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: "easeOut" }}
       style={{ backgroundColor: machineSurfaceBackground }}
+      data-oid="7h8m6p5"
     >
       <div
         className="mx-auto max-w-[980px] border border-[var(--scaffold-line)] p-5 md:p-8"
         style={{ backgroundColor: machineSurfaceBackground }}
+        data-oid="4j4wa:j"
       >
         {children}
       </div>
@@ -159,7 +179,7 @@ export function MachineModeController({
         timeoutRef.current = null;
       }, delay);
     },
-    [clearExistingTimer, loadingTarget, mode, prefersReducedMotion, trigger]
+    [clearExistingTimer, loadingTarget, mode, prefersReducedMotion, trigger],
   );
 
   const value = useMemo<MachineModeContextValue>(
@@ -168,15 +188,19 @@ export function MachineModeController({
       displayMode: loadingTarget ?? mode,
       switchMode,
     }),
-    [loadingTarget, mode, switchMode]
+    [loadingTarget, mode, switchMode],
   );
 
   return (
-    <MachineModeContext.Provider value={value}>
+    <MachineModeContext.Provider value={value} data-oid="a-oxcah">
       {children}
-      <AnimatePresence>{mode === "machine" ? <MachineSurface>{machineContent}</MachineSurface> : null}</AnimatePresence>
-      <MachineLoadingOverlay loadingTarget={loadingTarget} />
-      <MachineVersionToggle />
+      <AnimatePresence data-oid="ga_jtbo">
+        {mode === "machine" ? (
+          <MachineSurface data-oid="w44cou_">{machineContent}</MachineSurface>
+        ) : null}
+      </AnimatePresence>
+      <MachineLoadingOverlay loadingTarget={loadingTarget} data-oid="8dvkvy4" />
+      <MachineVersionToggle data-oid="1t6pras" />
     </MachineModeContext.Provider>
   );
 }
@@ -203,15 +227,23 @@ export function MachineLink({
   const { switchMode } = useMachineMode();
 
   if (!href) {
-    return <span className={className}>{children}</span>;
+    return (
+      <span className={className} data-oid="q:_tk5_">
+        {children}
+      </span>
+    );
   }
 
   if (href.startsWith("/")) {
     return (
       <Link
         href={href}
-        className={cn("underline decoration-[var(--scaffold-line)] underline-offset-2", className)}
+        className={cn(
+          "underline decoration-[var(--scaffold-line)] underline-offset-2",
+          className,
+        )}
         onClick={() => switchMode("human")}
+        data-oid=":ki9bt4"
       >
         {children}
       </Link>
@@ -223,7 +255,11 @@ export function MachineLink({
       href={href}
       target="_blank"
       rel="noreferrer"
-      className={cn("underline decoration-[var(--scaffold-line)] underline-offset-2", className)}
+      className={cn(
+        "underline decoration-[var(--scaffold-line)] underline-offset-2",
+        className,
+      )}
+      data-oid="f1.lk-0"
     >
       {children}
     </a>

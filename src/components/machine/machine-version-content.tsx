@@ -1,6 +1,12 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { homepageCapabilities, homepageIdentitySupport, homepageSelectedWork, homepageSystemsDiagram, profileSummary } from "@/config/site-home";
+import {
+  homepageCapabilities,
+  homepageIdentitySupport,
+  homepageSelectedWork,
+  homepageSystemsDiagram,
+  profileSummary,
+} from "@/config/site-home";
 import { siteProfileConfig } from "@/config/site-profile";
 import { resumeData } from "@/config/site-resume";
 import { getAllArticles, getAllProjects } from "@/lib/content";
@@ -11,15 +17,16 @@ function asciiBox(lines: string[]) {
   const width = Math.max(...lines.map((line) => line.length));
   const top = `+${"-".repeat(width + 2)}+`;
 
-  return [top, ...lines.map((line) => `| ${line.padEnd(width, " ")} |`), top].join("\n");
+  return [
+    top,
+    ...lines.map((line) => `| ${line.padEnd(width, " ")} |`),
+    top,
+  ].join("\n");
 }
 
 function asciiTable(headers: string[], rows: string[][]) {
   const widths = headers.map((header, index) =>
-    Math.max(
-      header.length,
-      ...rows.map((row) => (row[index] ?? "").length)
-    )
+    Math.max(header.length, ...rows.map((row) => (row[index] ?? "").length)),
   );
 
   const border = `+${widths.map((width) => "-".repeat(width + 2)).join("+")}+`;
@@ -28,7 +35,13 @@ function asciiTable(headers: string[], rows: string[][]) {
       .map((cell, index) => (cell ?? "").padEnd(widths[index], " "))
       .join(" | ")} |`;
 
-  return [border, renderRow(headers), border, ...rows.map(renderRow), border].join("\n");
+  return [
+    border,
+    renderRow(headers),
+    border,
+    ...rows.map(renderRow),
+    border,
+  ].join("\n");
 }
 
 function buildMachineSource({
@@ -36,24 +49,31 @@ function buildMachineSource({
   articleLinks,
 }: {
   projectLinks: Array<{ title: string; href: string; description: string }>;
-  articleLinks: Array<{ title: string; href: string; description: string; date: string }>;
+  articleLinks: Array<{
+    title: string;
+    href: string;
+    description: string;
+    date: string;
+  }>;
 }) {
   const capabilityTable = asciiTable(
     ["SYSTEM", "EVIDENCE"],
     homepageCapabilities.map((capability) => [
       capability.title,
       capability.evidenceLabel ?? "-",
-    ])
+    ]),
   );
 
   const resumeTable = asciiTable(
     ["AREA", "CAPABILITIES"],
-    resumeData.skills.map((row) => [row.area, row.capabilities])
+    resumeData.skills.map((row) => [row.area, row.capabilities]),
   );
 
   const selectedWork = homepageSelectedWork
     .map((item) => {
-      const linkLine = item.href ? `- Link: [open](${item.href})` : "- Link: not public yet";
+      const linkLine = item.href
+        ? `- Link: [open](${item.href})`
+        : "- Link: not public yet";
 
       return [
         `### ${item.title}`,
@@ -66,11 +86,17 @@ function buildMachineSource({
     .join("\n\n");
 
   const projectIndex = projectLinks
-    .map((project) => `- [${project.title}](${project.href}) — ${project.description}`)
+    .map(
+      (project) =>
+        `- [${project.title}](${project.href}) — ${project.description}`,
+    )
     .join("\n");
 
   const articleIndex = articleLinks
-    .map((article) => `- [${article.title}](${article.href}) — ${article.date} — ${article.description}`)
+    .map(
+      (article) =>
+        `- [${article.title}](${article.href}) — ${article.date} — ${article.description}`,
+    )
     .join("\n");
 
   return `\`\`\`text
@@ -121,7 +147,7 @@ ${capabilityTable}
 ${homepageCapabilities
   .map(
     (capability) =>
-      `### ${capability.title}\n${capability.description}${capability.href ? `\n\nReference: [${capability.evidenceLabel}](${capability.href})` : ""}`
+      `### ${capability.title}\n${capability.description}${capability.href ? `\n\nReference: [${capability.evidenceLabel}](${capability.href})` : ""}`,
   )
   .join("\n\n")}
 
@@ -154,7 +180,10 @@ Certifications: ${resumeData.certifications}
 }
 
 export async function MachineVersionContent() {
-  const [projects, articles] = await Promise.all([getAllProjects(), getAllArticles()]);
+  const [projects, articles] = await Promise.all([
+    getAllProjects(),
+    getAllArticles(),
+  ]);
 
   const source = buildMachineSource({
     projectLinks: projects.map((project) => ({
@@ -171,7 +200,7 @@ export async function MachineVersionContent() {
   });
 
   return (
-    <MachineMdxContent>
+    <MachineMdxContent data-oid="hfqb_0:">
       <MDXRemote
         source={source}
         components={{
@@ -182,6 +211,7 @@ export async function MachineVersionContent() {
             remarkPlugins: [remarkGfm],
           },
         }}
+        data-oid="zm55eg8"
       />
     </MachineMdxContent>
   );

@@ -26,6 +26,7 @@ const NotificationViewport = React.forwardRef<
       className,
     )}
     {...rest}
+    data-oid='kp866je'
   />
 ));
 NotificationViewport.displayName = 'NotificationViewport';
@@ -97,27 +98,40 @@ const Notification = React.forwardRef<
         )}
         asChild
         {...rest}
+        data-oid='rwfb2lu'
       >
-        <Alert.Root variant={variant} status={status} size='large'>
-          <Alert.Icon as={Icon} aria-hidden='true' />
-          <div className='flex w-full flex-col gap-2.5'>
-            <div className='flex w-full flex-col gap-1'>
+        <Alert.Root
+          variant={variant}
+          status={status}
+          size='large'
+          data-oid='ywsl_md'
+        >
+          <Alert.Icon as={Icon} aria-hidden='true' data-oid='mc0ihel' />
+          <div className='flex w-full flex-col gap-2.5' data-oid='rzni8x5'>
+            <div className='flex w-full flex-col gap-1' data-oid='yz9mhsz'>
               {title && (
-                <NotificationPrimitives.Title className='text-label-sm'>
+                <NotificationPrimitives.Title
+                  className='text-label-sm'
+                  data-oid='ka1:snz'
+                >
                   {title}
                 </NotificationPrimitives.Title>
               )}
               {description && (
-                <NotificationPrimitives.Description>
+                <NotificationPrimitives.Description data-oid='oun7d9h'>
                   {description}
                 </NotificationPrimitives.Description>
               )}
             </div>
-            {action && <div className='flex items-center gap-2'>{action}</div>}
+            {action && (
+              <div className='flex items-center gap-2' data-oid='ob6jvth'>
+                {action}
+              </div>
+            )}
           </div>
           {!disableDismiss && (
-            <NotificationPrimitives.Close aria-label='Close'>
-              <Alert.CloseIcon />
+            <NotificationPrimitives.Close aria-label='Close' data-oid='iwto.88'>
+              <Alert.CloseIcon data-oid='bs5j9vz' />
             </NotificationPrimitives.Close>
           )}
         </Alert.Root>

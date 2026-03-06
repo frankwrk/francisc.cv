@@ -24,6 +24,7 @@ export const avatarVariants = tv({
       'relative flex shrink-0 items-center justify-center rounded-full',
       'select-none text-center uppercase',
     ],
+
     image: 'size-full rounded-full object-cover',
     indicator:
       'absolute flex size-8 items-center justify-center drop-shadow-[0_2px_4px_#1b1c1d0a]',
@@ -129,6 +130,7 @@ export const avatarVariants = tv({
       },
     },
   ],
+
   defaultVariants: {
     size: '80',
     color: 'gray',
@@ -168,12 +170,16 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
     // use placeholder icon if no children provided
     if (!children) {
       return (
-        <div className={root({ class: className })} {...rest}>
-          <AvatarImage asChild>
+        <div
+          className={root({ class: className })}
+          {...rest}
+          data-oid='1g48.0m'
+        >
+          <AvatarImage asChild data-oid='8ty:zg.'>
             {placeholderType === 'company' ? (
-              <IconEmptyCompany />
+              <IconEmptyCompany data-oid='th58fcz' />
             ) : (
-              <IconEmptyUser />
+              <IconEmptyUser data-oid='z77t6uk' />
             )}
           </AvatarImage>
         </div>
@@ -193,6 +199,7 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
+        data-oid='nmhu.6l'
       >
         {extendedChildren}
       </Component>
@@ -216,6 +223,7 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
         ref={forwardedRef}
         className={image({ class: className })}
         {...rest}
+        data-oid='92pioj9'
       />
     );
   },
@@ -229,9 +237,7 @@ function AvatarIndicator({
   position = 'bottom',
   ...rest
 }: AvatarSharedProps &
-  React.HTMLAttributes<HTMLDivElement> & {
-    position?: 'top' | 'bottom';
-  }) {
+  React.HTMLAttributes<HTMLDivElement> & { position?: 'top' | 'bottom' }) {
   const { indicator } = avatarVariants({ size, color });
 
   return (
@@ -241,6 +247,7 @@ function AvatarIndicator({
         'bottom-0 origin-bottom-right': position === 'bottom',
       })}
       {...rest}
+      data-oid='vgk_qss'
     />
   );
 }
@@ -271,6 +278,7 @@ function AvatarStatus({
     <div
       className={avatarStatusVariants({ status, class: className })}
       {...rest}
+      data-oid='iso_7zo'
     />
   );
 }
@@ -294,6 +302,7 @@ const AvatarBrandLogo = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='40linxh'
     />
   );
 });
@@ -310,6 +319,7 @@ function AvatarNotification({
         className,
       )}
       {...rest}
+      data-oid='-275.n0'
     />
   );
 }

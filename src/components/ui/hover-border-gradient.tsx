@@ -68,21 +68,23 @@ export function HoverBorderGradient<TTag extends React.ElementType = "button">({
       className={cn(
         "relative flex rounded-full border content-center items-center flex-col flex-nowrap gap-10 h-min justify-center overflow-visible p-px decoration-clone w-fit transition duration-500",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--scaffold-ruler)]",
-        containerClassName
+        containerClassName,
       )}
       {...props}
+      data-oid="59t7i_:"
     >
       <div
         className={cn(
           "z-10 w-auto rounded-[inherit] bg-[var(--scaffold-surface)] px-4 py-2 text-[var(--scaffold-toggle-text-active)]",
-          className
+          className,
         )}
+        data-oid="racrm_."
       >
         {children}
       </div>
       <motion.div
         className={cn(
-          "flex-none inset-0 overflow-hidden absolute z-0 rounded-[inherit]"
+          "flex-none inset-0 overflow-hidden absolute z-0 rounded-[inherit]",
         )}
         style={{
           filter: "blur(2px)",
@@ -95,12 +97,20 @@ export function HoverBorderGradient<TTag extends React.ElementType = "button">({
           background: prefersReducedMotion
             ? movingMap["TOP"]
             : hovered
-            ? [movingMap[direction], highlight]
-            : movingMap[direction],
+              ? [movingMap[direction], highlight]
+              : movingMap[direction],
         }}
-        transition={{ ease: "linear", duration: prefersReducedMotion ? 0 : (duration ?? 1) }}
+        transition={{
+          ease: "linear",
+          duration: prefersReducedMotion ? 0 : (duration ?? 1),
+        }}
+        data-oid="doxrq2j"
       />
-      <div className="absolute inset-[2px] z-[1] flex-none rounded-[100px] bg-[var(--scaffold-surface)]" />
+
+      <div
+        className="absolute inset-[2px] z-[1] flex-none rounded-[100px] bg-[var(--scaffold-surface)]"
+        data-oid="diarr7i"
+      />
     </Tag>
   );
 }

@@ -15,6 +15,7 @@ export const dividerVariants = tv({
         // before
         'before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:-translate-y-1/2 before:bg-stroke-soft-200',
       ],
+
       'line-text': [
         // base
         'gap-2.5',
@@ -24,6 +25,7 @@ export const dividerVariants = tv({
         // after
         'after:h-px after:w-full after:flex-1 after:bg-stroke-soft-200',
       ],
+
       content: [
         // base
         'gap-2.5',
@@ -32,11 +34,13 @@ export const dividerVariants = tv({
         // after
         'after:h-px after:w-full after:flex-1 after:bg-stroke-soft-200',
       ],
+
       text: [
         // base
         'px-2 py-1',
         'text-subheading-xs text-text-soft-400',
       ],
+
       'solid-text': [
         // base
         'bg-bg-weak-50 px-5 py-1.5 uppercase',
@@ -60,6 +64,7 @@ function Divider({
       role='separator'
       className={dividerVariants({ variant, class: className })}
       {...rest}
+      data-oid='g1tsdu.'
     />
   );
 }

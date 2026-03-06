@@ -41,7 +41,12 @@ const ProgressBarRoot = React.forwardRef<HTMLDivElement, ProgressBarRootProps>(
     const safeValue = Math.min(max, Math.max(value, 0));
 
     return (
-      <div ref={forwardedRef} className={root({ class: className })} {...rest}>
+      <div
+        ref={forwardedRef}
+        className={root({ class: className })}
+        {...rest}
+        data-oid='lc1wv45'
+      >
         <div
           className={progress()}
           style={{
@@ -50,6 +55,7 @@ const ProgressBarRoot = React.forwardRef<HTMLDivElement, ProgressBarRootProps>(
           aria-valuenow={value}
           aria-valuemax={max}
           role='progressbar'
+          data-oid='7bfnv6f'
         />
       </div>
     );

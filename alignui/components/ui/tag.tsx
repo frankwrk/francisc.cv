@@ -19,18 +19,21 @@ export const tagVariants = tv({
       'transition duration-200 ease-out',
       'ring-1 ring-inset',
     ],
+
     icon: [
       // base
       '-mx-1 size-4 shrink-0 text-text-soft-400 transition duration-200 ease-out',
       // hover
       'group-hover/tag:text-text-sub-600',
     ],
+
     dismissButton: [
       // base
       'group/dismiss-button -ml-1.5 -mr-1 size-4 shrink-0',
       // focus
       'focus:outline-none',
     ],
+
     dismissIcon: 'size-4 text-text-soft-400 transition duration-200 ease-out',
   },
   variants: {
@@ -44,6 +47,7 @@ export const tagVariants = tv({
           // focus-within
           'focus-within:bg-bg-weak-50 focus-within:ring-transparent',
         ],
+
         dismissIcon: [
           // hover
           'group-hover/dismiss-button:text-text-sub-600',
@@ -108,6 +112,7 @@ const TagRoot = React.forwardRef<HTMLDivElement, TagProps>(
         className={root({ class: className })}
         aria-disabled={disabled}
         {...rest}
+        data-oid='.9hh5.o'
       >
         {extendedChildren}
       </Component>
@@ -126,7 +131,13 @@ function TagIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = tagVariants({ variant, disabled });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid='joj.-7u'
+    />
+  );
 }
 TagIcon.displayName = TAG_ICON_NAME;
 
@@ -151,12 +162,14 @@ const TagDismissButton = React.forwardRef<
         ref={forwardedRef}
         className={dismissButton({ class: className })}
         {...rest}
+        data-oid='67zxnqb'
       >
         {children ?? (
           <TagDismissIcon
             variant={variant}
             disabled={disabled}
             as={RiCloseFill}
+            data-oid='i1t1mac'
           />
         )}
       </Component>
@@ -175,7 +188,13 @@ function TagDismissIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { dismissIcon } = tagVariants({ variant, disabled });
 
-  return <Component className={dismissIcon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={dismissIcon({ class: className })}
+      {...rest}
+      data-oid='sg6lgqp'
+    />
+  );
 }
 TagDismissIcon.displayName = TAG_DISMISS_ICON_NAME;
 

@@ -36,6 +36,7 @@ const DrawerOverlay = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='9vahu63'
     />
   );
 });
@@ -46,8 +47,8 @@ const DrawerContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...rest }, forwardedRef) => {
   return (
-    <DrawerPortal>
-      <DrawerOverlay>
+    <DrawerPortal data-oid='y0ss.ph'>
+      <DrawerOverlay data-oid='npmqhe.'>
         <DialogPrimitive.Content
           ref={forwardedRef}
           className={cn(
@@ -62,8 +63,11 @@ const DrawerContent = React.forwardRef<
             className,
           )}
           {...rest}
+          data-oid='e8:fdno'
         >
-          <div className='relative flex size-full flex-col'>{children}</div>
+          <div className='relative flex size-full flex-col' data-oid='to.b9md'>
+            {children}
+          </div>
         </DialogPrimitive.Content>
       </DrawerOverlay>
     </DrawerPortal>
@@ -76,9 +80,7 @@ function DrawerHeader({
   children,
   showCloseButton = true,
   ...rest
-}: React.HTMLAttributes<HTMLDivElement> & {
-  showCloseButton?: boolean;
-}) {
+}: React.HTMLAttributes<HTMLDivElement> & { showCloseButton?: boolean }) {
   return (
     <div
       className={cn(
@@ -86,13 +88,14 @@ function DrawerHeader({
         className,
       )}
       {...rest}
+      data-oid='.qgwlbr'
     >
       {children}
 
       {showCloseButton && (
-        <DrawerClose asChild>
-          <CompactButton.Root variant='ghost' size='large'>
-            <CompactButton.Icon as={RiCloseLine} />
+        <DrawerClose asChild data-oid='kq-jihk'>
+          <CompactButton.Root variant='ghost' size='large' data-oid='apz8xt9'>
+            <CompactButton.Icon as={RiCloseLine} data-oid='nj8-iwj' />
           </CompactButton.Root>
         </DrawerClose>
       )}
@@ -110,6 +113,7 @@ const DrawerTitle = React.forwardRef<
       ref={forwardedRef}
       className={cn('flex-1 text-label-lg text-text-strong-950', className)}
       {...rest}
+      data-oid='7llkwl6'
     />
   );
 });
@@ -121,7 +125,7 @@ function DrawerBody({
   ...rest
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn('flex-1', className)} {...rest}>
+    <div className={cn('flex-1', className)} {...rest} data-oid='pd8bdy_'>
       {children}
     </div>
   );
@@ -139,6 +143,7 @@ function DrawerFooter({
         className,
       )}
       {...rest}
+      data-oid='0rx29ck'
     />
   );
 }

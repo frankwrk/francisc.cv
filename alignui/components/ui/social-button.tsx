@@ -18,6 +18,7 @@ export const socialButtonVariants = tv({
       // focus
       'focus:outline-none',
     ],
+
     icon: 'relative z-10 -mx-1.5 size-5 shrink-0',
   },
   variants: {
@@ -212,6 +213,7 @@ const SocialButtonRoot = React.forwardRef<HTMLButtonElement, SocialButtonProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
+        data-oid='g81g2hj'
       >
         {extendedChildren}
       </Component>
@@ -230,7 +232,13 @@ function SocialButtonIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = socialButtonVariants({ brand, mode });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid='i0zscdg'
+    />
+  );
 }
 SocialButtonIcon.displayName = SOCIAL_BUTTON_ICON_NAME;
 

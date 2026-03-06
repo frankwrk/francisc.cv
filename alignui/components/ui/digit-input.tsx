@@ -28,9 +28,11 @@ function DigitInput({
           disabled={disabled}
           hasError={hasError}
           {...inputProps}
+          data-oid='b2.5.-6'
         />
       )}
       {...rest}
+      data-oid='maibsa6'
     />
   );
 }
@@ -63,6 +65,7 @@ const DigitInputSlot = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='00vmgt0'
     />
   );
 });

@@ -10,8 +10,13 @@ const Table = React.forwardRef<
   React.TableHTMLAttributes<HTMLTableElement>
 >(({ className, ...rest }, forwardedRef) => {
   return (
-    <div className={cn('w-full overflow-x-auto', className)}>
-      <table ref={forwardedRef} className='w-full' {...rest} />
+    <div className={cn('w-full overflow-x-auto', className)} data-oid='topnbh2'>
+      <table
+        ref={forwardedRef}
+        className='w-full'
+        {...rest}
+        data-oid='5i:._r1'
+      />
     </div>
   );
 });
@@ -21,7 +26,7 @@ const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ ...rest }, forwardedRef) => {
-  return <thead ref={forwardedRef} {...rest} />;
+  return <thead ref={forwardedRef} {...rest} data-oid='a4ehb9j' />;
 });
 TableHeader.displayName = 'TableHeader';
 
@@ -37,6 +42,7 @@ const TableHead = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='iz:2enx'
     />
   );
 });
@@ -57,9 +63,10 @@ const TableBody = React.forwardRef<
         style={{
           height: spacing,
         }}
+        data-oid='_s6_j9_'
       />
 
-      <tbody ref={forwardedRef} {...rest} />
+      <tbody ref={forwardedRef} {...rest} data-oid='a_awvg6' />
     </>
   );
 });
@@ -70,7 +77,12 @@ const TableRow = React.forwardRef<
   React.HTMLAttributes<HTMLTableRowElement>
 >(({ className, ...rest }, forwardedRef) => {
   return (
-    <tr ref={forwardedRef} className={cn('group/row', className)} {...rest} />
+    <tr
+      ref={forwardedRef}
+      className={cn('group/row', className)}
+      {...rest}
+      data-oid='aq2ckul'
+    />
   );
 });
 TableRow.displayName = 'TableRow';
@@ -83,12 +95,13 @@ function TableRowDivider({
   dividerClassName?: string;
 }) {
   return (
-    <tr aria-hidden='true' className={className}>
-      <td colSpan={999} className='py-1'>
+    <tr aria-hidden='true' className={className} data-oid='thspj3w'>
+      <td colSpan={999} className='py-1' data-oid='cxwsxsr'>
         <Divider.Root
           variant='line-spacing'
           className={dividerClassName}
           {...rest}
+          data-oid='lyjpl_w'
         />
       </td>
     </tr>
@@ -108,6 +121,7 @@ const TableCell = React.forwardRef<
         className,
       )}
       {...rest}
+      data-oid='okk13d0'
     />
   );
 });
@@ -121,6 +135,7 @@ const TableCaption = React.forwardRef<
     ref={forwardedRef}
     className={cn('mt-4 text-paragraph-sm text-text-sub-600', className)}
     {...rest}
+    data-oid='.kqvlm1'
   />
 ));
 TableCaption.displayName = 'TableCaption';

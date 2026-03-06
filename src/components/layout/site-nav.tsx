@@ -51,7 +51,9 @@ export function SiteNav() {
   }, [isOpen]);
 
   function isActive(href: string) {
-    return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
+    return href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(href + "/");
   }
 
   function linkCls(href: string) {
@@ -60,16 +62,20 @@ export function SiteNav() {
       "rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]",
       isActive(href)
         ? "text-[var(--scaffold-toggle-text-active)]"
-        : "text-[var(--scaffold-ruler)] hover:text-[var(--scaffold-toggle-text-active)]"
+        : "text-[var(--scaffold-ruler)] hover:text-[var(--scaffold-toggle-text-active)]",
     );
   }
 
   return (
     // No `relative` here — the absolute dropdown resolves to the canvas column instead,
     // giving it the full canvas width automatically.
-    <div ref={navRef}>
+    <div ref={navRef} data-oid="aij:vuw">
       {/* Desktop: inline nav */}
-      <nav aria-label="Main navigation" className="hidden items-center gap-4 md:flex md:gap-5">
+      <nav
+        aria-label="Main navigation"
+        className="hidden items-center gap-4 md:flex md:gap-5"
+        data-oid="s75en:9"
+      >
         {links.map(({ label, href, flip }) => (
           <Link
             key={href}
@@ -77,18 +83,32 @@ export function SiteNav() {
             className={linkCls(href)}
             onClick={() => trigger([30])}
             {...(flip ? { "aria-label": label } : {})}
+            data-oid="628yh7e"
           >
             {flip ? (
-              <span className="relative inline-block" aria-hidden="true">
-                <span className="invisible">
-                  {flipNavWords.reduce((a, b) => (a.length >= b.length ? a : b))}
+              <span
+                className="relative inline-block"
+                aria-hidden="true"
+                data-oid="m6ez.ik"
+              >
+                <span className="invisible" data-oid="yrquens">
+                  {flipNavWords.reduce((a, b) =>
+                    a.length >= b.length ? a : b,
+                  )}
                 </span>
-                <span className="absolute inset-0 flex items-center">
-                  <FlipWords words={flipNavWords} duration={2500} />
+                <span
+                  className="absolute inset-0 flex items-center"
+                  data-oid="c4kdtx5"
+                >
+                  <FlipWords
+                    words={flipNavWords}
+                    duration={2500}
+                    data-oid="dtz55w0"
+                  />
                 </span>
               </span>
             ) : (
-              <span>{label}</span>
+              <span data-oid="g5qh88j">{label}</span>
             )}
           </Link>
         ))}
@@ -104,32 +124,41 @@ export function SiteNav() {
         aria-label="Toggle navigation"
         aria-controls="mobile-nav"
         className="flex min-h-[44px] min-w-[44px] items-center rounded-sm text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors [font-family:var(--font-geist-pixel-circle)] hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] md:hidden"
+        data-oid="-9xqm1b"
       >
         {isOpen ? "CLOSE" : "MENU"}
       </button>
 
       {/* Mobile: full-width dropdown panel */}
-      <AnimatePresence>
+      <AnimatePresence data-oid="14do28i">
         {isOpen && (
           <motion.div
             id="mobile-nav"
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: prefersReducedMotion ? 0 : -4 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.15, ease: "easeOut" }}
+            transition={{
+              duration: prefersReducedMotion ? 0 : 0.15,
+              ease: "easeOut",
+            }}
             className="absolute left-0 right-0 top-[50px] z-50 border-b border-[var(--scaffold-line)] bg-[var(--scaffold-surface)] md:hidden"
+            data-oid="yovrgsk"
           >
-            <nav aria-label="Mobile navigation">
+            <nav aria-label="Mobile navigation" data-oid="hq-jov-">
               {links.map(({ label, href }, i) => (
                 <Link
                   key={href}
                   href={href}
-                  onClick={() => { trigger([30]); setIsOpen(false); }}
+                  onClick={() => {
+                    trigger([30]);
+                    setIsOpen(false);
+                  }}
                   className={cn(
                     linkCls(href),
                     "flex items-center px-5 py-4",
-                    i > 0 && "border-t border-[var(--scaffold-line)]"
+                    i > 0 && "border-t border-[var(--scaffold-line)]",
                   )}
+                  data-oid="yshlga0"
                 >
                   {label}
                 </Link>

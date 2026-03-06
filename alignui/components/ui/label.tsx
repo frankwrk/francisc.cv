@@ -24,6 +24,7 @@ const LabelRoot = React.forwardRef<
       )}
       aria-disabled={disabled}
       {...rest}
+      data-oid='_b7100j'
     />
   );
 });
@@ -43,6 +44,7 @@ function LabelAsterisk({
         className,
       )}
       {...rest}
+      data-oid='qf7sotb'
     >
       {children || '*'}
     </span>
@@ -63,6 +65,7 @@ function LabelSub({
         className,
       )}
       {...rest}
+      data-oid='.556drq'
     >
       {children}
     </span>

@@ -21,6 +21,7 @@ export const fancyButtonVariants = tv({
       'disabled:pointer-events-none disabled:text-text-disabled-300',
       'disabled:bg-bg-weak-50 disabled:bg-none disabled:shadow-none disabled:before:hidden disabled:after:hidden',
     ],
+
     icon: 'relative z-10 size-5 shrink-0',
   },
   variants: {
@@ -78,6 +79,7 @@ export const fancyButtonVariants = tv({
       },
     },
   ],
+
   defaultVariants: {
     variant: 'neutral',
     size: 'medium',
@@ -115,6 +117,7 @@ const FancyButtonRoot = React.forwardRef<HTMLButtonElement, FancyButtonProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
+        data-oid=':6lov9g'
       >
         {extendedChildren}
       </Component>
@@ -133,7 +136,13 @@ function FancyButtonIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = fancyButtonVariants({ variant, size });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid='-s0xhy_'
+    />
+  );
 }
 FancyButtonIcon.displayName = FANCY_BUTTON_ICON_NAME;
 

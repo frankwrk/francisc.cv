@@ -24,6 +24,7 @@ const Textarea = React.forwardRef<
           !simple && [
             'pointer-events-auto h-full min-h-[82px] bg-transparent pl-3 pr-2.5 pt-2.5',
           ],
+
           simple && [
             'min-h-28 rounded-xl bg-bg-white-0 px-3 py-2.5 shadow-regular-xs',
             'ring-1 ring-inset ring-stroke-soft-200',
@@ -36,14 +37,17 @@ const Textarea = React.forwardRef<
               // focus
               'focus:shadow-button-important-focus focus:ring-stroke-strong-950',
             ],
+
             hasError && [
               // base
               'ring-error-base',
               // focus
               'focus:shadow-button-error-focus focus:ring-error-base',
             ],
+
             disabled && ['bg-bg-weak-50 ring-transparent'],
           ],
+
           !disabled && [
             // placeholder
             'placeholder:select-none placeholder:text-text-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out',
@@ -54,16 +58,19 @@ const Textarea = React.forwardRef<
             // focus placeholder
             'focus:placeholder:text-text-sub-600',
           ],
+
           disabled && [
             // disabled
             'text-text-disabled-300 placeholder:text-text-disabled-300',
           ],
         ],
+
         className,
       )}
       ref={forwardedRef}
       disabled={disabled}
       {...rest}
+      data-oid='zuvz2y3'
     />
   );
 });
@@ -71,17 +78,22 @@ Textarea.displayName = TEXTAREA_NAME;
 
 function ResizeHandle() {
   return (
-    <div className='pointer-events-none size-3 cursor-s-resize'>
+    <div
+      className='pointer-events-none size-3 cursor-s-resize'
+      data-oid='y:-ls_q'
+    >
       <svg
         width='12'
         height='12'
         viewBox='0 0 12 12'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
+        data-oid='7rsy.wo'
       >
         <path
           d='M9.11111 2L2 9.11111M10 6.44444L6.44444 10'
           className='stroke-text-soft-400'
+          data-oid='kqt-gy.'
         />
       </svg>
     </div>
@@ -112,7 +124,13 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     if (simple) {
       return (
-        <Textarea ref={forwardedRef} simple hasError={hasError} {...rest} />
+        <Textarea
+          ref={forwardedRef}
+          simple
+          hasError={hasError}
+          {...rest}
+          data-oid='s9xfse1'
+        />
       );
     }
 
@@ -129,30 +147,48 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             // disabled
             'has-[[disabled]]:pointer-events-none has-[[disabled]]:bg-bg-weak-50 has-[[disabled]]:ring-transparent',
           ],
+
           !hasError && [
             // hover
             'hover:[&:not(:focus-within)]:ring-transparent',
             // focus
             'focus-within:shadow-button-important-focus focus-within:ring-stroke-strong-950',
           ],
+
           hasError && [
             // base
             'ring-error-base',
             // focus
             'focus-within:shadow-button-error-focus focus-within:ring-error-base',
           ],
+
           containerClassName,
         )}
+        data-oid='4qj_ywr'
       >
-        <div className='grid'>
-          <div className='pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]'>
-            <Textarea ref={forwardedRef} hasError={hasError} {...rest} />
-            <div className='pointer-events-none flex items-center justify-end gap-1.5 pl-3 pr-2.5'>
+        <div className='grid' data-oid='ajt2dii'>
+          <div
+            className='pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]'
+            data-oid='vzc-vhu'
+          >
+            <Textarea
+              ref={forwardedRef}
+              hasError={hasError}
+              {...rest}
+              data-oid='cw45pfp'
+            />
+            <div
+              className='pointer-events-none flex items-center justify-end gap-1.5 pl-3 pr-2.5'
+              data-oid='.s_ogfc'
+            >
               {children}
-              <ResizeHandle />
+              <ResizeHandle data-oid='9zpfmq2' />
             </div>
           </div>
-          <div className='min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]' />
+          <div
+            className='min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]'
+            data-oid='sxam_tf'
+          />
         </div>
       </div>
     );
@@ -164,10 +200,7 @@ function CharCounter({
   current,
   max,
   className,
-}: {
-  current?: number;
-  max?: number;
-} & React.HTMLAttributes<HTMLSpanElement>) {
+}: { current?: number; max?: number } & React.HTMLAttributes<HTMLSpanElement>) {
   if (current === undefined || max === undefined) return null;
 
   const isError = current > max;
@@ -183,6 +216,7 @@ function CharCounter({
         },
         className,
       )}
+      data-oid='pvpu-qh'
     >
       {current}/{max}
     </span>

@@ -20,6 +20,7 @@ export const buttonVariants = tv({
       // disabled
       'disabled:pointer-events-none disabled:bg-bg-weak-50 disabled:text-text-disabled-300 disabled:ring-transparent',
     ],
+
     icon: [
       // base
       'flex size-5 shrink-0 items-center justify-center',
@@ -282,6 +283,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
+        data-oid='ny3oa9-'
       >
         {extendedChildren}
       </Component>
@@ -301,7 +303,13 @@ function ButtonIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = buttonVariants({ mode, variant, size });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid='t1m3tw4'
+    />
+  );
 }
 ButtonIcon.displayName = BUTTON_ICON_NAME;
 

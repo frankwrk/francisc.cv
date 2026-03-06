@@ -392,6 +392,7 @@ export const badgeVariants = tv({
         'pink',
         'teal',
       ],
+
       class: {
         root: [
           'ring-1 ring-inset ring-stroke-soft-200',
@@ -453,6 +454,7 @@ const BadgeRoot = React.forwardRef<HTMLDivElement, BadgeRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
+        data-oid='l-s-7_d'
       >
         {extendedChildren}
       </Component>
@@ -472,7 +474,13 @@ function BadgeIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = badgeVariants({ size, variant, color });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid='undm5.u'
+    />
+  );
 }
 BadgeIcon.displayName = BADGE_ICON_NAME;
 
@@ -482,7 +490,9 @@ type BadgeDotProps = BadgeSharedProps &
 function BadgeDot({ size, variant, color, className, ...rest }: BadgeDotProps) {
   const { dot } = badgeVariants({ size, variant, color });
 
-  return <div className={dot({ class: className })} {...rest} />;
+  return (
+    <div className={dot({ class: className })} {...rest} data-oid='6vkd1hy' />
+  );
 }
 BadgeDot.displayName = BADGE_DOT_NAME;
 

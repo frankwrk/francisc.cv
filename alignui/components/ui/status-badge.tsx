@@ -16,6 +16,7 @@ export const statusBadgeVariants = tv({
       'inline-flex h-6 items-center justify-center gap-2 whitespace-nowrap rounded-md px-2 text-label-xs',
       'has-[>.dot]:gap-1.5',
     ],
+
     icon: '-mx-1 size-4',
     dot: [
       // base
@@ -80,6 +81,7 @@ export const statusBadgeVariants = tv({
       },
     },
   ],
+
   defaultVariants: {
     status: 'disabled',
     variant: 'stroke',
@@ -120,6 +122,7 @@ const StatusBadgeRoot = React.forwardRef<HTMLDivElement, StatusBadgeRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
+        data-oid='l1:ruj-'
       >
         {extendedChildren}
       </Component>
@@ -137,7 +140,9 @@ function StatusBadgeIcon<T extends React.ElementType = 'div'>({
   const Component = as || 'div';
   const { icon } = statusBadgeVariants({ variant, status });
 
-  return <Component className={icon({ class: className })} />;
+  return (
+    <Component className={icon({ class: className })} data-oid='lvo584h' />
+  );
 }
 StatusBadgeIcon.displayName = STATUS_BADGE_ICON_NAME;
 
@@ -149,7 +154,9 @@ function StatusBadgeDot({
 }: StatusBadgeSharedProps & React.HTMLAttributes<HTMLDivElement>) {
   const { dot } = statusBadgeVariants({ variant, status });
 
-  return <div className={dot({ class: className })} {...rest} />;
+  return (
+    <div className={dot({ class: className })} {...rest} data-oid='_zry2bo' />
+  );
 }
 StatusBadgeDot.displayName = STATUS_BADGE_DOT_NAME;
 

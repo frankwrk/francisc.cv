@@ -16,6 +16,7 @@ export const tooltipVariants = tv({
       'z-50 shadow-tooltip',
       'animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
     ],
+
     arrow:
       '-translate-y-1/2 -rotate-45 border [clip-path:polygon(0_100%,0_0,100%_100%)]',
   },
@@ -76,6 +77,7 @@ export const tooltipVariants = tv({
       },
     },
   ],
+
   defaultVariants: {
     size: 'small',
     variant: 'dark',
@@ -97,16 +99,17 @@ const TooltipContent = React.forwardRef<
     });
 
     return (
-      <TooltipPrimitive.Portal>
+      <TooltipPrimitive.Portal data-oid='2hf4v:.'>
         <TooltipPrimitive.Content
           ref={forwardedRef}
           sideOffset={sideOffset}
           className={content({ class: className })}
           {...rest}
+          data-oid='ev9t34j'
         >
           {children}
-          <TooltipPrimitive.Arrow asChild>
-            <div className={arrow()} />
+          <TooltipPrimitive.Arrow asChild data-oid='5sboph6'>
+            <div className={arrow()} data-oid='zhi.hja' />
           </TooltipPrimitive.Arrow>
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>

@@ -15,11 +15,12 @@ const Switch = React.forwardRef<
     <SwitchPrimitives.Root
       className={cn(
         "group/switch block h-5 w-8 shrink-0 p-0.5 outline-none focus:outline-none",
-        className
+        className,
       )}
       ref={forwardedRef}
       disabled={disabled}
       {...rest}
+      data-oid="084n9_l"
     >
       <div
         className={cn(
@@ -34,8 +35,12 @@ const Switch = React.forwardRef<
             "group-active:data-[state=checked]/switch:bg-primary-base",
             "group-focus/switch:outline-none",
           ],
-          disabled && ["bg-bg-white-0 p-[3px] ring-1 ring-inset ring-stroke-soft-200"]
+
+          disabled && [
+            "bg-bg-white-0 p-[3px] ring-1 ring-inset ring-stroke-soft-200",
+          ],
         )}
+        data-oid="an-:5eg"
       >
         <SwitchPrimitives.Thumb
           className={cn(
@@ -48,9 +53,11 @@ const Switch = React.forwardRef<
               "after:absolute after:inset-y-0 after:left-1/2 after:w-3 after:-translate-x-1/2 after:rounded-full after:shadow-switch-thumb",
               "group-active/switch:scale-[.833]",
             ],
-            disabled && ["size-2.5 rounded-full bg-bg-soft-200 shadow-none"]
+
+            disabled && ["size-2.5 rounded-full bg-bg-soft-200 shadow-none"],
           )}
           style={thumbMaskStyle}
+          data-oid="uwq8.._"
         />
       </div>
     </SwitchPrimitives.Root>

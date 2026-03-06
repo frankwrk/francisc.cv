@@ -11,7 +11,10 @@ import {
 } from "geist/font/pixel";
 import { SiteScaffold } from "@/components/layout/site-scaffold";
 import { MachineVersionContent } from "@/components/machine/machine-version-content";
-import { createPersonSchema, homepageIdentitySupport } from "@/config/site-home";
+import {
+  createPersonSchema,
+  homepageIdentitySupport,
+} from "@/config/site-home";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteUrl } from "@/config/site-url";
 import { DialRoot } from "dialkit";
@@ -19,10 +22,8 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "dialkit/styles.css";
 import "./globals.css";
-
 const siteName = "francisc.cv";
 const siteDescription = homepageIdentitySupport.description;
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -61,43 +62,54 @@ export const metadata: Metadata = {
     canonical: siteUrl,
   },
 };
-
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "oklch(100% 0 89.88)" },
-    { media: "(prefers-color-scheme: dark)", color: "oklch(26.0325% 0 89.88)" },
+    {
+      media: "(prefers-color-scheme: light)",
+      color: "oklch(100% 0 89.88)",
+    },
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: "oklch(26.0325% 0 89.88)",
+    },
   ],
 };
-
 const personSchema = createPersonSchema();
-
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: ReactNode;
-}>) {
+}: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
+    <html lang="en" suppressHydrationWarning data-oid="_x6w6a_">
+      <head data-oid="-pg:75p">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personSchema),
+          }}
+          data-oid="k3kq0vs"
         />
       </head>
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} ${GeistPixelCircle.variable} ${GeistPixelTriangle.variable} ${GeistPixelLine.variable}`}
+        data-oid="f2allvw"
       >
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem={false}
           disableTransitionOnChange
+          data-oid="x08uk99"
         >
-          <SiteScaffold machineContent={<MachineVersionContent />}>{children}</SiteScaffold>
-          <DialRoot />
+          <SiteScaffold
+            machineContent={<MachineVersionContent data-oid="nrgiw42" />}
+            data-oid="dd_hx.4"
+          >
+            {children}
+          </SiteScaffold>
+          <DialRoot data-oid="ckr32k2" />
         </ThemeProvider>
-        <Analytics />
-        <SpeedInsights />
+        <Analytics data-oid=".vpe1uj" />
+        <SpeedInsights data-oid="3f2dzp:" />
       </body>
     </html>
   );

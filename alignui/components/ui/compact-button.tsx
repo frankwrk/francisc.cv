@@ -20,6 +20,7 @@ export const compactButtonVariants = tv({
       // focus
       'focus:outline-none',
     ],
+
     icon: '',
   },
   variants: {
@@ -122,6 +123,7 @@ const CompactButtonRoot = React.forwardRef<
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
+        data-oid=':e.59-:'
       >
         {extendedChildren}
       </Component>
@@ -140,7 +142,13 @@ function CompactButtonIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = compactButtonVariants({ variant, size });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  return (
+    <Component
+      className={icon({ class: className })}
+      {...rest}
+      data-oid='zf4:ljl'
+    />
+  );
 }
 CompactButtonIcon.displayName = COMPACT_BUTTON_ICON_NAME;
 
