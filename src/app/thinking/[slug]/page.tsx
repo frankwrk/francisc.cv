@@ -3,13 +3,14 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getAllArticles, getArticleBySlug } from "@/lib/content";
+import { getAllArticles, getArtAssignmentKey, getArticleBySlug } from "@/lib/content";
 import { Callout } from "@/components/mdx/callout";
 import { Figure } from "@/components/mdx/figure";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { ArtCanvas } from "@/components/ui/art-canvas";
 import { siteUrl } from "@/config/site-url";
 import { artAssignments } from "@/config/art-assignments";
+import { getAssignmentRecordValue } from "@/lib/art-assignments";
 
 export async function generateStaticParams() {
   const articles = await getAllArticles();
@@ -43,6 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ThinkingDetailPage({ params }: Props) {
   const { slug } = await params;
   const { meta, source } = await getArticleBySlug(slug);
+  const assignmentKey = getArtAssignmentKey("thinking", slug);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -79,8 +81,13 @@ export default async function ThinkingDetailPage({ params }: Props) {
           <div className="absolute inset-0" data-oid="ivtv9fl">
             <ArtCanvas
               slug={slug}
+              assignmentKey={assignmentKey}
               height={280}
-              serverConfig={artAssignments[slug] ?? null}
+              serverConfig={getAssignmentRecordValue(
+                artAssignments,
+                assignmentKey,
+                slug,
+              )}
               showEditorLink
               data-oid="un6n2a4"
             />

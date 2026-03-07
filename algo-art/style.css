@@ -1,10 +1,10 @@
 body {
   margin: 0;
   padding: 0;
-  gap: 0;
   background: #efefef;
   font-family: monospace;
-  position: fixed;
+  min-height: 100vh;
+  position: relative;
 }
 
 .isTouchDevice .message {
@@ -86,7 +86,6 @@ canvas {
   width: 100%;
   height: 63vw;
   position: relative;
-  outline: 1px solid #ff000022;
 }
 
 @media (min-width: 820px) {

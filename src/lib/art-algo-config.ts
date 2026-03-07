@@ -82,7 +82,7 @@ export const ALGO_ART_PROPS_META: AlgoArtPropMeta[] = [
   { key: "twirl", label: "Twirl", type: "number", increment: 0.03, range: [0, 0.01], default: 0 },
   { key: "freq", label: "Freq", type: "number", increment: 0.01, range: [0.4, 6], default: 1 },
   { key: "kaleids", label: "Kaleids", type: "number", increment: 0.1, range: [0, 10], default: 1 },
-  { key: "velocity", label: "Velocity", type: "number", increment: 0.03, range: [1, 1], default: 1 },
+  { key: "velocity", label: "Velocity", type: "number", increment: 0.03, range: [0, 2], default: 1 },
   { key: "axis", label: "Axis", type: "axis", default: "x", enums: ["x", "y", "xy"] },
   { key: "isRing", label: "Ring", type: "boolean", default: false },
   { key: "isDial", label: "Dial", type: "boolean", default: false },
@@ -92,24 +92,65 @@ export const ALGO_ART_PROPS_META: AlgoArtPropMeta[] = [
   { key: "isLineart", label: "Lineart", type: "boolean", default: false },
 ];
 
-/** Clamp numeric config values to their meta ranges */
+/** Coerce and clamp config values to their metadata-defined shapes and ranges. */
 export function clampAlgoArtConfig(config: AlgoArtConfig): AlgoArtConfig {
   let result: AlgoArtConfig = { ...config };
+
   for (const meta of ALGO_ART_PROPS_META) {
-    if (meta.type !== "number" || meta.key === "axis") continue;
-    const v = result[meta.key as keyof AlgoArtConfig];
-    if (typeof v !== "number") continue;
-    let out = v;
+    const value = result[meta.key as keyof AlgoArtConfig];
+
+    if (meta.type === "axis") {
+      const nextValue =
+        typeof value === "string" && meta.enums?.includes(value)
+          ? value
+          : meta.default;
+      result = { ...result, [meta.key]: nextValue };
+      continue;
+    }
+
+    if (meta.type === "boolean") {
+      const stringValue =
+        typeof value === "string" ? value.toLowerCase() : null;
+      const nextValue =
+        typeof value === "boolean"
+          ? value
+          : stringValue !== null
+            ? stringValue === "true"
+              ? true
+              : stringValue === "false"
+                ? false
+                : meta.default
+            : meta.default;
+      result = { ...result, [meta.key]: nextValue };
+      continue;
+    }
+
+    let nextValue =
+      typeof value === "number"
+        ? value
+        : typeof value === "string"
+          ? Number(value)
+          : Number.NaN;
+
+    if (!Number.isFinite(nextValue)) {
+      nextValue =
+        typeof meta.default === "number"
+          ? meta.default
+          : meta.min ?? meta.range?.[0] ?? 0;
+    }
+
     if (meta.range !== undefined) {
-      out = Math.min(Math.max(out, meta.range[0]), meta.range[1]);
+      nextValue = Math.min(Math.max(nextValue, meta.range[0]), meta.range[1]);
     }
     if (meta.min !== undefined) {
-      out = Math.max(out, meta.min);
+      nextValue = Math.max(nextValue, meta.min);
     }
     if (meta.max !== undefined) {
-      out = Math.min(out, meta.max);
+      nextValue = Math.min(nextValue, meta.max);
     }
-    result = { ...result, [meta.key]: out };
+
+    result = { ...result, [meta.key]: nextValue };
   }
+
   return result;
 }

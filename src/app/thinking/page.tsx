@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getAllArticles } from "@/lib/content";
+import { getAllArticles, getArtAssignmentKey } from "@/lib/content";
 import { ArtCanvas } from "@/components/ui/art-canvas";
 import { artAssignments } from "@/config/art-assignments";
+import { getAssignmentRecordValue } from "@/lib/art-assignments";
 
 export const metadata: Metadata = {
   title: "Thinking",
@@ -54,8 +55,13 @@ export default async function ThinkingPage() {
             >
               <ArtCanvas
                 slug={article.slug}
+                assignmentKey={getArtAssignmentKey("thinking", article.slug)}
                 height={110}
-                serverConfig={artAssignments[article.slug] ?? null}
+                serverConfig={getAssignmentRecordValue(
+                  artAssignments,
+                  getArtAssignmentKey("thinking", article.slug),
+                  article.slug,
+                )}
                 data-oid=":kz6hv_"
               />
             </div>

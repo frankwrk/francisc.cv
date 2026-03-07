@@ -7,6 +7,7 @@ import type { AlgoArtConfig } from "./art-algo-config";
 
 const BASE_SHAPE_SIZE = 30;
 const BASE_AMPLITUDE = 80;
+let tempCanvas: HTMLCanvasElement | null = null;
 
 export type AlgoArtShape = "rect" | "ellipse" | "line";
 
@@ -28,11 +29,15 @@ export function applyKaleidoscopeEffect(
   const angle = (2 * Math.PI) / kaleids;
   const halfW = canvas.width * 0.5;
   const halfH = canvas.height * 0.5;
-  const temp = document.createElement("canvas");
-  temp.width = halfW;
-  temp.height = halfH;
-  const tempCtx = temp.getContext("2d");
+  if (typeof document === "undefined") return;
+
+  tempCanvas ??= document.createElement("canvas");
+  tempCanvas.width = halfW;
+  tempCanvas.height = halfH;
+
+  const tempCtx = tempCanvas.getContext("2d");
   if (!tempCtx) return;
+  tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
   tempCtx.drawImage(canvas, 0, 0);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -43,17 +48,17 @@ export function applyKaleidoscopeEffect(
     ctx.rotate(i * angle);
     ctx.scale(1, -1);
     ctx.drawImage(
-      temp,
-      0, 0, temp.width, temp.height,
-      -temp.width / 2, -temp.height / 2,
-      temp.width / 2, temp.height / 2,
+      tempCanvas,
+      0, 0, tempCanvas.width, tempCanvas.height,
+      -tempCanvas.width / 2, -tempCanvas.height / 2,
+      tempCanvas.width / 2, tempCanvas.height / 2,
     );
     ctx.scale(-1, 1);
     ctx.drawImage(
-      temp,
-      0, 0, temp.width, temp.height,
-      -temp.width / 2, -temp.height / 2,
-      temp.width / 2, temp.height / 2,
+      tempCanvas,
+      0, 0, tempCanvas.width, tempCanvas.height,
+      -tempCanvas.width / 2, -tempCanvas.height / 2,
+      tempCanvas.width / 2, tempCanvas.height / 2,
     );
     ctx.restore();
   }

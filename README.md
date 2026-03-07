@@ -32,6 +32,10 @@ type ArtAssignment = {
 
 Legacy entries in `src/config/art-assignments.ts` are still readable at runtime. The editor normalizes them on load, and all new copied exports from `/art` use `algo-v1`.
 
+Assignment storage and exports are now namespaced by route type, so new keys are emitted as `work:slug` or `thinking:slug`. Runtime reads still fall back to legacy raw-slug keys in `src/config/art-assignments.ts` so existing committed entries keep working during migration.
+
+The editor also avoids continuous repainting when `prefers-reduced-motion` is enabled, and imported config values are coerced and clamped through `src/lib/art-algo-config.ts` before they reach the renderer.
+
 The intended workflow is:
 
 1. Open `/art` directly, or use the gear icon from a work/thinking hero.
@@ -49,6 +53,7 @@ The site now includes a fixed viewport switch that swaps between:
 
 The machine surface is rendered as an overlay so the human version remains the default implementation underneath. Internal links inside the machine view return the user to the human version before navigating, which keeps the interaction readable instead of turning the machine layer into a second visual shell.
 The floating mode switch relies on the shared `ButtonGroup` item styles with an explicit scaffold-tinted surface on both the group and the individual segments so the control stays legible while overlaying page content in both themes and across breakpoints. Its border and label colors are now hard-set in OKLCH for the two themes: light uses `oklch(0.9128 0 89.88)` border with `oklch(0.5521 0 89.88)` text, and dark uses `oklch(0.3052 0 89.88)` border with `oklch(0.6500 0 89.88)` text. The loading overlay and machine surface now inject their own theme tokens directly instead of depending on scaffold CSS variables from a sibling subtree.
+Shared scaffold shell CSS variables are now built from a single helper and include palette-owned machine surface tokens, so `AppShell` and `SiteScaffold` no longer drift on hardcoded surface colors.
 
 The scaffold layout was also corrected to stay single-column on mobile. The central frame now uses a responsive grid definition instead of a hardcoded multi-column width, and the scaffold container uses a minimum viewport height so long pages can expand without collapsing into a narrow strip.
 

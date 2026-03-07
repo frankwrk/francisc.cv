@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getAllProjects } from "@/lib/content";
+import { getAllProjects, getArtAssignmentKey } from "@/lib/content";
 import { ArtCanvas } from "@/components/ui/art-canvas";
 import { artAssignments } from "@/config/art-assignments";
+import { getAssignmentRecordValue } from "@/lib/art-assignments";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -54,8 +55,13 @@ export default async function WorkPage() {
             >
               <ArtCanvas
                 slug={project.slug}
+                assignmentKey={getArtAssignmentKey("work", project.slug)}
                 height={110}
-                serverConfig={artAssignments[project.slug] ?? null}
+                serverConfig={getAssignmentRecordValue(
+                  artAssignments,
+                  getArtAssignmentKey("work", project.slug),
+                  project.slug,
+                )}
                 data-oid="06sn8g6"
               />
             </div>

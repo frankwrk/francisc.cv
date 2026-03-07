@@ -130,30 +130,55 @@ export function normalizeArtAssignments(
 ): Record<string, ArtAssignment> {
   const normalized: Record<string, ArtAssignment> = {};
 
-  for (const [slug, value] of Object.entries(assignments)) {
+  for (const [assignmentKey, value] of Object.entries(assignments)) {
     const assignment = normalizeArtAssignment(value ?? null);
     if (assignment) {
-      normalized[slug] = assignment;
+      normalized[assignmentKey] = assignment;
     }
   }
 
   return normalized;
 }
 
-export function saveAssignment(slug: string, assignment: ArtAssignment): void {
+export function getAssignmentRecordValue<T>(
+  assignments: Record<string, T | null | undefined>,
+  assignmentKey: string,
+  legacyKey?: string,
+): T | null {
+  const direct = assignments[assignmentKey];
+  if (direct !== undefined && direct !== null) return direct;
+
+  if (legacyKey && legacyKey !== assignmentKey) {
+    return assignments[legacyKey] ?? null;
+  }
+
+  return null;
+}
+
+export function saveAssignment(
+  assignmentKey: string,
+  assignment: ArtAssignment,
+): void {
   if (typeof localStorage === "undefined") return;
 
   localStorage.setItem(
-    LS_PREFIX + slug,
+    LS_PREFIX + assignmentKey,
     JSON.stringify(normalizeArtAssignment(assignment)),
   );
 }
 
-export function getAssignment(slug: string): ArtAssignment | null {
+export function getAssignment(
+  assignmentKey: string,
+  legacyKey?: string,
+): ArtAssignment | null {
   if (typeof localStorage === "undefined") return null;
 
   try {
-    const raw = localStorage.getItem(LS_PREFIX + slug);
+    const raw =
+      localStorage.getItem(LS_PREFIX + assignmentKey) ??
+      (legacyKey && legacyKey !== assignmentKey
+        ? localStorage.getItem(LS_PREFIX + legacyKey)
+        : null);
     if (!raw) return null;
 
     return normalizeArtAssignment(JSON.parse(raw) as AnyArtAssignment);
@@ -162,17 +187,17 @@ export function getAssignment(slug: string): ArtAssignment | null {
   }
 }
 
-export function removeAssignment(slug: string): void {
+export function removeAssignment(assignmentKey: string): void {
   if (typeof localStorage === "undefined") return;
 
-  localStorage.removeItem(LS_PREFIX + slug);
+  localStorage.removeItem(LS_PREFIX + assignmentKey);
 }
 
 export function serializeAssignmentEntry(
-  slug: string,
+  assignmentKey: string,
   assignment: ArtAssignment,
 ): string {
-  return `  "${slug}": ${JSON.stringify(assignment, null, 2).replace(/\n/g, "\n  ")},`;
+  return `  "${assignmentKey}": ${JSON.stringify(assignment, null, 2).replace(/\n/g, "\n  ")},`;
 }
 
 export function serializeAssignmentsModule(
@@ -180,7 +205,9 @@ export function serializeAssignmentsModule(
 ): string {
   const lines = Object.entries(assignments)
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([slug, assignment]) => serializeAssignmentEntry(slug, assignment));
+    .map(([assignmentKey, assignment]) =>
+      serializeAssignmentEntry(assignmentKey, assignment),
+    );
 
   return [
     'import type { ArtConfig } from "@/lib/art-assignments";',

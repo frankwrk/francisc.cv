@@ -1,11 +1,12 @@
 "use client";
 
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { siteScaffoldConfig } from "@/config/site-scaffold";
 import { MachineModeController } from "@/components/machine/machine-mode-controller";
 import { SiteNav } from "@/components/layout/site-nav";
+import { buildShellVars } from "@/components/layout/shell-vars";
 import { cn } from "@/utils/cn";
 
 type SiteScaffoldProps = {
@@ -38,28 +39,6 @@ const sideRulerValues = (() => {
 
   return values;
 })();
-
-type ScaffoldVars = CSSProperties & {
-  "--scaffold-bg-light": string;
-  "--scaffold-bg-dark": string;
-  "--scaffold-surface-light": string;
-  "--scaffold-surface-dark": string;
-  "--scaffold-line-light": string;
-  "--scaffold-line-dark": string;
-  "--scaffold-ruler-light": string;
-  "--scaffold-ruler-dark": string;
-  "--scaffold-toggle-track-light": string;
-  "--scaffold-toggle-track-dark": string;
-  "--scaffold-toggle-thumb-light": string;
-  "--scaffold-toggle-thumb-dark": string;
-  "--scaffold-toggle-text-active-light": string;
-  "--scaffold-toggle-text-active-dark": string;
-  "--scaffold-toggle-text-inactive-light": string;
-  "--scaffold-toggle-text-inactive-dark": string;
-  "--scaffold-section-divider-width": string;
-  "--machine-surface-bg-light": string;
-  "--machine-surface-bg-dark": string;
-};
 
 function SideRuler({ align }: { align: "left" | "right" }) {
   const range =
@@ -323,7 +302,7 @@ function CornerMarkers() {
 
 export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
   // Polyfill navigator.clipboard for non-secure contexts (HTTP, network IP)
-  // so DialKit's Copy button doesn't throw "Cannot read properties of undefined".
+  // so copy UIs do not throw when navigator.clipboard is undefined.
   useEffect(() => {
     if (typeof navigator === "undefined" || navigator.clipboard) return;
     Object.defineProperty(navigator, "clipboard", {
@@ -347,33 +326,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
     });
   }, []);
 
-  const scaffoldVars: ScaffoldVars = {
-    "--scaffold-bg-light": siteScaffoldConfig.palette.light.background,
-    "--scaffold-bg-dark": siteScaffoldConfig.palette.dark.background,
-    "--scaffold-surface-light": siteScaffoldConfig.palette.light.surface,
-    "--scaffold-surface-dark": siteScaffoldConfig.palette.dark.surface,
-    "--scaffold-line-light": siteScaffoldConfig.palette.light.line,
-    "--scaffold-line-dark": siteScaffoldConfig.palette.dark.line,
-    "--scaffold-ruler-light": siteScaffoldConfig.palette.light.ruler,
-    "--scaffold-ruler-dark": siteScaffoldConfig.palette.dark.ruler,
-    "--scaffold-toggle-track-light":
-      siteScaffoldConfig.palette.light.toggleTrack,
-    "--scaffold-toggle-track-dark": siteScaffoldConfig.palette.dark.toggleTrack,
-    "--scaffold-toggle-thumb-light":
-      siteScaffoldConfig.palette.light.toggleThumb,
-    "--scaffold-toggle-thumb-dark": siteScaffoldConfig.palette.dark.toggleThumb,
-    "--scaffold-toggle-text-active-light":
-      siteScaffoldConfig.palette.light.toggleTextActive,
-    "--scaffold-toggle-text-active-dark":
-      siteScaffoldConfig.palette.dark.toggleTextActive,
-    "--scaffold-toggle-text-inactive-light":
-      siteScaffoldConfig.palette.light.toggleTextInactive,
-    "--scaffold-toggle-text-inactive-dark":
-      siteScaffoldConfig.palette.dark.toggleTextInactive,
-    "--scaffold-section-divider-width": `${siteScaffoldConfig.fullBleedSectionDividerWidth}px`,
-    "--machine-surface-bg-light": "#FAFAFA",
-    "--machine-surface-bg-dark": "#0A0A0A",
-  };
+  const scaffoldVars = buildShellVars();
 
   return (
     <MachineModeController machineContent={machineContent} data-oid="qjc9v6m">

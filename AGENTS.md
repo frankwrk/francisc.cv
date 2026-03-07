@@ -108,6 +108,7 @@ Customize scaffold behavior in `site-scaffold.ts`:
 
 Single source of truth policy:
 - All scaffold-wide visual tokens (light/dark background, line, ruler, and toggle colors) are defined in `siteScaffoldConfig.palette`.
+- Machine surface background tokens should also come from `siteScaffoldConfig.palette.*.machineSurfaceBg`, not hardcoded values in layout components.
 - Rendering components should consume CSS variables set by `SiteScaffold` and avoid hardcoded scaffold colors.
 - Layer model:
   - Layer 1 (`palette.*.background`) controls full-page background.
@@ -133,6 +134,7 @@ Single source of truth policy:
 - `src/config/art-assignments.ts` remains the durable source of truth for work/thinking hero art.
 - The canonical saved shape is `algo-v1`: `{ version: "algo-v1", heroCanvasIndex, config }`.
 - Legacy variant-based entries in `src/config/art-assignments.ts` remain readable during migration, but new exports from `/art` should use `algo-v1`.
+- Runtime assignment keys should be namespaced by route type (`work:slug`, `thinking:slug`). Reads may fall back to legacy raw slugs while the config file is being migrated.
 - `ArtCanvas` normalizes any assignment it receives and renders the selected `heroCanvasIndex` using the shared algo-art renderer.
 - Workflow: edit locally in `/art` -> assign to slug -> copy export -> paste into `src/config/art-assignments.ts`.
 - In art-related React code, keep hooks lint-clean: do not mutate refs during render (sync in effects); prefer derived config (`useMemo`) over `setState` in effects for prop/localStorage sync.

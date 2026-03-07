@@ -15,6 +15,7 @@ import { DiscreteFieldPreview } from "./discrete-field-preview";
 
 interface ArtCanvasProps {
   slug: string;
+  assignmentKey?: string;
   height?: number;
   serverConfig?: ArtConfig | null;
   showEditorLink?: boolean;
@@ -22,6 +23,7 @@ interface ArtCanvasProps {
 
 export function ArtCanvas({
   slug,
+  assignmentKey,
   height = 110,
   serverConfig,
   showEditorLink = false,
@@ -33,6 +35,7 @@ export function ArtCanvas({
     () => normalizeArtAssignment(serverConfig ?? null),
     [serverConfig],
   );
+  const effectiveAssignmentKey = assignmentKey ?? slug;
   const [localAssignment, setLocalAssignment] = useState<ArtAssignment | null>(null);
   const [reducedMotion, setReducedMotion] = useState(() =>
     typeof window !== "undefined"
@@ -41,8 +44,8 @@ export function ArtCanvas({
   );
 
   useEffect(() => {
-    setLocalAssignment(getAssignment(slug));
-  }, [slug]);
+    setLocalAssignment(getAssignment(effectiveAssignmentKey, slug));
+  }, [effectiveAssignmentKey, slug]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");

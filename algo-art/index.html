@@ -144,7 +144,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const canvas = document.querySelector('.ellipseCanvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
+            if (!ctx) return;
 
             const FRAME_RATE = 45;
             const FRAME_DURATION = 1000 / FRAME_RATE;

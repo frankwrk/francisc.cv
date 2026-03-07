@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { ArtPageClient } from "./art-page-client";
 import { artAssignments } from "@/config/art-assignments";
 import { getAllArtTargets } from "@/lib/content";
-import { normalizeArtAssignment, normalizeArtAssignments } from "@/lib/art-assignments";
+import {
+  getAssignmentRecordValue,
+  normalizeArtAssignment,
+  type ArtAssignment,
+} from "@/lib/art-assignments";
 import { parseArtEditorSearchParams } from "@/lib/art-config-url";
 
 export const metadata: Metadata = {
@@ -29,16 +33,40 @@ export default async function ArtPage({ searchParams }: Props) {
     searchParams ?? Promise.resolve({}),
   ]);
 
-  const committedAssignments = normalizeArtAssignments(artAssignments);
+  const committedAssignments = targets.reduce<Record<string, ArtAssignment>>(
+    (result, target) => {
+      const assignment = normalizeArtAssignment(
+        getAssignmentRecordValue(
+          artAssignments,
+          target.assignmentKey,
+          target.slug,
+        ),
+      );
+
+      if (assignment) {
+        result[target.assignmentKey] = assignment;
+      }
+
+      return result;
+    },
+    {},
+  );
   const parsed = parseArtEditorSearchParams(rawSearchParams);
-  const initialSlug =
-    parsed.slug && targets.some((target) => target.slug === parsed.slug)
-      ? parsed.slug
+  const initialTarget =
+    parsed.slug
+      ? targets.find((target) => target.slug === parsed.slug) ?? null
       : null;
+  const initialSlug = initialTarget?.slug ?? null;
   const initialAssignment =
     parsed.assignment ??
     normalizeArtAssignment(
-      initialSlug ? artAssignments[initialSlug] ?? null : null,
+      initialTarget
+        ? getAssignmentRecordValue(
+            artAssignments,
+            initialTarget.assignmentKey,
+            initialTarget.slug,
+          )
+        : null,
     );
 
   return (

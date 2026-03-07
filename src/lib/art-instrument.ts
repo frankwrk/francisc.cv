@@ -175,22 +175,51 @@ export function sanitizeInstrumentState(
     partial?.axis === "x" || partial?.axis === "y" || partial?.axis === "xy"
       ? partial.axis
       : defaultInstrumentState.axis;
-  next.ampX = clamp(next.ampX, 0.1, 2.5);
-  next.ampY = clamp(next.ampY, 0.1, 2.5);
-  next.aspectRatio = clamp(next.aspectRatio, 0.4, 2.2);
-  next.lump = clamp(next.lump, 0, 1.4);
-  next.count = Math.round(clamp(next.count, 16, 180));
-  next.freq = clamp(next.freq, 0.2, 8);
-  next.kaleids = clamp(next.kaleids, 1, 16);
-  next.mouseX = clamp(next.mouseX, 0, 1);
-  next.mouseY = clamp(next.mouseY, 0, 1);
-  next.noise = clamp(next.noise, 0, 1);
-  next.scale = clamp(next.scale, 0.05, 1.2);
-  next.left = clamp(next.left, -60, 60);
-  next.top = clamp(next.top, -60, 60);
-  next.twirl = clamp(next.twirl, -1.4, 1.4);
-  next.twist = clamp(next.twist, -1.4, 1.4);
-  next.velocity = clamp(next.velocity, 0, 2);
+  const finite = (value: number, fallback: number) =>
+    Number.isFinite(value) ? value : fallback;
+
+  next.ampX = clamp(finite(next.ampX, defaultInstrumentState.ampX), 0.1, 2.5);
+  next.ampY = clamp(finite(next.ampY, defaultInstrumentState.ampY), 0.1, 2.5);
+  next.aspectRatio = clamp(
+    finite(next.aspectRatio, defaultInstrumentState.aspectRatio),
+    0.4,
+    2.2,
+  );
+  next.lump = clamp(finite(next.lump, defaultInstrumentState.lump), 0, 1.4);
+  next.count = Math.round(
+    clamp(finite(next.count, defaultInstrumentState.count), 16, 180),
+  );
+  next.freq = clamp(finite(next.freq, defaultInstrumentState.freq), 0.2, 8);
+  next.kaleids = clamp(
+    finite(next.kaleids, defaultInstrumentState.kaleids),
+    1,
+    16,
+  );
+  next.mouseX = clamp(finite(next.mouseX, defaultInstrumentState.mouseX), 0, 1);
+  next.mouseY = clamp(finite(next.mouseY, defaultInstrumentState.mouseY), 0, 1);
+  next.noise = clamp(finite(next.noise, defaultInstrumentState.noise), 0, 1);
+  next.scale = clamp(
+    finite(next.scale, defaultInstrumentState.scale),
+    0.05,
+    1.2,
+  );
+  next.left = clamp(finite(next.left, defaultInstrumentState.left), -60, 60);
+  next.top = clamp(finite(next.top, defaultInstrumentState.top), -60, 60);
+  next.twirl = clamp(
+    finite(next.twirl, defaultInstrumentState.twirl),
+    -1.4,
+    1.4,
+  );
+  next.twist = clamp(
+    finite(next.twist, defaultInstrumentState.twist),
+    -1.4,
+    1.4,
+  );
+  next.velocity = clamp(
+    finite(next.velocity, defaultInstrumentState.velocity),
+    0,
+    2,
+  );
 
   normalizeExclusiveModes(next);
 

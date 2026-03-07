@@ -141,16 +141,26 @@ async function copyText(text: string) {
 }
 
 function assignmentStatus(
-  slug: string,
+  assignmentKey: string,
   committedAssignments: Record<string, ArtAssignment>,
   localAssignments: Record<string, ArtAssignment>,
 ) {
-  const hasLocal = Boolean(localAssignments[slug]);
-  const hasCommitted = Boolean(committedAssignments[slug]);
+  const hasLocal = Boolean(localAssignments[assignmentKey]);
+  const hasCommitted = Boolean(committedAssignments[assignmentKey]);
 
   if (hasLocal) return "local";
   if (hasCommitted) return "committed";
   return "none";
+}
+
+function isKeyboardEditingTarget(target: EventTarget | null) {
+  return (
+    target instanceof HTMLElement &&
+    (target.tagName === "INPUT" ||
+      target.tagName === "TEXTAREA" ||
+      target.tagName === "SELECT" ||
+      target.isContentEditable)
+  );
 }
 
 export function ArtPageClient({
@@ -218,22 +228,26 @@ export function ArtPageClient({
     const nextAssignments: Record<string, ArtAssignment> = {};
 
     for (const target of targets) {
-      const assignment = getAssignment(target.slug);
+      const assignment = getAssignment(target.assignmentKey, target.slug);
       if (assignment) {
-        nextAssignments[target.slug] = assignment;
+        nextAssignments[target.assignmentKey] = assignment;
       }
     }
+
+    const initialTarget =
+      initialSlug
+        ? targets.find((target) => target.slug === initialSlug) ?? null
+        : null;
+    const initialLocalAssignment = initialTarget
+      ? nextAssignments[initialTarget.assignmentKey] ?? null
+      : null;
 
     startTransition(() => {
       setLocalAssignments(nextAssignments);
 
-      if (
-        !hasInitialQueryAssignment &&
-        initialSlug &&
-        nextAssignments[initialSlug]
-      ) {
-        setConfig(nextAssignments[initialSlug].config);
-        setSelectedHeroCanvasIndex(nextAssignments[initialSlug].heroCanvasIndex);
+      if (!hasInitialQueryAssignment && initialLocalAssignment) {
+        setConfig(initialLocalAssignment.config);
+        setSelectedHeroCanvasIndex(initialLocalAssignment.heroCanvasIndex);
       }
     });
   }, [hasInitialQueryAssignment, initialSlug, targets]);
@@ -257,7 +271,7 @@ export function ArtPageClient({
     const dpr = typeof window === "undefined" ? 1 : window.devicePixelRatio || 1;
     const velocityMultiplier = reducedMotion ? 0 : 1;
 
-    const tick = () => {
+    const drawFrame = () => {
       frameRef.current += 1;
 
       const effectiveConfig: AlgoArtConfig = {
@@ -294,13 +308,21 @@ export function ArtPageClient({
           velocityMultiplier,
         });
       }
+    };
 
+    if (reducedMotion) {
+      drawFrame();
+      return () => cancelAnimationFrame(rafId);
+    }
+
+    const tick = () => {
+      drawFrame();
       rafId = requestAnimationFrame(tick);
     };
 
     rafId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafId);
-  }, [reducedMotion]);
+  }, [config, reducedMotion]);
 
   const handleWheel = useCallback(
     (event: React.WheelEvent) => {
@@ -320,6 +342,10 @@ export function ArtPageClient({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (isKeyboardEditingTarget(event.target)) {
+        return;
+      }
+
       if (event.key === "ArrowUp") {
         event.preventDefault();
         setCurrentPropIndex((previous) => Math.max(0, previous - 1));
@@ -349,6 +375,7 @@ export function ArtPageClient({
   }, [currentPropIndex]);
 
   const activeTarget = targets.find((target) => target.slug === activeSlug) ?? null;
+  const activeAssignmentKey = activeTarget?.assignmentKey ?? null;
   const mergedAssignments = useMemo(
     () => mergeAssignments(committedAssignments, localAssignments),
     [committedAssignments, localAssignments],
@@ -358,9 +385,9 @@ export function ArtPageClient({
     [config, selectedHeroCanvasIndex],
   );
 
-  function handleLoadAssignment(slug: string) {
-    const assignment = mergedAssignments[slug];
-    setActiveSlug(slug);
+  function handleLoadAssignment(target: ArtTarget) {
+    const assignment = mergedAssignments[target.assignmentKey];
+    setActiveSlug(target.slug);
 
     if (!assignment) return;
 
@@ -368,27 +395,27 @@ export function ArtPageClient({
     setSelectedHeroCanvasIndex(assignment.heroCanvasIndex);
   }
 
-  function handleAssignCurrent(slug: string) {
+  function handleAssignCurrent(target: ArtTarget) {
     const assignment = createAssignment(config, selectedHeroCanvasIndex);
-    saveAssignment(slug, assignment);
+    saveAssignment(target.assignmentKey, assignment);
     setLocalAssignments((previous) => ({
       ...previous,
-      [slug]: assignment,
+      [target.assignmentKey]: assignment,
     }));
-    setActiveSlug(slug);
+    setActiveSlug(target.slug);
   }
 
-  function handleClearLocal(slug: string) {
-    removeAssignment(slug);
+  function handleClearLocal(target: ArtTarget) {
+    removeAssignment(target.assignmentKey);
 
     setLocalAssignments((previous) => {
       const nextAssignments = { ...previous };
-      delete nextAssignments[slug];
+      delete nextAssignments[target.assignmentKey];
       return nextAssignments;
     });
 
-    if (activeSlug === slug) {
-      const fallback = committedAssignments[slug] ?? null;
+    if (activeSlug === target.slug) {
+      const fallback = committedAssignments[target.assignmentKey] ?? null;
       if (fallback) {
         setConfig(fallback.config);
         setSelectedHeroCanvasIndex(fallback.heroCanvasIndex);
@@ -397,13 +424,15 @@ export function ArtPageClient({
   }
 
   async function handleCopyCurrentSlugSnippet() {
-    if (!activeSlug) return;
+    if (!activeTarget || !activeAssignmentKey) return;
 
     try {
-      await copyText(serializeAssignmentEntry(activeSlug, currentAssignment));
-      setCopyFeedback(`Copied snippet for ${activeSlug}.`);
+      await copyText(
+        serializeAssignmentEntry(activeAssignmentKey, currentAssignment),
+      );
+      setCopyFeedback(`Copied snippet for ${activeTarget.slug}.`);
     } catch {
-      setCopyFeedback(`Could not copy snippet for ${activeSlug}.`);
+      setCopyFeedback(`Could not copy snippet for ${activeTarget.slug}.`);
     }
   }
 
@@ -521,8 +550,12 @@ export function ArtPageClient({
             <div>
               <p className={styles.summaryLabel}>Assignment source</p>
               <p className={styles.summaryValue}>
-                {activeSlug
-                  ? assignmentStatus(activeSlug, committedAssignments, localAssignments)
+                {activeAssignmentKey
+                  ? assignmentStatus(
+                      activeAssignmentKey,
+                      committedAssignments,
+                      localAssignments,
+                    )
                   : "none"}
               </p>
             </div>
@@ -578,7 +611,7 @@ export function ArtPageClient({
             <div className={styles.assignmentList}>
               {targets.map((target) => {
                 const source = assignmentStatus(
-                  target.slug,
+                  target.assignmentKey,
                   committedAssignments,
                   localAssignments,
                 );
@@ -606,23 +639,23 @@ export function ArtPageClient({
                       <button
                         type="button"
                         className={styles.secondaryButton}
-                        onClick={() => handleLoadAssignment(target.slug)}
-                        disabled={!mergedAssignments[target.slug]}
+                        onClick={() => handleLoadAssignment(target)}
+                        disabled={!mergedAssignments[target.assignmentKey]}
                       >
                         Load
                       </button>
                       <button
                         type="button"
                         className={styles.primaryButton}
-                        onClick={() => handleAssignCurrent(target.slug)}
+                        onClick={() => handleAssignCurrent(target)}
                       >
                         Assign Current
                       </button>
                       <button
                         type="button"
                         className={styles.secondaryButton}
-                        onClick={() => handleClearLocal(target.slug)}
-                        disabled={!localAssignments[target.slug]}
+                        onClick={() => handleClearLocal(target)}
+                        disabled={!localAssignments[target.assignmentKey]}
                       >
                         Clear Local
                       </button>

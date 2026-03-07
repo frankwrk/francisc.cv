@@ -36,10 +36,17 @@ export type ArticleData = {
   source: string;
 };
 
+export type ArtTargetType = "work" | "thinking";
+
+export function getArtAssignmentKey(type: ArtTargetType, slug: string) {
+  return `${type}:${slug}`;
+}
+
 export type ArtTarget = {
   slug: string;
   title: string;
-  type: "work" | "thinking";
+  type: ArtTargetType;
+  assignmentKey: string;
 };
 
 export async function getAllProjects(): Promise<ProjectMeta[]> {
@@ -127,11 +134,13 @@ export async function getAllArtTargets(): Promise<ArtTarget[]> {
       slug: project.slug,
       title: project.title,
       type: "work" as const,
+      assignmentKey: getArtAssignmentKey("work", project.slug),
     })),
     ...articles.map((article) => ({
       slug: article.slug,
       title: article.title,
       type: "thinking" as const,
+      assignmentKey: getArtAssignmentKey("thinking", article.slug),
     })),
   ];
 }
