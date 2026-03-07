@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithmic Art | Francisc Furdui</title>
+    <!-- Serve this folder over HTTP so style.css and grid.svg load (e.g. from repo root: npx serve algo-art -p 3333, then open http://localhost:3333) -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="canvases">
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+        <div class="canvasContainer">
+            <img class="grid" src="grid.svg" />
+            <canvas></canvas>
+        </div>
+    </div>
+
+    <div class="props">
+        <div class="prop isCurrent" data-property="scale">
+            [S]cale <span class="value">1</span>
+        </div>
+        <div class="prop" data-property="ampY">
+            [H]eight <span class="value">1</span>
+        </div>
+        <div class="prop" data-property="ampX">
+            [W]idth <span class="value">1</span>
+        </div>
+        <div class="prop" data-property="count">
+            [C]ount <span class="value">20</span>
+        </div>
+        <div class="prop" data-property="aspectRatio">
+            [A]spect <span class="value">1</span>
+        </div>
+        <div class="prop" data-property="noise">
+            [N]oise <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="lump">
+            L[U]mp <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="twist">
+            [T]wist <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="twirl">
+            Tw[I]rl <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="freq">
+            [F]req <span class="value">1</span>
+        </div>
+        <div class="prop" data-property="kaleids">
+            [K]aleids <span class="value">1</span>
+        </div>
+        <div class="prop" data-property="velocity">
+            [V]elocity <span class="value">1</span>
+        </div>
+        <hr />
+        [0] to default value
+        <hr />
+        <div class="prop isActive" data-property="axis-x">
+            [X]-wave <span class="value">1</span>
+        </div>
+        <div class="prop" data-property="axis-y">
+            [Y]-wave <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="isRing">
+            [R]ing <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="isDial">
+            [D]ial <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="isSpiral">
+            S[P]iral <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="isBalls">
+            [B]alls <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="isMatrix">
+            [M]atrix <span class="value">0</span>
+        </div>
+        <div class="prop" data-property="isLineart">
+            [L]ineart <span class="value">0</span>
+        </div>
+    </div>
+    <div class="pointer"></div>
+    <div class="message"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.querySelector('.ellipseCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
+
+            const FRAME_RATE = 45;
+            const FRAME_DURATION = 1000 / FRAME_RATE;
+            const ANIMATION_DURATION = 10000;
+
+            let lastFrameTime = 0;
+            let animationId;
+
+            function setCanvasSize() {
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = 42 * dpr;
+                canvas.height = 42 * dpr;
+                ctx.scale(dpr, dpr);
+            }
+
+            function animate(currentTime) {
+                lastFrameTime = currentTime;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = getComputedStyle(document.documentElement)
+                    .getPropertyValue('--globeGraphicColor')
+                    .trim();
+                ctx.lineWidth = 1;
+
+                const globeRadius = 19.5;
+                const globeCenterX = 20;
+                const globeCenterY = 21;
+
+                const progress =
+                    (currentTime % ANIMATION_DURATION) / ANIMATION_DURATION;
+
+                for (let i = 0; i < 4; i++) {
+                    const ellipseProgress = (progress + i / 4) % 1;
+                    const xRadius =
+                        globeRadius * Math.abs(Math.cos(ellipseProgress * Math.PI));
+                    let startAngle, endAngle;
+
+                    if (ellipseProgress < 0.5) {
+                        startAngle = Math.PI / 2;
+                        endAngle = (3 * Math.PI) / 2;
+                    } else {
+                        startAngle = (3 * Math.PI) / 2;
+                        endAngle = Math.PI / 2;
+                    }
+
+                    ctx.beginPath();
+                    ctx.ellipse(
+                        globeCenterX,
+                        globeCenterY,
+                        xRadius,
+                        globeRadius,
+                        0,
+                        startAngle,
+                        endAngle,
+                    );
+                    ctx.stroke();
+                }
+
+                animationId = requestAnimationFrame(animate);
+            }
+
+            setCanvasSize();
+            animationId = requestAnimationFrame(animate);
+
+            window.addEventListener('resize', setCanvasSize);
+        });
+    </script>
+
+    <script>
+        console.log(`
+          Hello curious person. This is a collection of algorithmic art pieces created by Stripe.dev`);
+
+        const propsEl = document.querySelector('.props');
+        const pointerEl = document.querySelector('.pointer');
+        const canvasList = document.querySelectorAll('canvas');
+        const pixelRatio = window.devicePixelRatio || 1;
+        const messageEl = document.querySelector('.message');
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('keydown', handleKeyPress);
+        window.addEventListener('wheel', handleWheel);
+        window.addEventListener('click', handleClick);
+        window.addEventListener('load', init);
+        document.addEventListener('paste', handlePaste);
+
+        const welcomeMessage =
+            'Press any key listed on the left and scroll to change values.';
+        const copiedMessage = 'Props have been copied to your clipboard.';
+        const widthMessage = 'To see width changes, try [R]ing or [Y]-wave';
+        const heightMessage = 'To see height changes, try [R]ing or [X]-wave';
+        const mobileMessage =
+            'WARNING: <br><br>Developer skill issue. Artwork instrumentation requires a keyboard and a trackpad or mouse until further notice.';
+
+        let clickTimeout;
+        let messageTimeout;
+        let isClicking = false;
+        let isPaused = false;
+        let isMouseDownRef = {
+            current: false,
+        };
+        let currentProperty = 'scale';
+        let baseShapeSize = 30;
+        let baseAmplitude = 80;
+        const revealDuration = 300;
+        const isInViewport = true;
+        const prefersReducedMotion = false;
+
+        let currentConfig = {
+            ampX: { value: 1, increment: 0.03, default: 1, range: [0, 2] },
+            ampY: { value: 1, increment: 0.03, default: 1, range: [0, 2] },
+            aspectRatio: { value: 1, increment: 0.03, default: 1, range: [0.01, 5] },
+            axis: { value: 'x', enums: ['x', 'y'] },
+            lump: { value: 0, increment: 0.03, default: 0, range: [0, 1] },
+            count: {
+                value: 20,
+                increment: 1,
+                default: 20,
+                min: 20,
+                max: 100,
+                range: [1, 20],
+            },
+            freq: { value: 1, increment: 0.01, default: 1, range: [0.4, 6] },
+            isDial: { value: false },
+            isLineart: { value: false },
+            isRing: { value: false },
+            isSpiral: { value: false },
+            isBalls: { value: false },
+            isMatrix: { value: false },
+            left: { value: 0, increment: 1, default: 0, range: [-0, 0] },
+            kaleids: {
+                value: 1,
+                increment: 0.1,
+                default: 1,
+                skip: 4,
+                range: [0, 10],
+            },
+            mouseX: { value: 0.7, range: [0.3, 0.7] },
+            mouseY: { value: 0.3, range: [0.3, 0.7] },
+            noise: { value: 0, increment: 0.03, default: 0, range: [0, 1] },
+            scale: {
+                value: 1,
+                increment: 0.03,
+                default: 1,
+                min: 0,
+                max: 12,
+                range: [0.4, 2],
+            },
+            top: { value: 0, increment: 1, default: 0, range: [-0, 0] },
+            twirl: { value: 0, increment: 0.03, default: 0, range: [0, 0.01] },
+            twist: { value: 0, increment: 0.03, default: 0, range: [0, 11] },
+            velocity: { value: 1, increment: 0.03, default: 1, range: [1, 1] },
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryConfig = urlParams.get('config');
+        if (queryConfig) {
+            try {
+                const preloaded = JSON.parse(decodeURI(queryConfig));
+                // Apply config keys to config
+                for (const [key, value] of Object.entries(currentConfig)) {
+                    if (key in preloaded) {
+                        currentConfig[key].value = preloaded[key];
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading config from query params', e);
+            }
+        }
+
+        function randomizeProps() {
+            Object.keys(currentConfig).forEach((key) => {
+                const prop = currentConfig[key];
+                if (prop.doNotRandomize) return;
+                if (typeof prop.value === 'number' && prop.range) {
+                    const [min, max] = prop.range;
+                    prop.value = Math.random() * (max - min) + min;
+                    updateProps(key);
+                } else if (typeof prop.value === 'boolean') {
+                    prop.value = Math.random() < 0.1;
+                } else if (prop.enums) {
+                    prop.value =
+                        prop.enums[Math.floor(Math.random() * prop.enums.length)];
+                }
+            });
+        }
+
+        function init() {
+            if ('ontouchstart' in window) {
+                document.body.classList.add('isTouchDevice');
+                showMessage(mobileMessage);
+            } else {
+                showMessage(welcomeMessage);
+            }
+        }
+
+        function showMessage(message, duration) {
+            messageEl.innerHTML = message;
+            document.body.classList.add('isMessage');
+            clearTimeout(messageTimeout);
+            if (duration) {
+                messageTimeout = setTimeout(
+                    () => document.body.classList.remove('isMessage'),
+                    duration,
+                );
+            }
+        }
+
+        function handlePaste(e) {
+            e.preventDefault();
+            const pastedText = (e.clipboardData || window.clipboardData).getData(
+                'text',
+            );
+            if (pastedText) {
+                parseAndApplyProps(pastedText);
+                showMessage('Props have been pasted and applied.', 4000);
+            }
+        }
+        function handleKeyPress(e) {
+            document.body.classList.remove('isMessage');
+            const keyActions = {
+                Enter: () => randomizeProps(),
+                ' ': () => (isPaused = !isPaused),
+                0: () =>
+                (currentConfig[currentProperty].value =
+                    currentConfig[currentProperty].default),
+                ArrowDown: () => (currentConfig.top.value += e.shiftKey ? 10 : 2),
+                ArrowUp: () => (currentConfig.top.value -= e.shiftKey ? 10 : 2),
+                ArrowLeft: () => (currentConfig.left.value -= e.shiftKey ? 10 : 2),
+                ArrowRight: () => (currentConfig.left.value += e.shiftKey ? 10 : 2),
+                a: () => (currentProperty = 'aspectRatio'),
+                b: () => toggleBalls(),
+                c: () => (currentProperty = 'count'),
+                d: () => toggleDial(),
+                f: () => (currentProperty = 'freq'),
+                h: () => (currentProperty = 'ampY'),
+                i: () => (currentProperty = 'twirl'),
+                k: () => (currentProperty = 'kaleids'),
+                l: () => toggleProp('isLineart')(),
+                m: () => toggleMatrix(),
+                n: () => (currentProperty = 'noise'),
+                o: () => toggleProp('isLineart')(),
+                p: () => toggleSpiral(),
+                r: () => toggleRing(),
+                s: () => (currentProperty = 'scale'),
+                t: () => (currentProperty = 'twist'),
+                u: () => (currentProperty = 'lump'),
+                v: () => (currentProperty = 'velocity'),
+                w: () => (currentProperty = 'ampX'),
+                x: () => setAxis('x'),
+                y: () => setAxis('y'),
+            };
+
+            if (keyActions[e.key]) keyActions[e.key]();
+            updateProps();
+        }
+
+        function toggleProp(prop) {
+            return () => {
+                currentConfig[prop].value = !currentConfig[prop].value;
+                const propElement = document.querySelector(
+                    `div.prop[data-property="${prop}"]`,
+                );
+                if (!propElement) return;
+                propElement.querySelector('.value').innerText = currentConfig[prop]
+                    .value
+                    ? 'On'
+                    : 'Off';
+                propElement.classList.toggle('isActive', currentConfig[prop].value);
+            };
+        }
+
+        function toggleRing() {
+            if (currentConfig.isRing.value) {
+                setAxisValues('axis-x', 1);
+                setAxisValues('axis-y', 0);
+                currentConfig.axis.value = 'x';
+            } else {
+                setAxisValues('axis-x', 0);
+                setAxisValues('axis-y', 0);
+                currentConfig.axis.value = 'xy';
+            }
+            toggleActiveState('isRing', [
+                'axis-x',
+                'axis-y',
+                'isDial',
+                'isSpiral',
+                'isMatrix',
+                'isBalls',
+            ]);
+            toggleProp('isRing')();
+        }
+
+        function toggleDial() {
+            setAxisValues('axis-x', 0);
+            setAxisValues('axis-y', 0);
+            currentConfig.axis.value = 'x';
+            toggleActiveState('isDial', [
+                'axis-x',
+                'axis-y',
+                'isRing',
+                'isSpiral',
+                'isMatrix',
+                'isBalls',
+            ]);
+            toggleProp('isDial')();
+        }
+
+        function toggleSpiral() {
+            setAxisValues('axis-x', 0);
+            setAxisValues('axis-y', 0);
+            currentConfig.axis.value = 'x';
+            toggleActiveState('isSpiral', [
+                'axis-x',
+                'axis-y',
+                'isRing',
+                'isDial',
+                'isMatrix',
+                'isBalls',
+            ]);
+            toggleProp('isSpiral')();
+        }
+
+        function toggleMatrix() {
+            setAxisValues('axis-x', 0);
+            setAxisValues('axis-y', 0);
+            currentConfig.axis.value = 'x';
+            toggleActiveState('isMatrix', [
+                'axis-x',
+                'axis-y',
+                'isRing',
+                'isDial',
+                'isSpiral',
+                'isBalls',
+            ]);
+            toggleProp('isMatrix')();
+        }
+
+        function toggleBalls() {
+            setAxisValues('axis-x', 0);
+            setAxisValues('axis-y', 0);
+            currentConfig.axis.value = 'x';
+            toggleActiveState('isBalls', [
+                'axis-x',
+                'axis-y',
+                'isRing',
+                'isDial',
+                'isSpiral',
+                'isMatrix',
+            ]);
+            toggleProp('isBalls')();
+        }
+
+        function setAxis(axis) {
+            currentConfig.axis.value = axis;
+            currentConfig.isRing.value = false;
+            currentConfig.isDial.value = false;
+            currentConfig.isSpiral.value = false;
+            currentConfig.isMatrix.value = false;
+            currentConfig.isBalls.value = false;
+            setAxisValues('axis-x', axis === 'x' ? 1 : 0);
+            setAxisValues('axis-y', axis === 'y' ? 1 : 0);
+            toggleActiveState(`axis-${axis}`, [
+                'axis-x',
+                'axis-y',
+                'isRing',
+                'isDial',
+                'isSpiral',
+                'isMatrix',
+                'isBalls',
+            ]);
+        }
+
+        function setAxisValues(axis, value) {
+            updatePropDisplay(axis, value);
+        }
+
+        function toggleActiveState(activeProp, propsToDeactivate) {
+            propsToDeactivate.forEach((prop) => {
+                document
+                    .querySelector(`div.prop[data-property="${prop}"]`)
+                    .classList.remove('isActive');
+            });
+            if (document.querySelector(`div.prop[data-property="${activeProp}"]`))
+                document
+                    .querySelector(`div.prop[data-property="${activeProp}"]`)
+                    .classList.add('isActive');
+        }
+
+        function updatePropDisplay(prop, value) {
+            document.querySelector(
+                `div.prop[data-property="${prop}"] .value`,
+            ).innerText = value;
+        }
+
+        function updateProps(prop = currentProperty) {
+            if (prop === 'ampX' && currentConfig.axis.value === 'x') {
+                document.body.classList.add('isMessage');
+                showMessage(widthMessage, 4000);
+            } else if (prop === 'ampY' && currentConfig.axis.value === 'y') {
+                document.body.classList.add('isMessage');
+                showMessage(heightMessage, 4000);
+            }
+            if (currentConfig[prop].min) {
+                currentConfig[prop].value = Math.max(
+                    currentConfig[prop].min,
+                    currentConfig[prop].value,
+                );
+            }
+            propsEl
+                .querySelectorAll('.prop')
+                .forEach((propEl) => propEl.classList.remove('isCurrent'));
+            const currentPropEl = document.querySelector(
+                `div.prop[data-property="${prop}"]`,
+            );
+            if (!currentPropEl) return;
+
+            currentPropEl.classList.add('isCurrent');
+            if (typeof currentConfig[prop].value === 'number') {
+                currentPropEl.querySelector('.value').innerText =
+                    prop === 'count'
+                        ? Math.floor(currentConfig[prop].value)
+                        : currentConfig[prop].value.toFixed(2);
+            }
+        }
+
+        function savePropsAndMovePointer() {
+            pointerEl.style.transform = `translate(${currentConfig.mouseX.value * window.innerWidth - 5
+                }px, ${currentConfig.mouseY.value * window.innerHeight - 5}px)`;
+            const propString = Object.entries(currentConfig)
+                .map(([key, prop]) => {
+                    const value =
+                        typeof prop.value === 'string' ? prop.value : prop.value;
+                    return `${key}: ${value}`;
+                })
+                .join(', ');
+            navigator.clipboard
+                .writeText(propString)
+                .then(() => {
+                    showMessage(copiedMessage, 4000);
+                })
+                .catch((error) => alert('Failed to copy props: ', error));
+        }
+
+        function promptAndApplyProps() {
+            const userInput = prompt('If you have copied props, paste them here');
+            if (userInput) {
+                parseAndApplyProps(userInput);
+            }
+        }
+
+        function parseAndApplyProps(propString) {
+            const propPairs = propString.split(',');
+            propPairs.forEach((pair) => {
+                const [key, value] = pair.split(':').map((item) => item.trim());
+                if (currentConfig.hasOwnProperty(key)) {
+                    if (typeof currentConfig[key].value === 'boolean') {
+                        currentConfig[key].value = value.toLowerCase() === 'true';
+                    } else if (typeof currentConfig[key].value === 'number') {
+                        currentConfig[key].value = parseFloat(value);
+                    } else if (typeof currentConfig[key].value === 'string') {
+                        if (key === 'axis') {
+                            setAxis(value);
+                        }
+                        currentConfig[key].value = value;
+                    } else {
+                        try {
+                            currentConfig[key].value = JSON.parse(value);
+                        } catch (e) {
+                            currentConfig[key].value = value;
+                        }
+                    }
+                    updateProps(key);
+                }
+            });
+        }
+
+        function handleClick() {
+            if (!isClicking) return;
+            savePropsAndMovePointer();
+        }
+
+        function handleMouseDown(e) {
+            if (e.button === 2) return;
+            isMouseDownRef.current = true;
+            isClicking = true;
+            clearTimeout(clickTimeout);
+            clickTimeout = setTimeout(() => (isClicking = false), 200);
+        }
+
+        function handleMouseUp() {
+            isMouseDownRef.current = false;
+        }
+
+        function handleMouseMove(e) {
+            if (e.shiftKey || isPaused) return;
+            currentConfig.mouseX.value = e.pageX / window.innerWidth;
+            currentConfig.mouseY.value =
+                (e.pageY - window.scrollY) / window.innerHeight;
+        }
+
+        function handleWheel(e) {
+            if (e.shiftKey) return;
+            currentConfig[currentProperty].value +=
+                e.deltaY * 0.1 * currentConfig[currentProperty].increment;
+            if (
+                currentConfig[currentProperty].max &&
+                currentConfig[currentProperty].value >
+                currentConfig[currentProperty].max
+            ) {
+                currentConfig[currentProperty].value =
+                    currentConfig[currentProperty].max;
+            }
+            updateProps();
+        }
+
+        function applyKaleidoscopeEffect(ctx, kaleids, canvas) {
+            const angle = (2 * Math.PI) / kaleids;
+            const currentCanvas = document.createElement('canvas');
+            currentCanvas.width = canvas.width * 0.5;
+            currentCanvas.height = canvas.height * 0.5;
+            const currentCtx = currentCanvas.getContext('2d');
+            currentCtx.drawImage(canvas, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < kaleids; i++) {
+                ctx.save();
+                ctx.translate(canvas.width / 4, canvas.height / 4);
+                ctx.rotate(angle);
+                ctx.rotate(i * angle);
+
+                // Ensure consistent scaling for each mirror
+                ctx.scale(1, -1); // Reset any previous scaling
+                ctx.drawImage(
+                    currentCanvas,
+                    0,
+                    0,
+                    currentCanvas.width,
+                    currentCanvas.height,
+                    -currentCanvas.width / 2,
+                    -currentCanvas.height / 2,
+                    currentCanvas.width / 2,
+                    currentCanvas.height / 2,
+                );
+                // draw a border around the image
+                ctx.scale(-1, 1); // Reset any previous scaling
+                ctx.drawImage(
+                    currentCanvas,
+                    0,
+                    0,
+                    currentCanvas.width,
+                    currentCanvas.height,
+                    -currentCanvas.width / 2,
+                    -currentCanvas.height / 2,
+                    currentCanvas.width / 2,
+                    currentCanvas.height / 2,
+                );
+                ctx.restore();
+            }
+        }
+
+        canvasList.forEach((canvas, index) => {
+            const ctx = canvas.getContext('2d');
+            canvas.width = 340 * pixelRatio;
+            canvas.height = 270 * pixelRatio;
+            const canvasCenterX = canvas.width / (2 * pixelRatio);
+            const canvasCenterY = canvas.height / (2 * pixelRatio);
+            ctx.scale(pixelRatio, pixelRatio);
+            const rafRef = {
+                current: null,
+            };
+
+            let frameRef = {
+                current: 0,
+            };
+
+            const TARGET_FPS = 60;
+            const FRAME_INTERVAL = 1000 / TARGET_FPS;
+            let lastFrameTime = 0;
+
+            function draw(currentTime) {
+                if (index < 5) {
+                    currentConfig.shape = 'rect';
+                } else if (index < 10) {
+                    currentConfig.shape = 'ellipse';
+                } else if (index < 15) {
+                    currentConfig.shape = 'line';
+                }
+
+                if (!ctx) {
+                    rafRef.current = requestAnimationFrame(draw);
+                    return;
+                }
+                const elapsed = currentTime - lastFrameTime;
+
+                if (elapsed > FRAME_INTERVAL) {
+                    lastFrameTime = currentTime - (elapsed % FRAME_INTERVAL);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.strokeStyle = '#1d1d1d';
+                    ctx.lineWidth = 0.4;
+                    ctx.fillStyle = '#efefef';
+                    const revealProgress = 1; //Math.min(1, frameRef.current / revealDuration);
+                    let shapeCount =
+                        currentConfig.count.value +
+                        Math.floor(
+                            (currentConfig.count.value * (0.5 + (index % 5) - 2)) / 2,
+                        );
+                    if (currentConfig.isDial.value) {
+                        shapeCount = shapeCount * 0.2;
+                    } else if (currentConfig.isMatrix.value) {
+                        shapeCount = shapeCount * 4;
+                    }
+                    let ampX =
+                        baseAmplitude *
+                        currentConfig.ampX.value *
+                        (currentConfig.mouseX.value - 0.5) *
+                        4;
+                    let ampY =
+                        baseAmplitude *
+                        currentConfig.ampY.value *
+                        (currentConfig.mouseY.value - 0.5) *
+                        4;
+                    if (
+                        currentConfig.isDial.value ||
+                        currentConfig.isSpiral.value ||
+                        currentConfig.isMatrix.value
+                    ) {
+                        ampX = 0;
+                        ampY = 0;
+                    }
+                    const baseRadius = currentConfig.scale.value * baseShapeSize;
+                    const waveCenterX = canvasCenterX + currentConfig.left.value;
+                    const waveCenterY = canvasCenterY + currentConfig.top.value;
+
+                    for (let i = 0; i < shapeCount; i++) {
+                        const angle =
+                            (i / shapeCount) * Math.PI * 2 + frameRef.current * 0.003;
+                        let shapeX =
+                            waveCenterX + Math.cos(angle * currentConfig.freq.value) * ampX;
+                        let shapeY =
+                            waveCenterY + Math.sin(angle * currentConfig.freq.value) * ampY;
+                        if (currentConfig.axis.value === 'x') {
+                            shapeX =
+                                waveCenterX +
+                                (((i / shapeCount - 0.5) * canvas.width) / 2) *
+                                4 *
+                                (currentConfig.mouseX.value - 0.5);
+                        }
+
+                        if (currentConfig.axis.value === 'y') {
+                            shapeY =
+                                waveCenterY +
+                                (((i / shapeCount - 0.5) * canvas.height) / 2) *
+                                4 *
+                                (currentConfig.mouseY.value - 0.5);
+                        }
+
+                        const lump =
+                            Math.sin(
+                                frameRef.current * 0.002 +
+                                i / (Math.PI * currentConfig.freq.value),
+                            ) *
+                            currentConfig.lump.value *
+                            baseRadius;
+                        const noiseWave =
+                            1 +
+                            currentConfig.noise.value *
+                            (Math.sin(i * 0.13) * 13 +
+                                Math.sin(i * 1.57) * 6 +
+                                Math.sin(i * 0.71) * 0.31 +
+                                Math.sin(i * 0.33) * 1.7);
+                        let shapeRadiusX = Math.max(0, baseRadius + lump) + noiseWave;
+                        if (currentConfig.isDial.value) {
+                            shapeRadiusX =
+                                ((shapeCount - i) / shapeCount) * shapeRadiusX * 2;
+                        }
+                        let shapeRadiusY = shapeRadiusX / currentConfig.aspectRatio.value;
+
+                        if (currentConfig.isMatrix.value) {
+                            const colCount = Math.floor(Math.sqrt(shapeCount));
+                            const col = i % Math.floor(Math.sqrt(shapeCount));
+                            shapeX =
+                                (col * shapeRadiusX * 1.5 +
+                                    Math.cos(col * 0.6 + frameRef.current * 0.002) * 10 +
+                                    currentConfig.left.value) *
+                                currentConfig.ampX.value;
+                            shapeY =
+                                (Math.floor(i / colCount) * shapeRadiusY +
+                                    Math.sin(col * 0.6 + frameRef.current * 0.002) * 40 +
+                                    currentConfig.top.value) *
+                                currentConfig.ampY.value;
+                        }
+
+                        ctx.beginPath();
+                        ctx.save();
+                        ctx.translate(shapeX, shapeY);
+                        ctx.rotate(
+                            i * currentConfig.twist.value * 0.03 +
+                            frameRef.current * currentConfig.twirl.value * 0.03,
+                        );
+
+                        if (currentConfig.shape === 'rect') {
+                            ctx.rect(
+                                -shapeRadiusX,
+                                -shapeRadiusY,
+                                shapeRadiusX * 2,
+                                (shapeRadiusY * 2) / currentConfig.aspectRatio.value,
+                            );
+                            ctx.restore();
+                            if (!currentConfig.isLineart.value) ctx.fill();
+                            ctx.stroke();
+                        } else if (currentConfig.shape === 'ellipse') {
+                            if (currentConfig.isDial.value) {
+                                ctx.ellipse(
+                                    0,
+                                    0,
+                                    Math.abs(shapeRadiusX),
+                                    Math.abs(shapeRadiusY),
+                                    0,
+                                    0,
+                                    Math.PI * 2,
+                                );
+                                if (!currentConfig.isLineart.value) {
+                                    ctx.fill();
+                                }
+                                ctx.stroke();
+                                const lineCount =
+                                    3 +
+                                    Math.floor(
+                                        (Math.sin((shapeCount - i) * currentConfig.noise.value) +
+                                            2) *
+                                        12 +
+                                        shapeCount -
+                                        i,
+                                    );
+                                for (let j = 0; j < lineCount; j++) {
+                                    const lineAngle =
+                                        (j / lineCount + (frameRef.current + i * 15) * 0.001) *
+                                        Math.PI *
+                                        2;
+                                    const x = Math.cos(lineAngle) * Math.abs(shapeRadiusX);
+                                    const y = Math.sin(lineAngle) * Math.abs(shapeRadiusY);
+                                    const dotRadius = 15;
+                                    ctx.beginPath();
+                                    ctx.moveTo(0, 0);
+                                    ctx.lineTo(x, y);
+                                    ctx.stroke();
+                                }
+                                ctx.restore();
+                                if (!currentConfig.isLineart.value) ctx.fill();
+                                ctx.stroke();
+                            } else if (currentConfig.isSpiral.value) {
+                                for (let j = 0; j < 6; j++) {
+                                    const angle =
+                                        (j / 6 + (frameRef.current + i * 25) * 0.001) *
+                                        Math.PI *
+                                        2;
+                                    const x =
+                                        Math.cos(angle) *
+                                        Math.abs(shapeRadiusX) *
+                                        (i / shapeCount) *
+                                        currentConfig.ampX.value;
+                                    const y =
+                                        Math.sin(angle) *
+                                        (Math.abs(shapeRadiusY) /
+                                            Math.abs(currentConfig.aspectRatio.value)) *
+                                        (i / shapeCount) *
+                                        currentConfig.ampY.value;
+                                    const dotRadiusX =
+                                        8 + Math.sin(i / 20 + frameRef.current * 0.003) * 3;
+                                    const dotRadiusY =
+                                        dotRadiusX * currentConfig.aspectRatio.value;
+                                    ctx.beginPath();
+                                    ctx.ellipse(
+                                        x,
+                                        y,
+                                        Math.max(0, dotRadiusX),
+                                        Math.max(0, dotRadiusY),
+                                        0,
+                                        0,
+                                        Math.PI * 2,
+                                    );
+                                    ctx.fill();
+                                    ctx.stroke();
+                                }
+                            } else {
+                                ctx.ellipse(
+                                    0,
+                                    0,
+                                    Math.abs(shapeRadiusX),
+                                    Math.abs(shapeRadiusY) /
+                                    Math.abs(currentConfig.aspectRatio.value),
+                                    0,
+                                    0,
+                                    Math.PI * 2,
+                                );
+                                if (!currentConfig.isLineart.value) ctx.fill();
+                                ctx.stroke();
+
+                                if (currentConfig.isBalls.value) {
+                                    ctx.beginPath();
+                                    ctx.ellipse(
+                                        0,
+                                        (Math.abs(shapeRadiusY) /
+                                            Math.abs(currentConfig.aspectRatio.value)) *
+                                        -0.1,
+                                        Math.abs(shapeRadiusX) * 0.995,
+                                        (Math.abs(shapeRadiusY) /
+                                            Math.abs(currentConfig.aspectRatio.value)) *
+                                        0.5,
+                                        0,
+                                        Math.PI + 0.1,
+                                        -0.1,
+                                    );
+                                    if (!currentConfig.isLineart.value) ctx.fill();
+                                    ctx.stroke();
+                                    ctx.beginPath();
+                                    ctx.ellipse(
+                                        0,
+                                        (Math.abs(shapeRadiusY) /
+                                            Math.abs(currentConfig.aspectRatio.value)) *
+                                        0.4,
+                                        Math.abs(shapeRadiusX) * 0.92,
+                                        (Math.abs(shapeRadiusY) /
+                                            Math.abs(currentConfig.aspectRatio.value)) *
+                                        0.4,
+                                        0,
+                                        Math.PI,
+                                        0,
+                                    );
+                                    if (!currentConfig.isLineart.value) ctx.fill();
+                                    ctx.stroke();
+                                    ctx.beginPath();
+
+                                    ctx.ellipse(
+                                        0,
+                                        (Math.abs(shapeRadiusY) /
+                                            Math.abs(currentConfig.aspectRatio.value)) *
+                                        0.8,
+                                        Math.abs(shapeRadiusX) * 0.6,
+                                        (Math.abs(shapeRadiusY) /
+                                            Math.abs(currentConfig.aspectRatio.value)) *
+                                        0.2,
+                                        0,
+                                        Math.PI,
+                                        0,
+                                    );
+                                    if (!currentConfig.isLineart.value) ctx.fill();
+                                    ctx.stroke();
+                                }
+                            }
+                            ctx.restore();
+                        } else {
+                            ctx.ellipse(
+                                0,
+                                0,
+                                0.2,
+                                Math.max(0, shapeRadiusY),
+                                0,
+                                0,
+                                Math.PI * 2,
+                            );
+                            ctx.restore();
+                            if (!currentConfig.isLineart.value) ctx.fill();
+                            ctx.stroke();
+                        }
+                    }
+                    if (!isPaused) {
+                        frameRef.current += isMouseDownRef.current
+                            ? currentConfig.velocity.value * 30
+                            : currentConfig.velocity.value * 3;
+                    }
+
+                    let kaleids = Math.floor(currentConfig.kaleids.value);
+                    if (kaleids > 1) {
+                        applyKaleidoscopeEffect(ctx, kaleids, canvas);
+                    }
+                }
+
+                if (isInViewport && !prefersReducedMotion) {
+                    rafRef.current = requestAnimationFrame(draw);
+                }
+            }
+
+            draw();
+        });
+    </script>
+</body>
+
+</html>

@@ -98,7 +98,7 @@ Customize scaffold behavior in `site-scaffold.ts`:
 - Border and divider color/thickness
 - Corner marker circles (`cornerMarkers.size`, `cornerMarkers.offset`, `cornerMarkers.borderWidth`)
 - Full-bleed major section divider thickness
-- Bleed section divider (edge extensions): horizontal length reaches viewport edges via `calc((100vw - 100%) / 2)`; vertical top uses `pageTopPadding`, bottom uses `pageBottomPadding` or extends to viewport bottom when canvas is shorter (`max(pageBottomPadding, calc(100dvh - 100%))`)
+- Corner border extension fade lengths (`edgeExtensions.horizontalLength`, `edgeExtensions.verticalLength`)
 - Canvas width and side ruler spacing
 - Top ruler numbers rendered outside the top bar, with downward ticks
 - Vertical ruler range/step + unit mapping (`rulerSide.start/end/step/unitPx`; default major marks at `50`-unit increments with pixel-based spacing and opacity fade toward bottom)
@@ -108,6 +108,7 @@ Customize scaffold behavior in `site-scaffold.ts`:
 
 Single source of truth policy:
 - All scaffold-wide visual tokens (light/dark background, line, ruler, and toggle colors) are defined in `siteScaffoldConfig.palette`.
+- Machine surface background tokens should also come from `siteScaffoldConfig.palette.*.machineSurfaceBg`, not hardcoded values in layout components.
 - Rendering components should consume CSS variables set by `SiteScaffold` and avoid hardcoded scaffold colors.
 - Layer model:
   - Layer 1 (`palette.*.background`) controls full-page background.
@@ -122,12 +123,21 @@ Single source of truth policy:
 - Production signature source is `public/images/signature.svg`; geometry in `site-signature.ts` should match that file.
 - Place signature as supporting decoration only (default usage: right-aligned under intro copy).
 
-### Art assignment conventions
+### Art Lab (`/art`)
 
-- `src/config/art-assignments.ts` exports a dynamic slug map (`Record<string, ArtConfig>`) so routes like `/work/[slug]` and `/thinking/[slug]` can index art configs without TypeScript build errors.
-- In art rendering code, keep React hooks lint-clean:
-  - Do not mutate refs during render; sync render-derived values into refs inside effects.
-  - Prefer derived config values (`useMemo`) over `setState` in effects for prop/localStorage synchronization.
+- The Art Lab is the canonical hero-art editor for work and thinking entries. It still renders a 15-canvas grid (squares, circles, lines) driven by one shared config.
+- Config and metadata: `src/lib/art-algo-config.ts`. Drawing: `src/lib/art-algo-draw.ts`. Page client: `src/app/art/art-page-client.tsx`.
+- `/art` accepts slug-aware editor state via query params and can load an existing assignment, select a `heroCanvasIndex`, assign locally, and export the merged config back into `src/config/art-assignments.ts`.
+
+### Art assignment conventions (work/thinking hero art)
+
+- `src/config/art-assignments.ts` remains the durable source of truth for work/thinking hero art.
+- The canonical saved shape is `algo-v1`: `{ version: "algo-v1", heroCanvasIndex, config }`.
+- Legacy variant-based entries in `src/config/art-assignments.ts` remain readable during migration, but new exports from `/art` should use `algo-v1`.
+- Runtime assignment keys should be namespaced by route type (`work:slug`, `thinking:slug`). Reads may fall back to legacy raw slugs while the config file is being migrated.
+- `ArtCanvas` normalizes any assignment it receives and renders the selected `heroCanvasIndex` using the shared algo-art renderer.
+- Workflow: edit locally in `/art` -> assign to slug -> copy export -> paste into `src/config/art-assignments.ts`.
+- In art-related React code, keep hooks lint-clean: do not mutate refs during render (sync in effects); prefer derived config (`useMemo`) over `setState` in effects for prop/localStorage sync.
 
 ### Theme conventions
 

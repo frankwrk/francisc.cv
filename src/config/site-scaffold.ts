@@ -7,6 +7,7 @@ export type ScaffoldSection = {
 export type ScaffoldPalette = {
   background: string;
   surface: string;
+  machineSurfaceBg: string;
   line: string;
   ruler: string;
   toggleTrack: string;
@@ -61,6 +62,7 @@ export const siteScaffoldConfig: SiteScaffoldConfig = {
     light: {
       background: "oklch(0.9851 0 0)",
       surface: "oklch(0.9851 0 0)",
+      machineSurfaceBg: "oklch(0.9851 0 0)",
       line: "oklch(91.279% 0 89.88)",
       ruler: "oklch(55% 0 89.88)", // was 84.83% → 4.86:1 vs white ✓ WCAG AA
       toggleTrack: "oklch(97.6139% 0 89.88)",
@@ -71,6 +73,7 @@ export const siteScaffoldConfig: SiteScaffoldConfig = {
     dark: {
       background: "oklch(0.1448 0 0)",
       surface: "oklch(0.1448 0 0)",
+      machineSurfaceBg: "oklch(0.109 0 0)",
       line: "oklch(30.3278% 0 89.88)",
       ruler: "oklch(65% 0 89.88)", // was 51.61% → 4.94:1 vs dark surface ✓ WCAG AA
       toggleTrack: "oklch(20.4627% 0 89.88)",

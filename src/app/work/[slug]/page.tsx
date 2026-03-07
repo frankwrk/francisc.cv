@@ -3,12 +3,13 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getAllProjects, getProjectBySlug } from "@/lib/content";
+import { getAllProjects, getArtAssignmentKey, getProjectBySlug } from "@/lib/content";
 import { Figure } from "@/components/mdx/figure";
 import { Callout } from "@/components/mdx/callout";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { ArtCanvas } from "@/components/ui/art-canvas";
 import { artAssignments } from "@/config/art-assignments";
+import { getAssignmentRecordValue } from "@/lib/art-assignments";
 
 export async function generateStaticParams() {
   const projects = await getAllProjects();
@@ -40,6 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function WorkDetailPage({ params }: Props) {
   const { slug } = await params;
   const { meta, source } = await getProjectBySlug(slug);
+  const assignmentKey = getArtAssignmentKey("work", slug);
 
   return (
     <article
@@ -52,11 +54,17 @@ export default async function WorkDetailPage({ params }: Props) {
         data-oid="kmxd7:x"
       >
         {/* Background art canvas */}
-        <div className="absolute inset-0" aria-hidden="true" data-oid="smd8p.j">
+        <div className="absolute inset-0" data-oid="smd8p.j">
           <ArtCanvas
             slug={slug}
+            assignmentKey={assignmentKey}
             height={280}
-            serverConfig={artAssignments[slug] ?? null}
+            serverConfig={getAssignmentRecordValue(
+              artAssignments,
+              assignmentKey,
+              slug,
+            )}
+            showEditorLink
             data-oid="l8yjw-w"
           />
         </div>
@@ -74,7 +82,7 @@ export default async function WorkDetailPage({ params }: Props) {
 
         {/* Text content pinned to the bottom-left */}
         <div
-          className="relative z-10 flex flex-col justify-end px-5 pb-5 pt-32 space-y-2"
+          className="pointer-events-none relative z-10 flex flex-col justify-end px-5 pb-5 pt-32 space-y-2"
           style={{ minHeight: 280 }}
           data-oid="xxsedc_"
         >

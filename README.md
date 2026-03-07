@@ -14,9 +14,35 @@ This creates a clearer scan path without discarding the existing tone or first-p
 
 ## Art Lab
 
-The `/art` page now takes over DialKit's default fixed panel layout only while the art lab is mounted. The `Art Generator` panel is initialized above the `Parameters` panel, and both panels can be dragged independently by their headers with explicit `grab` and `grabbing` cursors. This is implemented as an art-page DOM takeover instead of a DialKit fork so the rest of the site keeps the stock portal behavior.
+The `/art` page is now the canonical hero-art editor for work and thinking entries. It still uses the current fifteen-canvas algorithmic lab as the editing surface, but it now supports loading an existing slug assignment, choosing which of the fifteen canvases becomes the hero, assigning the current state to a slug locally, and copying a merged export back into `src/config/art-assignments.ts`.
 
-The `contour-lines` renderer also now writes at backing-store resolution before calling `putImageData()`. That avoids the old device-pixel-ratio mismatch where the topographic texture rendered as a small block in the canvas corner and leaked over the previous frame.
+The route renders a fifteen-canvas preview grid driven by one shared `AlgoArtConfig`. The grid remains organized as three rows of five: squares (indices `0–4`), circles (`5–9`), and lines (`10–14`). The selected `heroCanvasIndex` determines which canvas a work or thinking page renders through `ArtCanvas`.
+
+Control is still a single parameters panel: scroll over the panel to adjust the selected property, use arrow keys to move between properties, and press `0` to reset the selected property to its default. Config and drawing live in `src/lib/art-algo-config.ts` and `src/lib/art-algo-draw.ts`.
+
+Saved hero-art assignments continue to live in `src/config/art-assignments.ts`. New assignments use the canonical `algo-v1` shape:
+
+```ts
+type ArtAssignment = {
+  version: "algo-v1";
+  heroCanvasIndex: number;
+  config: AlgoArtConfig;
+};
+```
+
+Legacy entries in `src/config/art-assignments.ts` are still readable at runtime. The editor normalizes them on load, and all new copied exports from `/art` use `algo-v1`.
+
+Assignment storage and exports are now namespaced by route type, so new keys are emitted as `work:slug` or `thinking:slug`. Runtime reads still fall back to legacy raw-slug keys in `src/config/art-assignments.ts` so existing committed entries keep working during migration.
+
+The editor also avoids continuous repainting when `prefers-reduced-motion` is enabled, and imported config values are coerced and clamped through `src/lib/art-algo-config.ts` before they reach the renderer.
+
+The intended workflow is:
+
+1. Open `/art` directly, or use the gear icon from a work/thinking hero.
+2. Tune the shared lab parameters.
+3. Pick the hero canvas from the fifteen previews.
+4. Assign the current state to a work or thinking slug.
+5. Copy the full export and paste it into `src/config/art-assignments.ts`.
 
 ## Human / Machine Mode
 
@@ -27,6 +53,7 @@ The site now includes a fixed viewport switch that swaps between:
 
 The machine surface is rendered as an overlay so the human version remains the default implementation underneath. Internal links inside the machine view return the user to the human version before navigating, which keeps the interaction readable instead of turning the machine layer into a second visual shell.
 The floating mode switch relies on the shared `ButtonGroup` item styles with an explicit scaffold-tinted surface on both the group and the individual segments so the control stays legible while overlaying page content in both themes and across breakpoints. Its border and label colors are now hard-set in OKLCH for the two themes: light uses `oklch(0.9128 0 89.88)` border with `oklch(0.5521 0 89.88)` text, and dark uses `oklch(0.3052 0 89.88)` border with `oklch(0.6500 0 89.88)` text. The loading overlay and machine surface now inject their own theme tokens directly instead of depending on scaffold CSS variables from a sibling subtree.
+Shared scaffold shell CSS variables are now built from a single helper and include palette-owned machine surface tokens, so `AppShell` and `SiteScaffold` no longer drift on hardcoded surface colors.
 
 The scaffold layout was also corrected to stay single-column on mobile. The central frame now uses a responsive grid definition instead of a hardcoded multi-column width, and the scaffold container uses a minimum viewport height so long pages can expand without collapsing into a narrow strip.
 
@@ -52,6 +79,8 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+The Next config now pins Turbopack and output tracing to this repository root. That prevents local parent-folder lockfiles from confusing Next's workspace detection and breaking `bun dev` module resolution.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

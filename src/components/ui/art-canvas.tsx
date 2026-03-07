@@ -1,105 +1,163 @@
 "use client";
 
-import { useRef, useEffect, useMemo } from "react";
+import Link from "next/link";
+import { RiSettings3Line } from "@remixicon/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { drawAlgoArtFrame } from "@/lib/art-algo-draw";
 import {
   getAssignment,
-  drawFromConfig,
+  normalizeArtAssignment,
+  type ArtAssignment,
   type ArtConfig,
 } from "@/lib/art-assignments";
+import { buildArtEditorHref } from "@/lib/art-config-url";
 import { DiscreteFieldPreview } from "./discrete-field-preview";
 
 interface ArtCanvasProps {
   slug: string;
+  assignmentKey?: string;
   height?: number;
-  /**
-   * Config sourced from the committed src/config/art-assignments.ts file,
-   * passed in by the server component parent. When present it takes full
-   * precedence — no localStorage read occurs. This is what makes assignments
-   * persistent across devices and deployments.
-   *
-   * When absent (e.g. on the /art lab page) the component falls back to
-   * localStorage so live preview still works while designing.
-   */
   serverConfig?: ArtConfig | null;
+  showEditorLink?: boolean;
 }
 
 export function ArtCanvas({
   slug,
+  assignmentKey,
   height = 110,
   serverConfig,
+  showEditorLink = false,
 }: ArtCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const frameRef = useRef(0);
+  const normalizedServerConfig = useMemo(
+    () => normalizeArtAssignment(serverConfig ?? null),
+    [serverConfig],
+  );
+  const effectiveAssignmentKey = assignmentKey ?? slug;
+  const [localAssignment, setLocalAssignment] = useState<ArtAssignment | null>(null);
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      : false,
+  );
 
-  // If serverConfig is explicitly provided (even as null) we know we're in a
-  // server-driven context. Only fall back to localStorage when it's undefined.
-  const isServerDriven = serverConfig !== undefined;
-  const config = useMemo<ArtConfig | null>(() => {
-    if (isServerDriven) {
-      return serverConfig ?? null;
-    }
-    return getAssignment(slug);
-  }, [slug, serverConfig, isServerDriven]);
+  useEffect(() => {
+    setLocalAssignment(getAssignment(effectiveAssignmentKey, slug));
+  }, [effectiveAssignmentKey, slug]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handler = () => setReducedMotion(mediaQuery.matches);
+
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  const assignment = localAssignment ?? normalizedServerConfig;
+  const editorHref = useMemo(() => {
+    if (!showEditorLink) return null;
+
+    return buildArtEditorHref({
+      slug,
+      assignment,
+    });
+  }, [assignment, showEditorLink, slug]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
-    if (!canvas || !container || !config) return;
+    if (!canvas || !container || !assignment) return;
 
-    const dpr = window.devicePixelRatio || 1;
-    const w = container.clientWidth;
-    const h = container.clientHeight;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
+    const resizeObserver = new ResizeObserver(() => {
+      const width = container.clientWidth;
+      const heightValue = container.clientHeight;
+      const dpr = window.devicePixelRatio || 1;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      canvas.width = width * dpr;
+      canvas.height = heightValue * dpr;
+    });
 
-    const animated = config.animation?.enabled ?? false;
-    const speed = config.animation?.speed ?? 1;
+    resizeObserver.observe(container);
 
-    if (!animated) {
-      drawFromConfig(ctx, w, h, config, 0);
-      return;
-    }
+    let frameId = 0;
+    const velocityMultiplier = reducedMotion ? 0 : 1;
 
-    // Animated mode: run RAF loop
-    let time = 0;
-    let lastTs = 0;
-    let frameId: number;
+    const draw = () => {
+      const width = container.clientWidth;
+      const heightValue = container.clientHeight;
+      const dpr = window.devicePixelRatio || 1;
+      const context = canvas.getContext("2d");
 
-    function draw(ts: number) {
-      const dt = Math.min(ts - lastTs, 100);
-      lastTs = ts;
-      time += (dt / 1000) * speed;
-      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-      drawFromConfig(ctx!, w, h, config!, time);
+      if (!context || width === 0 || heightValue === 0) {
+        frameId = requestAnimationFrame(draw);
+        return;
+      }
+
+      if (canvas.width !== width * dpr || canvas.height !== heightValue * dpr) {
+        canvas.width = width * dpr;
+        canvas.height = heightValue * dpr;
+      }
+
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      drawAlgoArtFrame({
+        ctx: context,
+        canvas,
+        logicalWidth: width,
+        logicalHeight: heightValue,
+        config: assignment.config,
+        frame: frameRef.current,
+        canvasIndex: assignment.heroCanvasIndex,
+        velocityMultiplier,
+      });
+
+      frameRef.current += 1;
       frameId = requestAnimationFrame(draw);
-    }
+    };
 
     frameId = requestAnimationFrame(draw);
-    return () => cancelAnimationFrame(frameId);
-  }, [config]);
 
-  if (!config) {
+    return () => {
+      resizeObserver.disconnect();
+      cancelAnimationFrame(frameId);
+    };
+  }, [assignment, reducedMotion]);
+
+  if (!assignment) {
     return (
-      <DiscreteFieldPreview slug={slug} height={height} data-oid="38mbo18" />
+      <div className="relative">
+        <DiscreteFieldPreview slug={slug} height={height} />
+        {editorHref && <EditorLink href={editorHref} />}
+      </div>
     );
   }
 
   return (
     <div
       ref={containerRef}
+      className="relative"
       style={{ width: "100%", height, overflow: "hidden" }}
-      aria-hidden="true"
-      data-oid="5epvcc9"
+      aria-hidden={editorHref ? undefined : true}
     >
       <canvas
         ref={canvasRef}
         style={{ width: "100%", height: "100%", display: "block" }}
-        data-oid="7e6seo:"
       />
+      {editorHref && <EditorLink href={editorHref} />}
     </div>
+  );
+}
+
+function EditorLink({ href }: { href: string }) {
+  return (
+    <Link
+      href={href}
+      aria-label="Open art editor"
+      className="absolute right-2 top-2 z-10 inline-flex h-8 w-8 items-center justify-center rounded-none border border-white/30 bg-black/55 text-white/80 backdrop-blur transition-colors hover:border-white/55 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+    >
+      <RiSettings3Line className="h-4 w-4" />
+    </Link>
   );
 }
