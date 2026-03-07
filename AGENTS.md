@@ -124,13 +124,17 @@ Single source of truth policy:
 
 ### Art Lab (`/art`)
 
-- The Art Lab is a standalone route that bypasses the scaffold. It renders a 15-canvas grid (squares, circles, lines) driven by one shared config.
+- The Art Lab is the canonical hero-art editor for work and thinking entries. It still renders a 15-canvas grid (squares, circles, lines) driven by one shared config.
 - Config and metadata: `src/lib/art-algo-config.ts`. Drawing: `src/lib/art-algo-draw.ts`. Page client: `src/app/art/art-page-client.tsx`.
-- The lab has no URL config or content slug; it is self-contained. Hero art on work/thinking pages uses `src/config/art-assignments.ts` and `ArtCanvas` separately.
+- `/art` accepts slug-aware editor state via query params and can load an existing assignment, select a `heroCanvasIndex`, assign locally, and export the merged config back into `src/config/art-assignments.ts`.
 
 ### Art assignment conventions (work/thinking hero art)
 
-- `src/config/art-assignments.ts` exports a slug map (`Record<string, ArtConfig>`) used by `/work` and `/thinking` (list and slug pages) to pass `serverConfig` into `ArtCanvas`.
+- `src/config/art-assignments.ts` remains the durable source of truth for work/thinking hero art.
+- The canonical saved shape is `algo-v1`: `{ version: "algo-v1", heroCanvasIndex, config }`.
+- Legacy variant-based entries in `src/config/art-assignments.ts` remain readable during migration, but new exports from `/art` should use `algo-v1`.
+- `ArtCanvas` normalizes any assignment it receives and renders the selected `heroCanvasIndex` using the shared algo-art renderer.
+- Workflow: edit locally in `/art` -> assign to slug -> copy export -> paste into `src/config/art-assignments.ts`.
 - In art-related React code, keep hooks lint-clean: do not mutate refs during render (sync in effects); prefer derived config (`useMemo`) over `setState` in effects for prop/localStorage sync.
 
 ### Theme conventions

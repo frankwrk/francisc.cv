@@ -36,6 +36,12 @@ export type ArticleData = {
   source: string;
 };
 
+export type ArtTarget = {
+  slug: string;
+  title: string;
+  type: "work" | "thinking";
+};
+
 export async function getAllProjects(): Promise<ProjectMeta[]> {
   const files = fs.readdirSync(projectsDir).filter((f) => f.endsWith(".mdx"));
   const projects = files.map((file) => {
@@ -108,4 +114,24 @@ export async function getArticleBySlug(slug: string): Promise<ArticleData> {
     },
     source: content,
   };
+}
+
+export async function getAllArtTargets(): Promise<ArtTarget[]> {
+  const [projects, articles] = await Promise.all([
+    getAllProjects(),
+    getAllArticles(),
+  ]);
+
+  return [
+    ...projects.map((project) => ({
+      slug: project.slug,
+      title: project.title,
+      type: "work" as const,
+    })),
+    ...articles.map((article) => ({
+      slug: article.slug,
+      title: article.title,
+      type: "thinking" as const,
+    })),
+  ];
 }

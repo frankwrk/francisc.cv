@@ -14,13 +14,31 @@ This creates a clearer scan path without discarding the existing tone or first-p
 
 ## Art Lab
 
-The `/art` page is a standalone tool route: it keeps the site theme tokens but bypasses the regular scaffold and navigation so the page behaves as a full-bleed instrument surface.
+The `/art` page is now the canonical hero-art editor for work and thinking entries. It still uses the current fifteen-canvas algorithmic lab as the editing surface, but it now supports loading an existing slug assignment, choosing which of the fifteen canvases becomes the hero, assigning the current state to a slug locally, and copying a merged export back into `src/config/art-assignments.ts`.
 
-The route renders a fifteen-canvas preview grid driven by a single shared instrument model. The grid is organized as three rows of five: squares (indices 0–4), circles (5–9), and lines (10–14), with element count stepping up from left to right so comparisons stay within one shape family. The renderer uses a restrained sine/cosine core and explicit shape branches; the square row is closest to the ring-based reference look, while the circle and line rows stay simpler.
+The route renders a fifteen-canvas preview grid driven by one shared `AlgoArtConfig`. The grid remains organized as three rows of five: squares (indices `0–4`), circles (`5–9`), and lines (`10–14`). The selected `heroCanvasIndex` determines which canvas a work or thinking page renders through `ArtCanvas`.
 
-Control is a single parameters panel on the left: each row shows a prop label and its current value. One prop is selected at a time. Scroll over the panel to adjust the selected parameter; arrow keys change which parameter is selected; press `0` to reset the selected parameter to its default. Config and drawing live in `src/lib/art-algo-config.ts` and `src/lib/art-algo-draw.ts`. The lab does not use URL state or article/work assignments; it is self-contained.
+Control is still a single parameters panel: scroll over the panel to adjust the selected property, use arrow keys to move between properties, and press `0` to reset the selected property to its default. Config and drawing live in `src/lib/art-algo-config.ts` and `src/lib/art-algo-draw.ts`.
 
-Hero art on work and thinking pages is still supplied by `src/config/art-assignments.ts` and rendered via `ArtCanvas`; that pipeline is separate from the Art Lab.
+Saved hero-art assignments continue to live in `src/config/art-assignments.ts`. New assignments use the canonical `algo-v1` shape:
+
+```ts
+type ArtAssignment = {
+  version: "algo-v1";
+  heroCanvasIndex: number;
+  config: AlgoArtConfig;
+};
+```
+
+Legacy entries in `src/config/art-assignments.ts` are still readable at runtime. The editor normalizes them on load, and all new copied exports from `/art` use `algo-v1`.
+
+The intended workflow is:
+
+1. Open `/art` directly, or use the gear icon from a work/thinking hero.
+2. Tune the shared lab parameters.
+3. Pick the hero canvas from the fifteen previews.
+4. Assign the current state to a work or thinking slug.
+5. Copy the full export and paste it into `src/config/art-assignments.ts`.
 
 ## Human / Machine Mode
 
