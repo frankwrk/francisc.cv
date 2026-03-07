@@ -100,8 +100,15 @@ export function clampAlgoArtConfig(config: AlgoArtConfig): AlgoArtConfig {
     const v = result[meta.key as keyof AlgoArtConfig];
     if (typeof v !== "number") continue;
     let out = v;
-    if (meta.min !== undefined && v < meta.min) out = meta.min;
-    else if (meta.max !== undefined && v > meta.max) out = meta.max;
+    if (meta.range !== undefined) {
+      out = Math.min(Math.max(out, meta.range[0]), meta.range[1]);
+    }
+    if (meta.min !== undefined) {
+      out = Math.max(out, meta.min);
+    }
+    if (meta.max !== undefined) {
+      out = Math.min(out, meta.max);
+    }
     result = { ...result, [meta.key]: out };
   }
   return result;

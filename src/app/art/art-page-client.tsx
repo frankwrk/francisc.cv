@@ -104,7 +104,40 @@ function mergeAssignments(
 }
 
 async function copyText(text: string) {
-  await navigator.clipboard.writeText(text);
+  if (
+    typeof navigator !== "undefined" &&
+    navigator.clipboard &&
+    typeof navigator.clipboard.writeText === "function"
+  ) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  if (typeof document === "undefined") {
+    throw new Error("Clipboard is unavailable in this environment.");
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "0";
+  textarea.style.left = "-9999px";
+  textarea.style.opacity = "0";
+
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  textarea.setSelectionRange(0, textarea.value.length);
+
+  try {
+    const copied = document.execCommand("copy");
+    if (!copied) {
+      throw new Error("Fallback clipboard copy failed.");
+    }
+  } finally {
+    document.body.removeChild(textarea);
+  }
 }
 
 function assignmentStatus(
@@ -366,13 +399,21 @@ export function ArtPageClient({
   async function handleCopyCurrentSlugSnippet() {
     if (!activeSlug) return;
 
-    await copyText(serializeAssignmentEntry(activeSlug, currentAssignment));
-    setCopyFeedback(`Copied snippet for ${activeSlug}.`);
+    try {
+      await copyText(serializeAssignmentEntry(activeSlug, currentAssignment));
+      setCopyFeedback(`Copied snippet for ${activeSlug}.`);
+    } catch {
+      setCopyFeedback(`Could not copy snippet for ${activeSlug}.`);
+    }
   }
 
   async function handleCopyFullExport() {
-    await copyText(serializeAssignmentsModule(mergedAssignments));
-    setCopyFeedback("Copied full art-assignments.ts export.");
+    try {
+      await copyText(serializeAssignmentsModule(mergedAssignments));
+      setCopyFeedback("Copied full art-assignments.ts export.");
+    } catch {
+      setCopyFeedback("Could not copy full art-assignments.ts export.");
+    }
   }
 
   return (
