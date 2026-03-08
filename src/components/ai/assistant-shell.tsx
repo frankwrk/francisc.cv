@@ -7,7 +7,6 @@ import { useAssistant } from "@/components/ai/assistant-context";
 export function AssistantShell() {
   const {
     isOpen,
-    routeLabel,
     messages,
     input,
     error,
@@ -43,7 +42,6 @@ export function AssistantShell() {
   return (
     <ChatPanel
       isOpen={isOpen}
-      routeLabel={routeLabel}
       messages={messages}
       input={input}
       error={error}

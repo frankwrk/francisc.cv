@@ -3,6 +3,7 @@ import type {
   ComparisonFilter,
   CompoundFilter,
 } from "openai/resources/shared";
+import type { AssistantRouteContext } from "@/lib/ai/types";
 import { getAssistantVectorStoreId, getOpenAIClient, getResponsesModel } from "@/lib/ai/client";
 import {
   AssistantChatResponseSchema,
@@ -15,6 +16,48 @@ import { readAssistantVectorStoreManifest } from "@/lib/ai/sources";
 import {
   resolveAssistantRouteContext,
 } from "@/lib/ai/suggestions";
+
+function getLatestUserMessage(request: AssistantChatRequest) {
+  for (let index = request.messages.length - 1; index >= 0; index -= 1) {
+    const message = request.messages[index];
+
+    if (message?.role === "user") {
+      return message.content;
+    }
+  }
+
+  return null;
+}
+
+function normalizeSubjectLabel(value: string) {
+  const trimmed = value.trim().replace(/\s+/g, " ");
+
+  if (!trimmed) {
+    return null;
+  }
+
+  return `"${trimmed}"`;
+}
+
+export function extractFallbackSubject(message: string | null) {
+  if (!message) {
+    return null;
+  }
+
+  const quotedMatch = message.match(/["“”'‘’]([^"“”'‘’]{2,80})["“”'‘’]/);
+
+  if (quotedMatch?.[1]) {
+    return normalizeSubjectLabel(quotedMatch[1]);
+  }
+
+  const calledMatch = message.match(/\bcalled\s+([A-Z][\w/-]*(?:\s+[A-Z][\w/-]*){0,5})/);
+
+  if (calledMatch?.[1]) {
+    return normalizeSubjectLabel(calledMatch[1]);
+  }
+
+  return null;
+}
 
 function coerceSupportLevel(
   supportLevel: "grounded" | "partial" | "insufficient",
@@ -32,23 +75,91 @@ function coerceSupportLevel(
   return supportLevel;
 }
 
-function buildFallbackCaveat(
+export function buildFallbackCaveat(
   supportLevel: "grounded" | "partial" | "insufficient",
   currentCaveat: string | null,
 ) {
-  if (currentCaveat) {
-    return currentCaveat;
-  }
+  void currentCaveat;
 
   if (supportLevel === "partial") {
-    return "This answer is supported by the current material, but some of it is synthesis rather than direct statement.";
+    return "Some of this answer is cautious synthesis from the public material rather than a direct statement.";
   }
 
   if (supportLevel === "insufficient") {
-    return "The current public material does not fully establish more than this.";
+    return "I could not find enough support for that in the public material on this site.";
   }
 
   return null;
+}
+
+export function buildFallbackAnswer(
+  supportLevel: "grounded" | "partial" | "insufficient",
+  lastUserMessage: string | null,
+) {
+  const subject = extractFallbackSubject(lastUserMessage);
+
+  if (supportLevel === "partial") {
+    if (subject) {
+      return `I found related material, but not enough to answer ${subject} directly from the public material on this site.`;
+    }
+
+    return "I found related material, but not enough to answer that directly from the public material on this site.";
+  }
+
+  if (supportLevel === "insufficient") {
+    if (subject) {
+      return `I couldn't find ${subject} in the public material on this site.`;
+    }
+
+    return "I couldn't find enough support for that in the public material on this site.";
+  }
+
+  return "I couldn't produce a grounded answer from the public material on this site.";
+}
+
+export function buildFollowUpQuestion(
+  context: AssistantRouteContext,
+  supportLevel: "grounded" | "partial" | "insufficient",
+) {
+  if (supportLevel === "insufficient") {
+    return null;
+  }
+
+  switch (context.routeType) {
+    case "resume":
+      return "Do you want me to connect that more directly to role fit?";
+    case "work-detail":
+      return "Do you want me to explain what this project shows about how I work?";
+    case "work-index":
+      return "Do you want me to point to the case study that supports that best?";
+    case "thinking-detail":
+    case "thinking-index":
+      return "Do you want me to connect that to the writing or project work behind it?";
+    case "now":
+      return "Do you want me to connect that to what I’m working on right now?";
+    default:
+      return "Do you want me to point to the projects or writing that support that?";
+  }
+}
+
+export function appendFollowUpQuestion(
+  answer: string,
+  context: AssistantRouteContext,
+  supportLevel: "grounded" | "partial" | "insufficient",
+) {
+  const followUpQuestion = buildFollowUpQuestion(context, supportLevel);
+
+  if (!followUpQuestion) {
+    return answer;
+  }
+
+  const normalizedAnswer = answer.trimEnd();
+
+  if (normalizedAnswer.endsWith(followUpQuestion)) {
+    return normalizedAnswer;
+  }
+
+  return `${normalizedAnswer}\n\n${followUpQuestion}`;
 }
 
 function buildFileSearchFilters(
@@ -132,6 +243,7 @@ export function getResponsesReasoning(model: string) {
 export async function askPortfolioAssistant(
   request: AssistantChatRequest,
 ) {
+  const lastUserMessage = getLatestUserMessage(request);
   const context = resolveAssistantRouteContext(
     request.context.pathname,
     request.context.title,
@@ -201,10 +313,15 @@ export async function askPortfolioAssistant(
     citationState.citations.length,
     citationState.topScore,
   );
+  const answer = appendFollowUpQuestion(
+    parsed?.answer ?? buildFallbackAnswer(supportLevel, lastUserMessage),
+    context,
+    supportLevel,
+  );
 
   const payload = AssistantChatResponseSchema.parse({
     requestId: response.id,
-    answer: normalized.answer,
+    answer,
     caveat: buildFallbackCaveat(supportLevel, normalized.caveat),
     citations: citationState.citations,
     supportLevel,

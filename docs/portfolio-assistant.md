@@ -27,15 +27,24 @@ Resume PDFs remain publishing outputs. Retrieval uses curated markdown resume do
 
 ## Prompt rules
 
-The assistant is a public portfolio assistant, not a personal simulation.
+The assistant is source-bound first, but it now speaks in first person so the interaction feels more like a direct response from Francisc.
 
 It is instructed to:
 
 - answer from evidence first
+- answer in first person (`I`, `me`, `my`) instead of talking about Francisc in the third person
+- sound like a thoughtful professional in direct conversation rather than a branded assistant
 - avoid inventing claims, metrics, dates, or employers
 - state uncertainty explicitly when the corpus is thin
 - distinguish fact from synthesis
 - stay within public professional scope
+- avoid drifting into free-form roleplay or unsupported personal voice
+- prefer natural sentence rhythm over exhaustive coverage
+- avoid generic polished-AI phrasing and overly abstract stacked sentences
+- prefer short paragraphs over dense block text
+- avoid inline dash-list formatting inside a single paragraph
+- default to roughly `90–140` words unless the question clearly needs more
+- keep any continuation light and optional rather than sounding like a scripted CTA
 - keep tone aligned with `OVERVIEW.md`: restrained, clear, and non-hyped
 
 ## Response contract
@@ -49,7 +58,13 @@ The server validates every model answer against a strict schema:
 
 This keeps rendering stable and makes unsupported answers degrade predictably instead of drifting into free-form chat output.
 
-The answer itself carries the useful substance. Caveats are only surfaced when support is partial or insufficient. This keeps the assistant from reading like it is exposing internal reasoning under the main answer, and it trims output tokens on every request.
+The answer itself carries the useful substance. Caveats are only surfaced in the UI when support is insufficient. This keeps the assistant from reading like it is exposing internal reasoning under otherwise usable answers, while still making weakly supported responses explicit.
+
+Caveats are app-controlled in the fallback path. The runtime does not preserve model-authored limitation text for partial or insufficient answers, because that can drift into unsupported suggestions such as asking the user to upload files or provide external material. Instead, the UI only shows short portfolio-native limits for insufficient support, while `partial` remains an internal support signal for logging and behavior tuning.
+
+The main fallback answer is app-controlled as well. When the model fails to complete a valid structured response, the route returns short product-authored wording instead of generic model language. If the latest user message contains a clear quoted or named subject, the fallback can mention it directly, for example when a user asks about a project name that does not appear anywhere in the public corpus.
+
+Grounded and partial answers now end with one short app-controlled follow-up question. The wording is route-aware and portfolio-native, and it is deliberately suppressed for insufficient answers so weakly supported responses stay neutral instead of trying to drive engagement.
 
 ## Corpus workflow
 
@@ -103,7 +118,10 @@ The deployed route also exports an explicit Vercel function budget with `maxDura
 - Mobile entry is exposed from the navigation menu instead of a floating button.
 - The chat opens as a centered modal with a blurred page backdrop, not a corner drawer. This keeps the interaction calmer and makes the assistant feel subordinate to the portfolio rather than a separate product surface.
 - The panel hierarchy is intentionally quiet: one primary surface, lighter prompt chips, and softer user/assistant message separation.
+- Assistant replies use a slightly narrower bubble width than before to keep line length more readable and reduce the “heavy block” effect.
+- Citation pills sit under an explicit `Sources` label so the provenance area reads as evidence, not just extra tags.
 - Prompt-chip questions are sent statelessly. They use the clicked prompt only, which avoids replaying the full transcript for common one-off recruiter questions.
+- The empty-state chip set is fixed to five portfolio-orientation questions rather than varying by route. This keeps the first-open modal predictable and makes the stateless prompt behavior easier to evaluate.
 - Typed follow-ups keep only the most recent completed exchange plus the new user question. This preserves local continuity without paying to resend the entire session history.
 
 ## Analytics and logging

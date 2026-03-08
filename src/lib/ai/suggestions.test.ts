@@ -19,7 +19,13 @@ describe("assistant route context", () => {
       resolveAssistantRouteContext("/resume", "Resume"),
     );
 
-    expect(prompts).toHaveLength(3);
-    expect(prompts[0]).toContain("TPM role");
+    expect(prompts).toHaveLength(5);
+    expect(prompts).toEqual([
+      "How do I approach my work?",
+      "What evidence supports my positioning?",
+      "Why am I a fit for platform-heavy roles?",
+      "What kind of roles am I aiming for?",
+      "Which projects best reflect how I think?",
+    ]);
   });
 });

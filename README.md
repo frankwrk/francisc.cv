@@ -12,6 +12,8 @@ The site now includes a V1 portfolio assistant available from the human-facing s
 - structured answer validation with Zod
 - no multi-agent runtime, durable user memory, browsing, or tool calling beyond retrieval
 
+The assistant now answers in first person for a more direct conversational feel, but it remains strictly constrained to the approved public source material rather than improvising as a free-form persona.
+
 Interaction model:
 
 - desktop access is a nav-level `Ask about my work` trigger placed just before the theme toggle

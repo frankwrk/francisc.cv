@@ -1,5 +1,13 @@
 import type { AssistantRouteContext } from "@/lib/ai/types";
 
+const STATELESS_PROMPT_CHIPS = [
+  "How do I approach my work?",
+  "What evidence supports my positioning?",
+  "Why am I a fit for platform-heavy roles?",
+  "What kind of roles am I aiming for?",
+  "Which projects best reflect how I think?",
+] as const;
+
 function getSlug(pathname: string) {
   return pathname.split("/").filter(Boolean)[1];
 }
@@ -56,60 +64,23 @@ export function resolveAssistantRouteContext(
 export function getSuggestedQuestions(context: AssistantRouteContext) {
   switch (context.routeType) {
     case "home":
-      return [
-        "What kind of roles is Francisc aiming for?",
-        "How does his work connect AI adoption with operations?",
-        "Which projects best show product judgment?",
-        "What does this site suggest about how he handles ambiguity?",
-      ];
+      return [...STATELESS_PROMPT_CHIPS];
     case "about":
-      return [
-        "How does Francisc describe the way he works?",
-        "What evidence supports his positioning across product and systems work?",
-        "Which parts of his background are most relevant for platform-heavy roles?",
-      ];
+      return [...STATELESS_PROMPT_CHIPS];
     case "now":
-      return [
-        "What is Francisc focused on right now?",
-        "How does his current direction connect to AI adoption work?",
-        "What is he actively trying to improve in his process?",
-      ];
+      return [...STATELESS_PROMPT_CHIPS];
     case "resume":
-      return [
-        "Which parts of Francisc’s experience fit a TPM role best?",
-        "How does his engineering background influence his product work?",
-        "What does the resume suggest about his strengths in ambiguous environments?",
-      ];
+      return [...STATELESS_PROMPT_CHIPS];
     case "work-index":
-      return [
-        "Which case study best demonstrates cross-functional judgment?",
-        "What themes connect these projects?",
-        "Which project is most relevant for workflow-heavy product roles?",
-      ];
+      return [...STATELESS_PROMPT_CHIPS];
     case "work-detail":
-      return [
-        `What problem was this project solving?`,
-        `What does this project show about Francisc’s working style?`,
-        `How does this case study support his positioning for product and systems work?`,
-      ];
+      return [...STATELESS_PROMPT_CHIPS];
     case "thinking-index":
-      return [
-        "What themes show up most often in Francisc’s writing?",
-        "Which article best explains how he thinks about systems work?",
-        "How does the writing support his portfolio positioning?",
-      ];
+      return [...STATELESS_PROMPT_CHIPS];
     case "thinking-detail":
-      return [
-        "What is the core argument of this piece?",
-        "How does this article connect to Francisc’s project work?",
-        "What does this piece reveal about how he frames trade-offs?",
-      ];
+      return [...STATELESS_PROMPT_CHIPS];
     default:
-      return [
-        "What kind of work is Francisc trying to be hired for?",
-        "Which portfolio pieces best demonstrate evidence-backed judgment?",
-        "How should I read this portfolio if I’m evaluating for fit?",
-      ];
+      return [...STATELESS_PROMPT_CHIPS];
   }
 }
 
