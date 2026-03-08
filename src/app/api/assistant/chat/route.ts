@@ -1,6 +1,11 @@
 import { AssistantChatRequestSchema } from "@/lib/ai/schema";
 import { askPortfolioAssistant } from "@/lib/ai/ask-portfolio-assistant";
-import { logAssistantError, logAssistantInfo } from "@/lib/telemetry/logger";
+import { getAssistantContentLoggingEnabled } from "@/lib/ai/client";
+import {
+  buildLogPreview,
+  logAssistantError,
+  logAssistantInfo,
+} from "@/lib/telemetry/logger";
 import { createId } from "@/utils/create-id";
 
 export const runtime = "nodejs";
@@ -13,6 +18,7 @@ export async function POST(request: Request) {
     const json = await request.json();
     const payload = AssistantChatRequestSchema.parse(json);
     const result = await askPortfolioAssistant(payload);
+    const includeContentLogs = getAssistantContentLoggingEnabled();
 
     logAssistantInfo("assistant_answered", {
       requestId: result.payload.requestId,
@@ -33,6 +39,19 @@ export async function POST(request: Request) {
       outputTokens: result.diagnostics.usage?.outputTokens ?? null,
       reasoningTokens: result.diagnostics.usage?.reasoningTokens ?? null,
       totalTokens: result.diagnostics.usage?.totalTokens ?? null,
+      storedInOpenAI: result.diagnostics.storedInOpenAI,
+      userQuestionPreview: includeContentLogs
+        ? buildLogPreview(result.diagnostics.latestUserMessage, 220)
+        : null,
+      answerPreview: includeContentLogs
+        ? buildLogPreview(result.payload.answer, 280)
+        : null,
+      caveatPreview: includeContentLogs
+        ? buildLogPreview(result.payload.caveat, 180)
+        : null,
+      citationTitles: includeContentLogs
+        ? result.payload.citations.map((citation) => citation.title)
+        : null,
     });
 
     return Response.json(result.payload);

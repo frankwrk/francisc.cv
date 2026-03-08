@@ -44,6 +44,8 @@ describe("POST /api/assistant/chat", () => {
         responseStatus: "completed",
         incompleteReason: null,
         parsedSuccessfully: true,
+        storedInOpenAI: false,
+        latestUserMessage: "What roles fit best?",
         usage: {
           inputTokens: 1200,
           cachedInputTokens: 400,

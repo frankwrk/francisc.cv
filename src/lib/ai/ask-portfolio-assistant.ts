@@ -4,7 +4,13 @@ import type {
   CompoundFilter,
 } from "openai/resources/shared";
 import type { AssistantRouteContext } from "@/lib/ai/types";
-import { getAssistantVectorStoreId, getOpenAIClient, getResponsesModel } from "@/lib/ai/client";
+import {
+  getAssistantEnvironmentLabel,
+  getAssistantVectorStoreId,
+  getOpenAIClient,
+  getResponsesModel,
+  getResponsesStoreEnabled,
+} from "@/lib/ai/client";
 import {
   AssistantChatResponseSchema,
   AssistantModelAnswerSchema,
@@ -258,8 +264,17 @@ export async function askPortfolioAssistant(
 
   const client = getOpenAIClient();
   const model = getResponsesModel();
+  const store = getResponsesStoreEnabled();
   const response = await client.responses.create({
     model,
+    metadata: {
+      app: "francisc.cv",
+      feature: "portfolio-assistant",
+      environment: getAssistantEnvironmentLabel(),
+      pathname: request.context.pathname,
+      routeType: context.routeType,
+      interactionSource: request.context.interactionSource ?? "typed",
+    },
     reasoning: getResponsesReasoning(model),
     instructions: buildPortfolioInstructions(context),
     input: request.messages.map((message) => ({
@@ -268,7 +283,7 @@ export async function askPortfolioAssistant(
     })),
     include: ["file_search_call.results"],
     max_output_tokens: 800,
-    store: false,
+    store,
     tools: [
       {
         type: "file_search",
@@ -337,6 +352,8 @@ export async function askPortfolioAssistant(
       responseStatus: response.status,
       incompleteReason: response.incomplete_details?.reason ?? null,
       parsedSuccessfully: parsed !== null,
+      storedInOpenAI: store,
+      latestUserMessage: lastUserMessage,
       usage: response.usage
         ? {
             inputTokens: response.usage.input_tokens,

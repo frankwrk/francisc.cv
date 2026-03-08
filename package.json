@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "assistant:build-corpus": "bun run ./scripts/assistant-build-corpus.ts",
-    "assistant:upload-corpus": "bun run ./scripts/assistant-upload-corpus.ts"
+    "assistant:upload-corpus": "bun run ./scripts/assistant-upload-corpus.ts",
+    "assistant:review-logs": "bun run ./scripts/assistant-review-logs.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",

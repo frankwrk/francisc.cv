@@ -31,6 +31,8 @@ OPENAI_API_KEY=
 OPENAI_RESPONSES_MODEL=gpt-5-mini
 OPENAI_VECTOR_STORE_ID=
 OPENAI_PROJECT_ID=
+OPENAI_RESPONSES_STORE=
+ASSISTANT_LOG_CONTENT=
 ```
 
 `gpt-5-mini` is the default because it is fast, relatively inexpensive, and strong enough for short retrieval-grounded portfolio answers. The assistant request intentionally does not send `temperature`, because GPT-5 Responses requests in this flow reject that parameter.
@@ -38,6 +40,10 @@ OPENAI_PROJECT_ID=
 For GPT-5 models, the assistant also forces `reasoning.effort = "low"`. That keeps enough budget available for the structured JSON answer when `file_search` is enabled; the model's default reasoning effort was causing otherwise-valid responses to end in `max_output_tokens` cutoffs.
 
 The deployed chat route also exports `maxDuration = 60` so Vercel gives the assistant enough execution time for hosted `file_search` and structured output. Without that explicit budget, production can fail with `FUNCTION_INVOCATION_TIMEOUT` even when local development works.
+
+`OPENAI_RESPONSES_STORE` controls whether assistant Responses API calls are stored in OpenAI for later inspection in the project dashboard. It defaults to enabled in local development and disabled elsewhere unless you opt in explicitly.
+
+`ASSISTANT_LOG_CONTENT` controls whether the app's own server logs include safe text previews of user questions, answers, caveats, and citation titles. It also defaults to enabled in local development and disabled elsewhere unless you opt in explicitly.
 
 ### Assistant Corpus Workflow
 
@@ -86,6 +92,31 @@ The runtime is also tuned for lower token burn:
 - route logs capture token usage breakdowns so model behavior can be inspected over time
 
 Optimization notes are tracked in [performance-optimizations.md](/Users/frank/dev/Code/Work/francisc.cv/performance-optimizations.md).
+
+### Assistant Log Review
+
+You can review exported dev or Vercel runtime logs with:
+
+```bash
+bun run assistant:review-logs path/to/assistant-logs.ndjson
+```
+
+or:
+
+```bash
+cat path/to/assistant-logs.ndjson | bun run assistant:review-logs
+```
+
+The script scans newline-delimited JSON logs for `scope: "portfolio-assistant"` and summarizes:
+
+- support-level distribution
+- prompt-chip usage by question text
+- weak-support prompts
+- repeated continuation-style follow-ups
+- repeated answers to continuation requests
+- failure stages and token averages
+
+This is intended as a lightweight weekly review tool for spotting prompt drift, weak follow-up handling, and recurring low-quality question patterns.
 
 
 Full implementation notes live in [docs/portfolio-assistant.md](/Users/frank/dev/Code/Work/francisc.cv/docs/portfolio-assistant.md).

@@ -94,8 +94,14 @@ This writes `data/assistant/vector-store-manifest.json`, which maps uploaded fil
 - `OPENAI_RESPONSES_MODEL`
 - `OPENAI_VECTOR_STORE_ID`
 - `OPENAI_PROJECT_ID` (optional)
+- `OPENAI_RESPONSES_STORE` (optional)
+- `ASSISTANT_LOG_CONTENT` (optional)
 
 If `OPENAI_VECTOR_STORE_ID` is omitted, the upload script can create a vector store and persist its ID into the local manifest.
+
+`OPENAI_RESPONSES_STORE` enables stored Responses API records in OpenAI. In this project it defaults to `true` in local development and `false` outside development unless explicitly set. This is the switch to use if you want to inspect assistant requests from the OpenAI project dashboard.
+
+`ASSISTANT_LOG_CONTENT` enables richer app-side assistant logs that include truncated previews of the user's question, the final answer, the caveat, and source titles. It also defaults to `true` in local development and `false` outside development unless explicitly set. Use this when you want practical monitoring in local terminal logs and Vercel runtime logs without storing every full transcript externally.
 
 The runtime default for `OPENAI_RESPONSES_MODEL` is `gpt-5-mini`.
 
@@ -148,6 +154,39 @@ Server logs include:
 - `outputTokens`
 - `reasoningTokens`
 - `totalTokens`
+- `storedInOpenAI`
 - `failureStage` on errors
+
+When `ASSISTANT_LOG_CONTENT` is enabled, logs also include:
+
+- `userQuestionPreview`
+- `answerPreview`
+- `caveatPreview`
+- `citationTitles`
+
+## Weekly review workflow
+
+1. Export assistant runtime logs from local development or Vercel.
+2. Save them as newline-delimited JSON, or pipe them directly into the review script.
+3. Run:
+
+```bash
+bun run assistant:review-logs path/to/assistant-logs.ndjson
+```
+
+4. Review these sections first:
+
+- `Support levels`
+- `Top prompt-chip questions`
+- `Weak-support prompts`
+- `Repeated continuation replies`
+- `Repeated answers to continuation replies`
+
+Use this review to identify:
+
+- prompt chips that drive weak answers
+- follow-up questions that produce redundant answers
+- support-level regressions after prompt changes
+- token spikes tied to specific question types
 
 The client also maps plain-text Vercel timeout bodies into a specific user-facing timeout message instead of showing `The assistant returned an invalid response.` This does not fix the timeout by itself, but it makes live failures legible when an upstream deployment budget issue reappears.
