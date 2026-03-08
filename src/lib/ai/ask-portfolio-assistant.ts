@@ -13,7 +13,6 @@ import { extractCitationState } from "@/lib/ai/citations";
 import { buildPortfolioInstructions } from "@/lib/ai/prompts";
 import { readAssistantVectorStoreManifest } from "@/lib/ai/sources";
 import {
-  getSuggestedQuestions,
   resolveAssistantRouteContext,
 } from "@/lib/ai/suggestions";
 
@@ -122,6 +121,14 @@ export function parseAssistantModelAnswer(rawText: string) {
   }
 }
 
+export function getResponsesReasoning(model: string) {
+  if (model.startsWith("gpt-5")) {
+    return { effort: "low" as const };
+  }
+
+  return undefined;
+}
+
 export async function askPortfolioAssistant(
   request: AssistantChatRequest,
 ) {
@@ -138,8 +145,10 @@ export async function askPortfolioAssistant(
   }
 
   const client = getOpenAIClient();
+  const model = getResponsesModel();
   const response = await client.responses.create({
-    model: getResponsesModel(),
+    model,
+    reasoning: getResponsesReasoning(model),
     instructions: buildPortfolioInstructions(context),
     input: request.messages.map((message) => ({
       role: message.role,
@@ -161,6 +170,7 @@ export async function askPortfolioAssistant(
     ],
     text: {
       format: zodTextFormat(AssistantModelAnswerSchema, "portfolio_answer"),
+      verbosity: "low",
     },
   });
 
@@ -183,9 +193,7 @@ export async function askPortfolioAssistant(
       citationState.citations.length > 0
         ? "I found relevant material, but I could not assemble a complete grounded answer from it."
         : "The assistant could not produce a valid answer from the current material.",
-    supportPoints: [],
     caveat: fallbackReason,
-    suggestedQuestions: [],
     supportLevel: "insufficient" as const,
   };
   const supportLevel = coerceSupportLevel(
@@ -197,12 +205,7 @@ export async function askPortfolioAssistant(
   const payload = AssistantChatResponseSchema.parse({
     requestId: response.id,
     answer: normalized.answer,
-    supportPoints: normalized.supportPoints,
     caveat: buildFallbackCaveat(supportLevel, normalized.caveat),
-    suggestedQuestions:
-      normalized.suggestedQuestions.length > 0
-        ? normalized.suggestedQuestions
-        : getSuggestedQuestions(context).slice(0, 3),
     citations: citationState.citations,
     supportLevel,
   });
@@ -217,6 +220,15 @@ export async function askPortfolioAssistant(
       responseStatus: response.status,
       incompleteReason: response.incomplete_details?.reason ?? null,
       parsedSuccessfully: parsed !== null,
+      usage: response.usage
+        ? {
+            inputTokens: response.usage.input_tokens,
+            cachedInputTokens: response.usage.input_tokens_details.cached_tokens,
+            outputTokens: response.usage.output_tokens,
+            reasoningTokens: response.usage.output_tokens_details.reasoning_tokens,
+            totalTokens: response.usage.total_tokens,
+          }
+        : null,
     },
   };
 }

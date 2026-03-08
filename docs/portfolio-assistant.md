@@ -43,15 +43,13 @@ It is instructed to:
 The server validates every model answer against a strict schema:
 
 - `answer`
-- `supportPoints`
 - `caveat`
-- `suggestedQuestions`
 - `citations`
 - `supportLevel`
 
 This keeps rendering stable and makes unsupported answers degrade predictably instead of drifting into free-form chat output.
 
-The UI intentionally suppresses visible `supportPoints` for normal responses. The answer itself should carry the useful substance, while caveats are only surfaced when support is partial or insufficient. This keeps the assistant from reading like it is exposing internal reasoning under the main answer.
+The answer itself carries the useful substance. Caveats are only surfaced when support is partial or insufficient. This keeps the assistant from reading like it is exposing internal reasoning under the main answer, and it trims output tokens on every request.
 
 ## Corpus workflow
 
@@ -88,6 +86,10 @@ The runtime default for `OPENAI_RESPONSES_MODEL` is `gpt-5-mini`.
 
 The assistant request does not send `temperature`. This is intentional: GPT-5 Responses requests for this flow reject that parameter, and the assistant does not need sampling control for narrow retrieval-grounded answers.
 
+When the runtime model is a GPT-5 variant, the request explicitly sets `reasoning.effort = "low"`. GPT-5 defaults to a higher reasoning budget than this assistant needs, and that default can consume output budget before the structured JSON completes. `minimal` is not usable here because OpenAI rejects that setting when `file_search` is enabled.
+
+The request also sets `text.verbosity = "low"` to keep answer length aligned with the product goal: concise, recruiter-readable, retrieval-grounded answers rather than expansive summaries.
+
 The server treats incomplete structured output as recoverable. If the model is cut off before it finishes valid JSON, the route returns a narrow fallback answer instead of failing the request.
 
 The deployed route also exports an explicit Vercel function budget with `maxDuration = 60`. This matters because hosted `file_search` plus structured output can run longer than the platform default, especially with GPT-5-class models. Without that budget, production can fail with `FUNCTION_INVOCATION_TIMEOUT`, which otherwise surfaces in the UI as a generic invalid-response path.
@@ -101,6 +103,8 @@ The deployed route also exports an explicit Vercel function budget with `maxDura
 - Mobile entry is exposed from the navigation menu instead of a floating button.
 - The chat opens as a centered modal with a blurred page backdrop, not a corner drawer. This keeps the interaction calmer and makes the assistant feel subordinate to the portfolio rather than a separate product surface.
 - The panel hierarchy is intentionally quiet: one primary surface, lighter prompt chips, and softer user/assistant message separation.
+- Prompt-chip questions are sent statelessly. They use the clicked prompt only, which avoids replaying the full transcript for common one-off recruiter questions.
+- Typed follow-ups keep only the most recent completed exchange plus the new user question. This preserves local continuity without paying to resend the entire session history.
 
 ## Analytics and logging
 
@@ -119,6 +123,13 @@ Server logs include:
 - `latencyMs`
 - `tool`
 - `citationCount`
+- `interactionSource`
+- `requestMessageCount`
+- `inputTokens`
+- `cachedInputTokens`
+- `outputTokens`
+- `reasoningTokens`
+- `totalTokens`
 - `failureStage` on errors
 
 The client also maps plain-text Vercel timeout bodies into a specific user-facing timeout message instead of showing `The assistant returned an invalid response.` This does not fix the timeout by itself, but it makes live failures legible when an upstream deployment budget issue reappears.

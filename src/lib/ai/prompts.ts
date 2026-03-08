@@ -18,9 +18,7 @@ Rules:
 Output requirements:
 - Return a direct answer.
 - Make the answer self-contained. Do not expose chain-of-thought, step-by-step reasoning, or internal analysis.
-- Keep supportPoints empty unless there is a strong reason to preserve terse factual fragments separately.
 - Include a caveat only when the source material is incomplete or indirect.
-- Suggest up to three useful follow-up questions.
 - Mark supportLevel as grounded, partial, or insufficient.
 `.trim();
 

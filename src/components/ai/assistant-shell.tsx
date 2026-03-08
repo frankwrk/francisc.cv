@@ -37,7 +37,7 @@ export function AssistantShell() {
 
   function handlePromptSelect(prompt: string) {
     trackPromptClick(prompt);
-    void submitQuestion(prompt);
+    void submitQuestion(prompt, "prompt");
   }
 
   return (

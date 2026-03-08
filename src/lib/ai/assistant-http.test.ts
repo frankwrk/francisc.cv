@@ -7,9 +7,7 @@ describe("parseAssistantResponse", () => {
       JSON.stringify({
         requestId: "req_123",
         answer: "Grounded answer",
-        supportPoints: [],
         caveat: null,
-        suggestedQuestions: ["What else should I ask?"],
         citations: [],
         supportLevel: "grounded",
       }),

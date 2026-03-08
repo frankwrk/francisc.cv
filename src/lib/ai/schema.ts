@@ -14,18 +14,17 @@ export const AssistantMessageSchema = z.object({
 export const AssistantContextInputSchema = z.object({
   pathname: z.string().trim().min(1).max(2048),
   title: z.string().trim().max(240).optional(),
+  interactionSource: z.enum(["prompt", "typed"]).optional(),
 });
 
 export const AssistantChatRequestSchema = z.object({
-  messages: z.array(AssistantMessageSchema).min(1).max(12),
+  messages: z.array(AssistantMessageSchema).min(1).max(4),
   context: AssistantContextInputSchema,
 });
 
 export const AssistantModelAnswerSchema = z.object({
   answer: z.string().trim().min(1).max(4000),
-  supportPoints: z.array(z.string().trim().min(1).max(280)).max(4),
   caveat: z.string().trim().max(400).nullable(),
-  suggestedQuestions: z.array(z.string().trim().min(1).max(160)).max(3),
   supportLevel: AssistantSupportLevelSchema,
 });
 
@@ -38,9 +37,7 @@ export const AssistantCitationSchema = z.object({
 export const AssistantChatResponseSchema = z.object({
   requestId: z.string().trim().min(1),
   answer: z.string().trim().min(1),
-  supportPoints: z.array(z.string().trim().min(1)).max(4),
   caveat: z.string().trim().nullable(),
-  suggestedQuestions: z.array(z.string().trim().min(1)).max(3),
   citations: z.array(AssistantCitationSchema).max(4),
   supportLevel: AssistantSupportLevelSchema,
 });

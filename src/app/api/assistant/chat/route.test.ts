@@ -22,9 +22,7 @@ describe("POST /api/assistant/chat", () => {
       payload: {
         requestId: "resp_123",
         answer: "Direct answer",
-        supportPoints: ["Point one"],
         caveat: null,
-        suggestedQuestions: ["Follow-up"],
         citations: [
           {
             title: "Profile summary",
@@ -46,6 +44,13 @@ describe("POST /api/assistant/chat", () => {
         responseStatus: "completed",
         incompleteReason: null,
         parsedSuccessfully: true,
+        usage: {
+          inputTokens: 1200,
+          cachedInputTokens: 400,
+          outputTokens: 220,
+          reasoningTokens: 40,
+          totalTokens: 1420,
+        },
       },
     });
 

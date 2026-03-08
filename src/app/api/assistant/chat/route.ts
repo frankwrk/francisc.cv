@@ -23,9 +23,16 @@ export async function POST(request: Request) {
       resultCount: result.diagnostics.resultCount,
       supportLevel: result.payload.supportLevel,
       model: process.env.OPENAI_RESPONSES_MODEL ?? "gpt-5-mini",
+      interactionSource: payload.context.interactionSource ?? "typed",
+      requestMessageCount: payload.messages.length,
       responseStatus: result.diagnostics.responseStatus,
       incompleteReason: result.diagnostics.incompleteReason,
       parsedSuccessfully: result.diagnostics.parsedSuccessfully,
+      inputTokens: result.diagnostics.usage?.inputTokens ?? null,
+      cachedInputTokens: result.diagnostics.usage?.cachedInputTokens ?? null,
+      outputTokens: result.diagnostics.usage?.outputTokens ?? null,
+      reasoningTokens: result.diagnostics.usage?.reasoningTokens ?? null,
+      totalTokens: result.diagnostics.usage?.totalTokens ?? null,
     });
 
     return Response.json(result.payload);

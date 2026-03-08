@@ -33,6 +33,8 @@ OPENAI_PROJECT_ID=
 
 `gpt-5-mini` is the default because it is fast, relatively inexpensive, and strong enough for short retrieval-grounded portfolio answers. The assistant request intentionally does not send `temperature`, because GPT-5 Responses requests in this flow reject that parameter.
 
+For GPT-5 models, the assistant also forces `reasoning.effort = "low"`. That keeps enough budget available for the structured JSON answer when `file_search` is enabled; the model's default reasoning effort was causing otherwise-valid responses to end in `max_output_tokens` cutoffs.
+
 The deployed chat route also exports `maxDuration = 60` so Vercel gives the assistant enough execution time for hosted `file_search` and structured output. Without that explicit budget, production can fail with `FUNCTION_INVOCATION_TIMEOUT` even when local development works.
 
 ### Assistant Corpus Workflow
@@ -67,13 +69,22 @@ That manifest is used to map file-search hits back to public URLs so the assista
 Every successful assistant response is normalized into:
 
 - `answer`
-- `supportPoints`
 - `caveat`
-- `suggestedQuestions`
 - `citations`
 - `supportLevel`
 
 If retrieval support is weak, the response is deliberately narrowed and marked as partial or insufficient rather than padded with speculation.
+
+The runtime is also tuned for lower token burn:
+
+- prompt-chip questions are sent statelessly
+- typed follow-ups only send the most recent exchange plus the new question
+- GPT-5 requests use `reasoning.effort = "low"`
+- model verbosity is forced to `low`
+- route logs capture token usage breakdowns so model behavior can be inspected over time
+
+Optimization notes are tracked in [performance-optimizations.md](/Users/frank/dev/Code/Work/francisc.cv/performance-optimizations.md).
+
 
 Full implementation notes live in [docs/portfolio-assistant.md](/Users/frank/dev/Code/Work/francisc.cv/docs/portfolio-assistant.md).
 

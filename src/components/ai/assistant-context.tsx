@@ -15,6 +15,10 @@ import {
   type AssistantChatResponse,
 } from "@/lib/ai/schema";
 import {
+  buildAssistantRequestMessages,
+  type AssistantInteractionSource,
+} from "@/lib/ai/request-messages";
+import {
   getSuggestedQuestions,
   resolveAssistantRouteContext,
 } from "@/lib/ai/suggestions";
@@ -46,7 +50,10 @@ type AssistantContextValue = {
   openAssistant: () => void;
   closeAssistant: () => void;
   setInput: (value: string) => void;
-  submitQuestion: (rawQuestion?: string) => Promise<void>;
+  submitQuestion: (
+    rawQuestion?: string,
+    interactionSource?: AssistantInteractionSource,
+  ) => Promise<void>;
   trackPromptClick: (prompt: string) => void;
   trackCitationClick: (
     citation: AssistantChatResponse["citations"][number],
@@ -99,14 +106,6 @@ function hydrateMessages(value: string | null): UiMessage[] {
   }
 }
 
-function buildRequestMessages(messages: UiMessage[]): AssistantChatRequest["messages"] {
-  return messages.map((message) =>
-    message.role === "user"
-      ? { role: "user", content: message.content }
-      : { role: "assistant", content: message.response.answer },
-  );
-}
-
 export function AssistantProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { displayMode } = useMachineMode();
@@ -122,15 +121,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     [pathname, title],
   );
   const routeLabel = useMemo(() => getRouteLabel(pathname), [pathname]);
-  const prompts = useMemo(() => {
-    const lastAssistant = [...messages]
-      .reverse()
-      .find((message) => message.role === "assistant");
-
-    return lastAssistant?.role === "assistant"
-      ? lastAssistant.response.suggestedQuestions
-      : getSuggestedQuestions(routeContext);
-  }, [messages, routeContext]);
+  const prompts = useMemo(() => getSuggestedQuestions(routeContext), [routeContext]);
 
   useEffect(() => {
     setTitle(document.title);
@@ -154,7 +145,10 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     }
   }, [displayMode]);
 
-  async function submitQuestion(rawQuestion?: string) {
+  async function submitQuestion(
+    rawQuestion?: string,
+    interactionSource: AssistantInteractionSource = "typed",
+  ) {
     const question = (rawQuestion ?? input).trim();
     if (!question || isPending) {
       return;
@@ -184,10 +178,11 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          messages: buildRequestMessages(nextMessages),
+          messages: buildAssistantRequestMessages(nextMessages, interactionSource),
           context: {
             pathname,
             title: document.title,
+            interactionSource,
           },
         } satisfies AssistantChatRequest),
       });
