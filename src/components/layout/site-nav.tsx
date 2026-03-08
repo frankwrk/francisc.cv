@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { Sparkles } from "lucide-react";
 import { useWebHaptics } from "web-haptics/react";
+import { useAssistant } from "@/components/ai/assistant-context";
 import { FlipWords } from "@/components/ui/flip-words";
 import { cn } from "@/utils/cn";
 
@@ -17,8 +19,6 @@ const links = [
   { label: "Thinking", href: "/thinking", flip: true },
 ];
 
-/** Grace period (ms) after opening during which we ignore outside clicks. Prevents iOS
- * synthetic click (fired after layout shift) from immediately closing the menu. */
 const OUTSIDE_CLICK_GRACE_MS = 400;
 
 export function SiteNav() {
@@ -28,9 +28,8 @@ export function SiteNav() {
   const openedAtRef = useRef<number>(0);
   const { trigger } = useWebHaptics();
   const prefersReducedMotion = useReducedMotion();
+  const { openAssistant } = useAssistant();
 
-  // Close on outside click + ESC. Ignore outside clicks for a short grace period after
-  // opening so iOS synthetic click (delivered after layout shift) does not close the menu.
   useEffect(() => {
     if (!isOpen) return;
     openedAtRef.current = Date.now();
@@ -67,14 +66,10 @@ export function SiteNav() {
   }
 
   return (
-    // No `relative` here — the absolute dropdown resolves to the canvas column instead,
-    // giving it the full canvas width automatically.
-    <div ref={navRef} data-oid="aij:vuw">
-      {/* Desktop: inline nav */}
+    <div ref={navRef}>
       <nav
         aria-label="Main navigation"
         className="hidden items-center gap-4 md:flex md:gap-5"
-        data-oid="s75en:9"
       >
         {links.map(({ label, href, flip }) => (
           <Link
@@ -83,38 +78,23 @@ export function SiteNav() {
             className={linkCls(href)}
             onClick={() => trigger([30])}
             {...(flip ? { "aria-label": label } : {})}
-            data-oid="628yh7e"
           >
             {flip ? (
-              <span
-                className="relative inline-block"
-                aria-hidden="true"
-                data-oid="m6ez.ik"
-              >
-                <span className="invisible" data-oid="yrquens">
-                  {flipNavWords.reduce((a, b) =>
-                    a.length >= b.length ? a : b,
-                  )}
+              <span className="relative inline-block" aria-hidden="true">
+                <span className="invisible">
+                  {flipNavWords.reduce((a, b) => (a.length >= b.length ? a : b))}
                 </span>
-                <span
-                  className="absolute inset-0 flex items-center"
-                  data-oid="c4kdtx5"
-                >
-                  <FlipWords
-                    words={flipNavWords}
-                    duration={2500}
-                    data-oid="dtz55w0"
-                  />
+                <span className="absolute inset-0 flex items-center">
+                  <FlipWords words={flipNavWords} duration={2500} />
                 </span>
               </span>
             ) : (
-              <span data-oid="g5qh88j">{label}</span>
+              <span>{label}</span>
             )}
           </Link>
         ))}
       </nav>
 
-      {/* Mobile: MENU toggle */}
       <button
         onClick={() => {
           trigger(isOpen ? [60] : "nudge");
@@ -124,13 +104,11 @@ export function SiteNav() {
         aria-label="Toggle navigation"
         aria-controls="mobile-nav"
         className="flex min-h-[44px] min-w-[44px] items-center rounded-sm text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors [font-family:var(--font-geist-pixel-circle)] hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] md:hidden"
-        data-oid="-9xqm1b"
       >
         {isOpen ? "CLOSE" : "MENU"}
       </button>
 
-      {/* Mobile: full-width dropdown panel */}
-      <AnimatePresence data-oid="14do28i">
+      <AnimatePresence>
         {isOpen && (
           <motion.div
             id="mobile-nav"
@@ -142,9 +120,8 @@ export function SiteNav() {
               ease: "easeOut",
             }}
             className="absolute left-0 right-0 top-[50px] z-50 border-b border-[var(--scaffold-line)] bg-[var(--scaffold-surface)] md:hidden"
-            data-oid="yovrgsk"
           >
-            <nav aria-label="Mobile navigation" data-oid="hq-jov-">
+            <nav aria-label="Mobile navigation">
               {links.map(({ label, href }, i) => (
                 <Link
                   key={href}
@@ -158,11 +135,22 @@ export function SiteNav() {
                     "flex items-center px-5 py-4",
                     i > 0 && "border-t border-[var(--scaffold-line)]",
                   )}
-                  data-oid="yshlga0"
                 >
                   {label}
                 </Link>
               ))}
+              <button
+                type="button"
+                onClick={() => {
+                  trigger([20, 30]);
+                  setIsOpen(false);
+                  openAssistant();
+                }}
+                className="flex w-full items-center gap-2 border-t border-[var(--scaffold-line)] px-5 py-4 text-left text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)]"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                Ask about my work
+              </button>
             </nav>
           </motion.div>
         )}

@@ -2,6 +2,79 @@
 
 Portfolio and structured narrative site for Francisc Furdui. The implementation prioritizes evidence-backed positioning, readable systems framing, and restrained visual polish over hype.
 
+## Portfolio Assistant
+
+The site now includes a V1 portfolio assistant available from the human-facing scaffold. It is intentionally narrow:
+
+- single server-side assistant route at `/api/assistant/chat`
+- OpenAI Responses API for generation
+- hosted `file_search` over an approved public corpus
+- structured answer validation with Zod
+- no multi-agent runtime, durable user memory, browsing, or tool calling beyond retrieval
+
+Interaction model:
+
+- desktop access is a nav-level `Ask about my work` trigger placed just before the theme toggle
+- mobile access is available from the nav menu instead of a floating launcher
+- the assistant opens as a centered modal with a blurred backdrop so it reads as part of the portfolio shell, not a separate app
+
+This architecture was chosen because the main product risk is answer grounding, not orchestration. Hosted file search keeps retrieval operationally light for V1 and makes it easier to ship a constrained, reviewable assistant before taking on custom vector infrastructure.
+
+### Assistant Environment
+
+Set these variables for local or deployed assistant use:
+
+```bash
+OPENAI_API_KEY=
+OPENAI_RESPONSES_MODEL=gpt-5-mini
+OPENAI_VECTOR_STORE_ID=
+OPENAI_PROJECT_ID=
+```
+
+`gpt-5-mini` is the default because it is fast, relatively inexpensive, and strong enough for short retrieval-grounded portfolio answers. The assistant request intentionally does not send `temperature`, because GPT-5 Responses requests in this flow reject that parameter.
+
+### Assistant Corpus Workflow
+
+The assistant corpus is normalized from the existing authored content plus assistant-specific markdown under `content/assistant/`.
+
+Build the local corpus artifact:
+
+```bash
+bun run assistant:build-corpus
+```
+
+Upload it to the hosted vector store:
+
+```bash
+bun run assistant:upload-corpus
+```
+
+The build writes:
+
+- `data/assistant/public-corpus.json`
+- `data/assistant/files/*.md`
+
+The upload step writes:
+
+- `data/assistant/vector-store-manifest.json`
+
+That manifest is used to map file-search hits back to public URLs so the assistant can render source badges in the UI.
+
+### Assistant Answer Contract
+
+Every successful assistant response is normalized into:
+
+- `answer`
+- `supportPoints`
+- `caveat`
+- `suggestedQuestions`
+- `citations`
+- `supportLevel`
+
+If retrieval support is weak, the response is deliberately narrowed and marked as partial or insufficient rather than padded with speculation.
+
+Full implementation notes live in [docs/portfolio-assistant.md](/Users/frank/dev/Code/Work/francisc.cv/docs/portfolio-assistant.md).
+
 ## Homepage Structure
 
 The homepage intentionally preserves the original intro copy as the primary narrative block. New sections below the hero are ordered for fast recruiter and AI-tool scanning:

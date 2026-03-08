@@ -4,6 +4,7 @@ import matter from "gray-matter";
 
 const projectsDir = path.join(process.cwd(), "content/projects");
 const writingDir = path.join(process.cwd(), "content/writing");
+const pagesDir = path.join(process.cwd(), "content/pages");
 
 export type ProjectMeta = {
   slug: string;
@@ -36,6 +37,17 @@ export type ArticleData = {
   source: string;
 };
 
+export type StaticPageMeta = {
+  slug: string;
+  title: string;
+  description: string;
+};
+
+export type StaticPageData = {
+  meta: StaticPageMeta;
+  source: string;
+};
+
 export type ArtTargetType = "work" | "thinking";
 
 export function getArtAssignmentKey(type: ArtTargetType, slug: string) {
@@ -49,11 +61,19 @@ export type ArtTarget = {
   assignmentKey: string;
 };
 
+function getMdxFiles(dir: string) {
+  return fs.readdirSync(dir).filter((file) => file.endsWith(".mdx"));
+}
+
+function readMdxFile(dir: string, slug: string) {
+  return matter(fs.readFileSync(path.join(dir, `${slug}.mdx`), "utf8"));
+}
+
 export async function getAllProjects(): Promise<ProjectMeta[]> {
-  const files = fs.readdirSync(projectsDir).filter((f) => f.endsWith(".mdx"));
+  const files = getMdxFiles(projectsDir);
   const projects = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
-    const { data } = matter(fs.readFileSync(path.join(projectsDir, file), "utf8"));
+    const { data } = readMdxFile(projectsDir, slug);
     return {
       slug,
       title: data.title ?? slug,
@@ -70,9 +90,7 @@ export async function getAllProjects(): Promise<ProjectMeta[]> {
 }
 
 export async function getProjectBySlug(slug: string): Promise<ProjectData> {
-  const { data, content } = matter(
-    fs.readFileSync(path.join(projectsDir, `${slug}.mdx`), "utf8")
-  );
+  const { data, content } = readMdxFile(projectsDir, slug);
   return {
     meta: {
       slug,
@@ -90,10 +108,10 @@ export async function getProjectBySlug(slug: string): Promise<ProjectData> {
 }
 
 export async function getAllArticles(): Promise<ArticleMeta[]> {
-  const files = fs.readdirSync(writingDir).filter((f) => f.endsWith(".mdx"));
+  const files = getMdxFiles(writingDir);
   const articles = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
-    const { data } = matter(fs.readFileSync(path.join(writingDir, file), "utf8"));
+    const { data } = readMdxFile(writingDir, slug);
     return {
       slug,
       title: data.title ?? slug,
@@ -107,9 +125,7 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
 }
 
 export async function getArticleBySlug(slug: string): Promise<ArticleData> {
-  const { data, content } = matter(
-    fs.readFileSync(path.join(writingDir, `${slug}.mdx`), "utf8")
-  );
+  const { data, content } = readMdxFile(writingDir, slug);
   return {
     meta: {
       slug,
@@ -118,6 +134,35 @@ export async function getArticleBySlug(slug: string): Promise<ArticleData> {
       date: data.date ?? "",
       tags: data.tags,
       takeaways: data.takeaways,
+    },
+    source: content,
+  };
+}
+
+export async function getAllStaticPages(): Promise<StaticPageMeta[]> {
+  const files = getMdxFiles(pagesDir);
+  const pages = files.map((file) => {
+    const slug = file.replace(/\.mdx$/, "");
+    const { data } = readMdxFile(pagesDir, slug);
+
+    return {
+      slug,
+      title: data.title ?? slug,
+      description: data.description ?? "",
+    } as StaticPageMeta;
+  });
+
+  return pages.sort((a, b) => a.title.localeCompare(b.title));
+}
+
+export async function getStaticPageBySlug(slug: string): Promise<StaticPageData> {
+  const { data, content } = readMdxFile(pagesDir, slug);
+
+  return {
+    meta: {
+      slug,
+      title: data.title ?? slug,
+      description: data.description ?? "",
     },
     source: content,
   };

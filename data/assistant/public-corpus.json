@@ -1,0 +1,583 @@
+{
+  "generatedAt": "2026-03-08T11:07:26.830Z",
+  "documents": [
+    {
+      "id": "faq:faq",
+      "slug": "faq",
+      "title": "Portfolio assistant FAQ",
+      "sourceType": "faq",
+      "canonicalUrl": "/about",
+      "priority": 2,
+      "topics": [
+        "faq",
+        "portfolio",
+        "evidence"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager"
+      ],
+      "content": "## What is this portfolio trying to show?\n\nThe site is meant to show how Francisc frames ambiguous work, translates it into structured artifacts, and delivers systems that hold up after handover.\n\n## What kinds of roles does the portfolio support?\n\nThe material is strongest for technical program management, product or platform roles with systems responsibility, workflow-heavy AI adoption work, documentation-heavy platform work, and security-aware web platform work.\n\n## What should a reader look at first?\n\nIf the reader wants delivery evidence, start with the work case studies. If they want thought process and trade-off framing, start with the writing. If they want role-fit evidence, use the resume page and role-specific resumes.\n\n## What should the assistant avoid claiming?\n\nThe assistant should avoid claims that are not directly supported by public material, including invented metrics, speculative role claims, or private project details.",
+      "excerpt": "## What is this portfolio trying to show? The site is meant to show how Francisc frames ambiguous work, translates it into structured artifacts, and delivers systems that hold up after handover. ## What kinds of roles...",
+      "filename": "faq--faq.md",
+      "attributes": {
+        "id": "faq:faq",
+        "slug": "faq",
+        "title": "Portfolio assistant FAQ",
+        "sourceType": "faq",
+        "canonicalUrl": "/about",
+        "priority": 2,
+        "topics": "faq|portfolio|evidence",
+        "audience": "recruiter|hiring-manager"
+      }
+    },
+    {
+      "id": "page:about",
+      "slug": "about",
+      "title": "About",
+      "sourceType": "page",
+      "canonicalUrl": "/about",
+      "priority": 1,
+      "topics": [
+        "background",
+        "method",
+        "portfolio"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager",
+        "technical-peer"
+      ],
+      "content": "I work across product management, UX, WordPress engineering, and platform security. Nine years in, I've come to believe that clear requirements matter as much as the code itself.\n\n## What I'm best at\n\n- Turning ambiguous ideas into clear requirements, user stories, and acceptance criteria.\n- Bridging business goals, design intent, and technical constraints before build starts.\n- Shipping systems with handover docs and runbooks so the next person can actually operate them.\n\n## Evidence from recent work\n\n- Built and maintained 60+ web products for SMEs, research teams, and SaaS contexts.\n- Cut downtime and attack surface on client environments by up to 70% through CDN, firewall, and hardening work.\n- Improved engagement by 40% on educational research interfaces through UX redesign and iterative validation.\n\n## How I work\n\n1. Discovery: define the problem, users, constraints, and non-goals.\n2. Requirements: write stories, acceptance criteria, and decision rationale.\n3. Delivery: balance UX quality with platform, security, and performance constraints.\n4. Handover: leave documentation thorough enough that teams can run and extend the system without me.\n\n## Core stack\n\nWordPress, WooCommerce, Elementor, PHP, JavaScript, Python, REST APIs, MySQL, NGINX, Redis, Cloudflare, AWS, and workflow documentation practices.\n\n## Current direction\n\nFocusing on Technical Product Manager, Product/Platform Engineer, UX Systems, and Security-aware Web Platform roles.\n\n## Contact\n\nEmail [francisc.frd@gmail.com](mailto:francisc.frd@gmail.com) for roles and collaborations, or use the form.",
+      "excerpt": "I work across product management, UX, WordPress engineering, and platform security. Nine years in, I've come to believe that clear requirements matter as much as the code itself. ## What I'm best at - Turning ambiguou...",
+      "filename": "page--about.md",
+      "attributes": {
+        "id": "page:about",
+        "slug": "about",
+        "title": "About",
+        "sourceType": "page",
+        "canonicalUrl": "/about",
+        "priority": 1,
+        "topics": "background|method|portfolio",
+        "audience": "recruiter|hiring-manager|technical-peer"
+      }
+    },
+    {
+      "id": "page:now",
+      "slug": "now",
+      "title": "Now",
+      "sourceType": "page",
+      "canonicalUrl": "/now",
+      "priority": 2,
+      "topics": [
+        "current-direction",
+        "learning"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager",
+        "technical-peer"
+      ],
+      "content": "Updated: January 2026\n\n## Current focus\n\n- Designing clearer case-study formats for product and engineering work.\n- Tightening documentation workflows so onboarding takes days, not weeks.\n- Building lightweight automation for repeat delivery tasks.\n\n## Learning\n\n- Measurable UX outcomes without heavy analytics overhead.\n- Security-by-default practices for frontend-heavy systems.\n\n## Open to\n\n- Product engineering roles with real ownership.\n- Platform UX and documentation-heavy system design.",
+      "excerpt": "Updated: January 2026 ## Current focus - Designing clearer case-study formats for product and engineering work. - Tightening documentation workflows so onboarding takes days, not weeks. - Building lightweight automati...",
+      "filename": "page--now.md",
+      "attributes": {
+        "id": "page:now",
+        "slug": "now",
+        "title": "Now",
+        "sourceType": "page",
+        "canonicalUrl": "/now",
+        "priority": 2,
+        "topics": "current-direction|learning",
+        "audience": "recruiter|hiring-manager|technical-peer"
+      }
+    },
+    {
+      "id": "page:resume",
+      "slug": "resume",
+      "title": "Resume",
+      "sourceType": "page",
+      "canonicalUrl": "/resume",
+      "priority": 2,
+      "topics": [
+        "background",
+        "method",
+        "portfolio"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager",
+        "technical-peer"
+      ],
+      "content": "## Summary\n\nProduct-oriented technologist with 9+ years of experience working across business requirements, UX decisions, and technical delivery. I build clarity in complex environments through strong documentation, explicit scope, and durable implementation patterns.\n\n## Highlights\n\n- 9+ years across product, UX, web engineering, and systems/security operations.\n- 60+ websites and platform implementations delivered for SMEs and research organizations.\n- Technical lead on a secure accounting integration platform (Sage50 context).\n- Hands-on infrastructure and security work across Cloudflare, AWS, Linux, and monitoring pipelines.\n\n## Experience timeline\n\n### Product & Technical Consultant / Founder\n\n`SYNQ Group LLC` · Boston, MA · 2020 — Present\n\n- Act as the bridge between stakeholders, designers, and engineers.\n- Define problem statements, user stories, acceptance criteria, and delivery constraints.\n- Deliver handover documentation: system overviews, setup guides, and maintenance instructions.\n- Architect and maintain WordPress environments focused on performance, reliability, and security.\n\n### Digital Experience Designer / Technical Generalist\n\n`Independent` · Dublin, Ireland · 2016 — 2020\n\n- Designed and delivered 60+ web products across multiple industries.\n- Built IA, user flows, and UX decisions aligned with technical constraints.\n- Implemented conversion and analytics instrumentation (Hotjar, Clarity, GA/GTM) and iterative UX improvements.\n\n### Technical Lead\n\n`Suntico Holdings` · Dublin, Ireland · 2014 — 2017\n\n- Led delivery for a secure, web-based accounting integration platform.\n- Coordinated engineering, compliance, and business requirements.\n- Defined internal API usage, access models, and governance documentation.\n\n## Skills snapshot\n\n| Area | Tools / capabilities |\n| --- | --- |\n| Product execution | Requirements definition, user stories, acceptance criteria, trade-off analysis |\n| UX and design | Information architecture, wireframing, usability testing, stakeholder workshops |\n| WordPress engineering | WooCommerce, Elementor, ACF, custom integrations, migration and scaling |\n| Infrastructure and security | Cloudflare WAF, SSL/TLS, DNS, NGINX, Redis, MySQL, vulnerability and incident workflows |\n| Automation and tooling | Bash, Python, JavaScript, Git, monitoring and reporting automation |\n\n## Education\n\n`BEng/BSc in Enterprise Computing` · Dublin City University · 2024\n\nRelevant coursework: Software Engineering, Enterprise Systems, System Integration, Cloud Platforms, Data Security, Human-Computer Interaction.\n\n## Certifications\n\nIn progress: CompTIA Security+, ISC2 Certified in Cybersecurity.\n\n## Download role-specific resumes\n\n- [Technical Product Manager Resume](/resumes/francisc-furdui-technical-product-manager.pdf)\n- [Cybersecurity Analyst Resume](/resumes/francisc-furdui-cybersecurity-analyst.pdf)\n- [UI/UX Resume](/resumes/francisc-furdui-ui-ux.pdf)\n- [WordPress Developer Resume](/resumes/francisc-furdui-wordpress-developer.pdf)\n- [General Resume](/resumes/francisc-furdui-general.pdf)",
+      "excerpt": "## Summary Product-oriented technologist with 9+ years of experience working across business requirements, UX decisions, and technical delivery. I build clarity in complex environments through strong documentation, ex...",
+      "filename": "page--resume.md",
+      "attributes": {
+        "id": "page:resume",
+        "slug": "resume",
+        "title": "Resume",
+        "sourceType": "page",
+        "canonicalUrl": "/resume",
+        "priority": 2,
+        "topics": "background|method|portfolio",
+        "audience": "recruiter|hiring-manager|technical-peer"
+      }
+    },
+    {
+      "id": "positioning:positioning",
+      "slug": "positioning",
+      "title": "Portfolio positioning",
+      "sourceType": "positioning",
+      "canonicalUrl": "/",
+      "priority": 1,
+      "topics": [
+        "positioning",
+        "ai-adoption",
+        "systems"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager",
+        "technical-peer"
+      ],
+      "content": "Francisc Furdui is positioning for roles that sit between product judgment, systems thinking, and technical delivery.\n\nThe strongest through-line in the portfolio is not a single tool or title. It is the ability to take ambiguous work, make the constraints explicit, and leave behind artifacts that help a team operate after launch.\n\nThe material supports a few recurring claims:\n\n- He works well in workflow-heavy and cross-functional environments.\n- He thinks about AI adoption as an operational systems problem, not a demo problem.\n- He values documentation, handover quality, and run-state reliability as part of delivery quality.\n- He can connect product framing, UX structure, and implementation constraints.\n\nThe portfolio does not try to overstate narrow specialization. It suggests breadth with a systems bias, especially around documentation, governance, platform operations, and AI-enabled work.",
+      "excerpt": "Francisc Furdui is positioning for roles that sit between product judgment, systems thinking, and technical delivery. The strongest through-line in the portfolio is not a single tool or title. It is the ability to tak...",
+      "filename": "positioning--positioning.md",
+      "attributes": {
+        "id": "positioning:positioning",
+        "slug": "positioning",
+        "title": "Portfolio positioning",
+        "sourceType": "positioning",
+        "canonicalUrl": "/",
+        "priority": 1,
+        "topics": "positioning|ai-adoption|systems",
+        "audience": "recruiter|hiring-manager|technical-peer"
+      }
+    },
+    {
+      "id": "profile:summary",
+      "slug": "profile-summary",
+      "title": "Profile summary",
+      "sourceType": "profile",
+      "canonicalUrl": "/profile.json",
+      "priority": 1,
+      "topics": [
+        "profile",
+        "positioning",
+        "portfolio"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager",
+        "technical-peer"
+      ],
+      "content": "# Profile summary\n\nName: Francisc Furdui\nRole: Technical Program Manager focused on AI adoption systems\nLocation: Boston\n\n## Positioning\n\nWhat interests me is the part after the demo. How does a team introduce a new capability, keep context intact, and turn one-off experiments into something people can actually use? That usually leads me to workflow design, knowledge structure, and the operational details that keep a system from drifting.\n\n## Focus\n\n- AI adoption in enterprises\n- agent architectures\n- technical program management\n- knowledge systems\n- workflow automation\n- governance and auditability\n\n## Capability signals\n\n- AI Adoption Systems: I build the structure around adoption: rollout paths, ownership, and the guardrails that keep a new tool useful after the first week. Evidence: Current work.\n- Agent Infrastructure: I care about the layer behind the interface: how agents get context, use tools, and fit inside the constraints of a real operating environment. Evidence: SYNQ Engine.\n- Knowledge Systems: Good automation depends on clean context. I design the docs, content models, and decision trails that make systems easier to trust and extend. Evidence: Requirements system.\n- Workflow Automation: A lot of coordination work is still manual. I look for the parts that can be made repeatable without making the process brittle. Evidence: Security resilience.\n\n## Selected work\n\n- SYNQ Engine: Agent orchestration runtime built for WordPress-heavy environments. (Live system)\n- STARTLINE: Working framework for enterprise AI adoption and workflow change. (Current work)\n- Cycl: Current exploration in AI-assisted credit planning and optimization. (Current work)\n- Requirements and handover documentation system: Documentation framework for scoping work, making trade-offs explicit, and handing systems over cleanly. (Documented case study)\n- WordPress migration and platform modernization: Migration playbook focused on performance, governance, and cleaner long-term maintenance. (Documented case study)\n- Security hardening and incident resilience: Security and monitoring routines designed to reduce avoidable incidents and speed up response. (Documented case study)",
+      "excerpt": "# Profile summary Name: Francisc Furdui Role: Technical Program Manager focused on AI adoption systems Location: Boston ## Positioning What interests me is the part after the demo. How does a team introduce a new capa...",
+      "filename": "profile--summary.md",
+      "attributes": {
+        "id": "profile:summary",
+        "slug": "profile-summary",
+        "title": "Profile summary",
+        "sourceType": "profile",
+        "canonicalUrl": "/profile.json",
+        "priority": 1,
+        "topics": "profile|positioning|portfolio",
+        "audience": "recruiter|hiring-manager|technical-peer"
+      }
+    },
+    {
+      "id": "project:docs-as-product-playbook",
+      "slug": "docs-as-product-playbook",
+      "title": "Requirements and handover documentation system",
+      "sourceType": "project",
+      "canonicalUrl": "/work/docs-as-product-playbook",
+      "priority": 1,
+      "topics": [
+        "Product",
+        "DevEx",
+        "Systems"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager",
+        "technical-peer"
+      ],
+      "content": "## Problem / Context\n\nProjects stalled because teams had partial context. Business goals were clear in the kickoff meeting, then vague by the time engineering started.\n\n## Approach\n\nI made discovery and handover documentation part of delivery, not cleanup you do at the end.\n\n- Define the problem and success criteria before implementation.\n- Write user stories and acceptance criteria in plain language.\n- Capture decision rationale when trade-offs are made.\n\n## Execution\n\n- Created reusable templates for discovery, scope, and handover.\n- Linked technical decisions to business and UX goals.\n- Produced maintenance instructions for teams inheriting systems after launch.\n\n```ts\ntype DeliveryArtifact = {\n  problem: string;\n  acceptanceCriteria: string[];\n  constraints: string[];\n  handoverChecklist: string[];\n};\n```\n\n## Results\n\n- Teams aligned earlier and reduced avoidable rework.\n- Stakeholders had clearer ownership boundaries during implementation.\n- Non-technical operators could manage production systems with less dependency on original builders.\n\n## Learnings\n\nDocumentation quality directly affects delivery speed and long-term maintainability.\n\n## Artifacts\n\n- Discovery and scope template set\n- Handover and maintenance guides\n- Decision record format",
+      "excerpt": "## Problem / Context Projects stalled because teams had partial context. Business goals were clear in the kickoff meeting, then vague by the time engineering started. ## Approach I made discovery and handover document...",
+      "filename": "project--docs-as-product-playbook.md",
+      "attributes": {
+        "id": "project:docs-as-product-playbook",
+        "slug": "docs-as-product-playbook",
+        "title": "Requirements and handover documentation system",
+        "sourceType": "project",
+        "canonicalUrl": "/work/docs-as-product-playbook",
+        "priority": 1,
+        "topics": "Product|DevEx|Systems",
+        "audience": "recruiter|hiring-manager|technical-peer"
+      }
+    },
+    {
+      "id": "project:geoformations-redesign",
+      "slug": "geoformations-redesign",
+      "title": "Educational research UX redesign",
+      "sourceType": "project",
+      "canonicalUrl": "/work/geoformations-redesign",
+      "priority": 1,
+      "topics": [
+        "UX",
+        "Product",
+        "WordPress"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager",
+        "technical-peer"
+      ],
+      "content": "## Problem / Context\n\nEducational and research organizations needed sites that made complex topics legible to non-technical audiences — and could be maintained by those same people after handover.\n\n## Approach\n\nI treated each redesign as a UX and requirements problem, not just a visual one.\n\n- Mapped user journeys before visual design.\n- Clarified page goals and conversion intent per section.\n- Used lightweight usability checks to validate decisions before launch.\n\n## Execution\n\n- Built wireframes and prototypes in Figma.\n- Implemented production builds in WordPress.\n- Added analytics and behavior tools to monitor drop-offs and navigation friction.\n- Iterated content hierarchy and CTA order based on observed usage.\n\n## Results\n\n- Engagement improved by 40% on key project surfaces.\n- Users reached high-intent content faster with fewer navigation loops.\n- Stakeholders gained a reusable pattern for future content additions.\n\n## Learnings\n\nClear information architecture does more for trust and usability than visual polish alone.\n\n## Artifacts\n\n- User journeys and IA map\n- Wireframes and interaction prototypes\n- Post-launch behavior review notes",
+      "excerpt": "## Problem / Context Educational and research organizations needed sites that made complex topics legible to non-technical audiences — and could be maintained by those same people after handover. ## Approach I treated...",
+      "filename": "project--geoformations-redesign.md",
+      "attributes": {
+        "id": "project:geoformations-redesign",
+        "slug": "geoformations-redesign",
+        "title": "Educational research UX redesign",
+        "sourceType": "project",
+        "canonicalUrl": "/work/geoformations-redesign",
+        "priority": 1,
+        "topics": "UX|Product|WordPress",
+        "audience": "recruiter|hiring-manager|technical-peer"
+      }
+    },
+    {
+      "id": "project:platform-onboarding-accelerator",
+      "slug": "platform-onboarding-accelerator",
+      "title": "WordPress migration and platform modernization",
+      "sourceType": "project",
+      "canonicalUrl": "/work/platform-onboarding-accelerator",
+      "priority": 1,
+      "topics": [
+        "Systems",
+        "WordPress",
+        "Product"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager",
+        "technical-peer"
+      ],
+      "content": "## Problem / Context\n\nOrganizations on older CMS setups or page-builder platforms were paying a maintenance tax: slow deploys, brittle plugins, and no clear owner when something broke.\n\n## Approach\n\nI scoped migration work as a full system transition, not a template swap.\n\n- Audit content, URL structure, and integrations.\n- Define migration acceptance criteria (performance, parity, SEO safety).\n- Build a repeatable rollout and rollback process.\n\n## Execution\n\n- Rebuilt site architecture on WordPress with modern infrastructure.\n- Tuned caching and database layers with NGINX, Redis, and MySQL optimization.\n- Integrated CDN and security controls via Cloudflare.\n- Delivered post-launch documentation for updates and incident handling.\n\n## Results\n\n- Faster, more stable websites across migrated properties.\n- Lower incident frequency and improved operational consistency.\n- Clearer ownership for ongoing content and technical maintenance.\n\n## Learnings\n\nMigration success depends on disciplined requirements and rollback planning, not just implementation speed.\n\n## Artifacts\n\n- Migration checklist and launch runbook\n- Performance baseline + post-launch comparison\n- Maintenance and governance notes",
+      "excerpt": "## Problem / Context Organizations on older CMS setups or page-builder platforms were paying a maintenance tax: slow deploys, brittle plugins, and no clear owner when something broke. ## Approach I scoped migration wo...",
+      "filename": "project--platform-onboarding-accelerator.md",
+      "attributes": {
+        "id": "project:platform-onboarding-accelerator",
+        "slug": "platform-onboarding-accelerator",
+        "title": "WordPress migration and platform modernization",
+        "sourceType": "project",
+        "canonicalUrl": "/work/platform-onboarding-accelerator",
+        "priority": 1,
+        "topics": "Systems|WordPress|Product",
+        "audience": "recruiter|hiring-manager|technical-peer"
+      }
+    },
+    {
+      "id": "project:secure-release-gates",
+      "slug": "secure-release-gates",
+      "title": "Security hardening and incident resilience",
+      "sourceType": "project",
+      "canonicalUrl": "/work/secure-release-gates",
+      "priority": 1,
+      "topics": [
+        "Security",
+        "Systems",
+        "DevEx"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager",
+        "technical-peer"
+      ],
+      "content": "## Problem / Context\n\nSmall and mid-sized organizations often had the right tools but no operational model behind them. Alerts fired, patches waited, and incidents had no clear owner.\n\n## Approach\n\nI focused on pragmatic controls tied to measurable operational outcomes.\n\n- Strengthen perimeter and access controls.\n- Monitor critical events and certificate/uptime health.\n- Define incident triage and post-incident hardening steps.\n\n## Execution\n\n- Deployed Cloudflare firewall and policy controls.\n- Implemented SSL, DNS, and access hardening patterns.\n- Set up vulnerability scanning and log review workflows.\n- Automated recurring maintenance tasks for patching and monitoring.\n\n```yaml\nsecurity_baseline:\n  - waf_rules_enabled\n  - ssl_tls_enforced\n  - uptime_and_log_alerts\n  - vulnerability_scan_cycle\n```\n\n## Results\n\n- Reduced downtime and attack impact by up to 70% in targeted environments.\n- Better visibility into risk through monitoring and reporting routines.\n- Faster incident containment with clearer ownership and response playbooks.\n\n## Learnings\n\nSecurity improvements hold only when controls are paired with consistent operational habits.\n\n## Artifacts\n\n- Security baseline checklist\n- Incident response and post-mortem template\n- Vulnerability remediation workflow",
+      "excerpt": "## Problem / Context Small and mid-sized organizations often had the right tools but no operational model behind them. Alerts fired, patches waited, and incidents had no clear owner. ## Approach I focused on pragmatic...",
+      "filename": "project--secure-release-gates.md",
+      "attributes": {
+        "id": "project:secure-release-gates",
+        "slug": "secure-release-gates",
+        "title": "Security hardening and incident resilience",
+        "sourceType": "project",
+        "canonicalUrl": "/work/secure-release-gates",
+        "priority": 1,
+        "topics": "Security|Systems|DevEx",
+        "audience": "recruiter|hiring-manager|technical-peer"
+      }
+    },
+    {
+      "id": "resume:overview",
+      "slug": "resume-overview",
+      "title": "Resume overview",
+      "sourceType": "resume",
+      "canonicalUrl": "/resume",
+      "priority": 1,
+      "topics": [
+        "resume",
+        "experience",
+        "skills"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager"
+      ],
+      "content": "# Resume overview\n\nProduct-oriented technologist with 9+ years of experience working across business requirements, UX decisions, and technical delivery. I build clarity in complex environments through strong documentation, explicit scope, and durable implementation patterns.\n\n## Highlights\n\n- 9+ years across product, UX, web engineering, and systems/security operations.\n- 60+ websites and platform implementations delivered for SMEs and research organizations.\n- Technical lead on a secure accounting integration platform (Sage50 context).\n- Hands-on infrastructure and security work across Cloudflare, AWS, Linux, and monitoring pipelines.\n\n## Experience\n\n### Product & Technical Consultant / Founder\nSYNQ Group LLC · Boston, MA · 2020 — Present\n- Act as the bridge between stakeholders, designers, and engineers.\n- Define problem statements, user stories, acceptance criteria, and delivery constraints.\n- Deliver handover documentation: system overviews, setup guides, and maintenance instructions.\n- Architect and maintain WordPress environments focused on performance, reliability, and security.\n\n### Digital Experience Designer / Technical Generalist\nIndependent · Dublin, Ireland · 2016 — 2020\n- Designed and delivered 60+ web products across multiple industries.\n- Built IA, user flows, and UX decisions aligned with technical constraints.\n- Implemented conversion and analytics instrumentation (Hotjar, Clarity, GA/GTM) and iterative UX improvements.\n\n### Technical Lead\nSuntico Holdings · Dublin, Ireland · 2014 — 2017\n- Led delivery for a secure, web-based accounting integration platform.\n- Coordinated engineering, compliance, and business requirements.\n- Defined internal API usage, access models, and governance documentation.\n\n## Skills\n\n- Product execution: Requirements definition, user stories, acceptance criteria, trade-off analysis\n- UX and design: Information architecture, wireframing, usability testing, stakeholder workshops\n- WordPress engineering: WooCommerce, Elementor, ACF, custom integrations, migration and scaling\n- Infrastructure and security: Cloudflare WAF, SSL/TLS, DNS, NGINX, Redis, MySQL, vulnerability and incident workflows\n- Automation and tooling: Bash, Python, JavaScript, Git, monitoring and reporting automation",
+      "excerpt": "# Resume overview Product-oriented technologist with 9+ years of experience working across business requirements, UX decisions, and technical delivery. I build clarity in complex environments through strong documentat...",
+      "filename": "resume--overview.md",
+      "attributes": {
+        "id": "resume:overview",
+        "slug": "resume-overview",
+        "title": "Resume overview",
+        "sourceType": "resume",
+        "canonicalUrl": "/resume",
+        "priority": 1,
+        "topics": "resume|experience|skills",
+        "audience": "recruiter|hiring-manager"
+      }
+    },
+    {
+      "id": "resume:resume-general",
+      "slug": "resume/general",
+      "title": "General resume profile",
+      "sourceType": "resume",
+      "canonicalUrl": "/resume",
+      "priority": 1,
+      "topics": [
+        "resume",
+        "product",
+        "systems"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager"
+      ],
+      "content": "This profile is the broadest summary of Francisc Furdui's public experience.\n\nIt combines product execution, UX structure, WordPress and web platform delivery, documentation systems, and security-aware operations.\n\nThe main signal is breadth with operational discipline:\n\n- clear requirements and acceptance criteria\n- practical cross-functional coordination\n- implementation awareness\n- durable handover and maintenance thinking",
+      "excerpt": "This profile is the broadest summary of Francisc Furdui's public experience. It combines product execution, UX structure, WordPress and web platform delivery, documentation systems, and security-aware operations. The ...",
+      "filename": "resume--resume-general.md",
+      "attributes": {
+        "id": "resume:resume-general",
+        "slug": "resume/general",
+        "title": "General resume profile",
+        "sourceType": "resume",
+        "canonicalUrl": "/resume",
+        "priority": 1,
+        "topics": "resume|product|systems",
+        "audience": "recruiter|hiring-manager"
+      }
+    },
+    {
+      "id": "resume:resume-security",
+      "slug": "resume/security",
+      "title": "Security-aware platform resume profile",
+      "sourceType": "resume",
+      "canonicalUrl": "/resume?role=security",
+      "priority": 1,
+      "topics": [
+        "resume",
+        "security",
+        "operations"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager"
+      ],
+      "content": "This profile emphasizes security-aware web platform and operational resilience work.\n\nThe public material supports:\n\n- platform hardening and attack-surface reduction\n- Cloudflare, TLS, DNS, NGINX, Redis, and operational security practices\n- secure release and governance thinking\n- response and maintenance workflows that reduce avoidable incidents\n\nThe portfolio presents security as part of operating a production system well, not as isolated compliance theater.",
+      "excerpt": "This profile emphasizes security-aware web platform and operational resilience work. The public material supports: - platform hardening and attack-surface reduction - Cloudflare, TLS, DNS, NGINX, Redis, and operationa...",
+      "filename": "resume--resume-security.md",
+      "attributes": {
+        "id": "resume:resume-security",
+        "slug": "resume/security",
+        "title": "Security-aware platform resume profile",
+        "sourceType": "resume",
+        "canonicalUrl": "/resume?role=security",
+        "priority": 1,
+        "topics": "resume|security|operations",
+        "audience": "recruiter|hiring-manager"
+      }
+    },
+    {
+      "id": "resume:resume-tpm",
+      "slug": "resume/tpm",
+      "title": "Technical Program Manager resume profile",
+      "sourceType": "resume",
+      "canonicalUrl": "/resume?role=tpm",
+      "priority": 1,
+      "topics": [
+        "resume",
+        "tpm",
+        "delivery"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager"
+      ],
+      "content": "This profile emphasizes Francisc Furdui as a Technical Program Manager or closely related product-operations candidate.\n\nThe strongest evidence in the portfolio for TPM-fit is:\n\n- translating ambiguous work into requirements and acceptance criteria\n- aligning stakeholders, designers, and engineers\n- documenting decisions, constraints, and ownership boundaries\n- treating handover and operational clarity as part of delivery quality\n\nThe TPM framing is strongest when the work involves workflow change, platform ownership, or AI adoption with governance concerns.",
+      "excerpt": "This profile emphasizes Francisc Furdui as a Technical Program Manager or closely related product-operations candidate. The strongest evidence in the portfolio for TPM-fit is: - translating ambiguous work into require...",
+      "filename": "resume--resume-tpm.md",
+      "attributes": {
+        "id": "resume:resume-tpm",
+        "slug": "resume/tpm",
+        "title": "Technical Program Manager resume profile",
+        "sourceType": "resume",
+        "canonicalUrl": "/resume?role=tpm",
+        "priority": 1,
+        "topics": "resume|tpm|delivery",
+        "audience": "recruiter|hiring-manager"
+      }
+    },
+    {
+      "id": "resume:resume-ux-ui",
+      "slug": "resume/ux-ui",
+      "title": "UX and product design resume profile",
+      "sourceType": "resume",
+      "canonicalUrl": "/resume?role=ux",
+      "priority": 1,
+      "topics": [
+        "resume",
+        "ux",
+        "design"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager"
+      ],
+      "content": "This profile emphasizes the parts of Francisc Furdui's background that are strongest for UX systems, information architecture, and product design work connected to delivery.\n\nThe material supports:\n\n- user-flow and IA thinking\n- aligning design decisions to technical constraints\n- using documentation to reduce ambiguity before implementation\n- iterative improvement informed by analytics and user behavior\n\nThe portfolio does not position him as a purely visual designer. The strongest angle is UX decisions inside system and delivery constraints.",
+      "excerpt": "This profile emphasizes the parts of Francisc Furdui's background that are strongest for UX systems, information architecture, and product design work connected to delivery. The material supports: - user-flow and IA t...",
+      "filename": "resume--resume-ux-ui.md",
+      "attributes": {
+        "id": "resume:resume-ux-ui",
+        "slug": "resume/ux-ui",
+        "title": "UX and product design resume profile",
+        "sourceType": "resume",
+        "canonicalUrl": "/resume?role=ux",
+        "priority": 1,
+        "topics": "resume|ux|design",
+        "audience": "recruiter|hiring-manager"
+      }
+    },
+    {
+      "id": "resume:resume-wordpress",
+      "slug": "resume/wordpress",
+      "title": "WordPress platform resume profile",
+      "sourceType": "resume",
+      "canonicalUrl": "/resume?role=wordpress",
+      "priority": 1,
+      "topics": [
+        "resume",
+        "wordpress",
+        "platform"
+      ],
+      "audiences": [
+        "recruiter",
+        "hiring-manager"
+      ],
+      "content": "This profile emphasizes Francisc Furdui's WordPress and website platform experience.\n\nThe strongest evidence in the portfolio is around:\n\n- migrations from legacy or brittle setups\n- platform modernization for performance and maintainability\n- operational governance after launch\n- connecting content operations, SEO safety, hosting, caching, and security\n\nThe value proposition is not theme work alone. It is system transition, ownership clarity, and more stable long-term operation.",
+      "excerpt": "This profile emphasizes Francisc Furdui's WordPress and website platform experience. The strongest evidence in the portfolio is around: - migrations from legacy or brittle setups - platform modernization for performan...",
+      "filename": "resume--resume-wordpress.md",
+      "attributes": {
+        "id": "resume:resume-wordpress",
+        "slug": "resume/wordpress",
+        "title": "WordPress platform resume profile",
+        "sourceType": "resume",
+        "canonicalUrl": "/resume?role=wordpress",
+        "priority": 1,
+        "topics": "resume|wordpress|platform",
+        "audience": "recruiter|hiring-manager"
+      }
+    },
+    {
+      "id": "writing:bridging-ux-and-engineering",
+      "slug": "bridging-ux-and-engineering",
+      "title": "Bridging UX and engineering",
+      "sourceType": "writing",
+      "canonicalUrl": "/thinking/bridging-ux-and-engineering",
+      "priority": 2,
+      "topics": [
+        "UX",
+        "Engineering",
+        "Collaboration"
+      ],
+      "audiences": [
+        "technical-peer",
+        "hiring-manager"
+      ],
+      "content": "## What breaks the bridge\n\nIn mixed product/design/engineering teams, the most expensive failures usually happen before coding starts. The brief is often directionally right but operationally vague.\n\n## What fixes it\n\nA short alignment pass can prevent weeks of rework. I use this sequence:\n\n1. Define user objective and business objective separately.\n2. Document constraints (time, platform, security, ownership).\n3. Convert UX intent into testable acceptance criteria.\n4. Log trade-offs as soon as they are made.\n\n  If the team cannot explain the non-goals in one minute, the scope is still unstable.\n\n## Why this matters\n\nWorking across UX, WordPress engineering, and product management, I kept coming back to the same problem: intent evaporates between conversations. The bridge is not a meeting. It's a shared artifact.",
+      "excerpt": "## What breaks the bridge In mixed product/design/engineering teams, the most expensive failures usually happen before coding starts. The brief is often directionally right but operationally vague. ## What fixes it A ...",
+      "filename": "writing--bridging-ux-and-engineering.md",
+      "attributes": {
+        "id": "writing:bridging-ux-and-engineering",
+        "slug": "bridging-ux-and-engineering",
+        "title": "Bridging UX and engineering",
+        "sourceType": "writing",
+        "canonicalUrl": "/thinking/bridging-ux-and-engineering",
+        "priority": 2,
+        "topics": "UX|Engineering|Collaboration",
+        "audience": "technical-peer|hiring-manager"
+      }
+    },
+    {
+      "id": "writing:documentation-as-product-surface",
+      "slug": "documentation-as-product-surface",
+      "title": "Documentation as a product surface",
+      "sourceType": "writing",
+      "canonicalUrl": "/thinking/documentation-as-product-surface",
+      "priority": 2,
+      "topics": [
+        "Documentation",
+        "Product",
+        "DevEx"
+      ],
+      "audiences": [
+        "technical-peer",
+        "hiring-manager"
+      ],
+      "content": "## The hidden product surface\n\nThe same issue appears across industries: teams invest heavily in build quality and almost nothing in transfer quality. Then the original builders become permanent support.\n\n## Documentation should answer four questions\n\nEvery project handover should make these explicit:\n\n1. What was built, and why?\n2. What are the known constraints and trade-offs?\n3. How do I run and update this system safely?\n4. What should I check first during an incident?\n\n## Treat docs as requirements infrastructure\n\nI now write documentation alongside user stories and acceptance criteria, not after launch. This keeps scope decisions visible and reduces surprises near release.\n\n```ts\ntype HandoverPackage = {\n  systemOverview: string;\n  setupGuide: string[];\n  maintenanceChecklist: string[];\n  knownRisks: string[];\n};\n```\n\n## Practical rule\n\nIf a non-technical owner cannot perform routine updates using your docs, the product is not fully delivered.",
+      "excerpt": "## The hidden product surface The same issue appears across industries: teams invest heavily in build quality and almost nothing in transfer quality. Then the original builders become permanent support. ## Documentati...",
+      "filename": "writing--documentation-as-product-surface.md",
+      "attributes": {
+        "id": "writing:documentation-as-product-surface",
+        "slug": "documentation-as-product-surface",
+        "title": "Documentation as a product surface",
+        "sourceType": "writing",
+        "canonicalUrl": "/thinking/documentation-as-product-surface",
+        "priority": 2,
+        "topics": "Documentation|Product|DevEx",
+        "audience": "technical-peer|hiring-manager"
+      }
+    },
+    {
+      "id": "writing:systems-thinking-in-web-projects",
+      "slug": "systems-thinking-in-web-projects",
+      "title": "Systems thinking in web projects",
+      "sourceType": "writing",
+      "canonicalUrl": "/thinking/systems-thinking-in-web-projects",
+      "priority": 2,
+      "topics": [
+        "Systems",
+        "WordPress",
+        "Execution"
+      ],
+      "audiences": [
+        "technical-peer",
+        "hiring-manager"
+      ],
+      "content": "## A website is an operating system\n\nAcross 60+ deliveries, the same pattern: teams treat launch as the finish line, then struggle in maintenance. Real quality shows up after handover.\n\n## Design for run-state, not demo-state\n\nBefore implementation, I now define:\n\n- who updates content,\n- who owns hosting and security,\n- what gets monitored,\n- what happens when something breaks.\n\nThis changes technical decisions early. For example, component and CMS choices become easier when operational constraints are explicit.\n\n## Connect UX and infrastructure\n\nUsers feel slow pages, broken forms, expired SSL, and confusing navigation as one problem. They do not separate design from systems.\n\nThat is why delivery plans should combine:\n\n1. information architecture,\n2. performance baselines,\n3. security controls,\n4. handover documentation.\n\n## Practical rule\n\nIf your project plan has no maintenance section, it is not a project plan. It is a launch checklist.",
+      "excerpt": "## A website is an operating system Across 60+ deliveries, the same pattern: teams treat launch as the finish line, then struggle in maintenance. Real quality shows up after handover. ## Design for run-state, not demo...",
+      "filename": "writing--systems-thinking-in-web-projects.md",
+      "attributes": {
+        "id": "writing:systems-thinking-in-web-projects",
+        "slug": "systems-thinking-in-web-projects",
+        "title": "Systems thinking in web projects",
+        "sourceType": "writing",
+        "canonicalUrl": "/thinking/systems-thinking-in-web-projects",
+        "priority": 2,
+        "topics": "Systems|WordPress|Execution",
+        "audience": "technical-peer|hiring-manager"
+      }
+    }
+  ]
+}

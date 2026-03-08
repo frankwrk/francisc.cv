@@ -1,0 +1,41 @@
+---
+id: "page:about"
+title: "About"
+sourceType: "page"
+canonicalUrl: "/about"
+priority: 1
+topics: ["background", "method", "portfolio"]
+audiences: ["recruiter", "hiring-manager", "technical-peer"]
+---
+I work across product management, UX, WordPress engineering, and platform security. Nine years in, I've come to believe that clear requirements matter as much as the code itself.
+
+## What I'm best at
+
+- Turning ambiguous ideas into clear requirements, user stories, and acceptance criteria.
+- Bridging business goals, design intent, and technical constraints before build starts.
+- Shipping systems with handover docs and runbooks so the next person can actually operate them.
+
+## Evidence from recent work
+
+- Built and maintained 60+ web products for SMEs, research teams, and SaaS contexts.
+- Cut downtime and attack surface on client environments by up to 70% through CDN, firewall, and hardening work.
+- Improved engagement by 40% on educational research interfaces through UX redesign and iterative validation.
+
+## How I work
+
+1. Discovery: define the problem, users, constraints, and non-goals.
+2. Requirements: write stories, acceptance criteria, and decision rationale.
+3. Delivery: balance UX quality with platform, security, and performance constraints.
+4. Handover: leave documentation thorough enough that teams can run and extend the system without me.
+
+## Core stack
+
+WordPress, WooCommerce, Elementor, PHP, JavaScript, Python, REST APIs, MySQL, NGINX, Redis, Cloudflare, AWS, and workflow documentation practices.
+
+## Current direction
+
+Focusing on Technical Product Manager, Product/Platform Engineer, UX Systems, and Security-aware Web Platform roles.
+
+## Contact
+
+Email [francisc.frd@gmail.com](mailto:francisc.frd@gmail.com) for roles and collaborations, or use the form.

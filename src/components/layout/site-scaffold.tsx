@@ -3,9 +3,15 @@
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
+import { Sparkles } from "lucide-react";
+import { useWebHaptics } from "web-haptics/react";
+import { AssistantProvider } from "@/components/ai/assistant-context";
+import { useAssistant } from "@/components/ai/assistant-context";
 import { siteScaffoldConfig } from "@/config/site-scaffold";
 import { MachineModeController } from "@/components/machine/machine-mode-controller";
 import { SiteNav } from "@/components/layout/site-nav";
+import { AssistantShell } from "@/components/ai/assistant-shell";
+import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { buildShellVars } from "@/components/layout/shell-vars";
 import { cn } from "@/utils/cn";
 
@@ -145,6 +151,9 @@ function TopOuterRuler() {
 }
 
 function TopRuler() {
+  const { openAssistant } = useAssistant();
+  const { trigger } = useWebHaptics();
+
   return (
     <header
       className="flex h-[50px] items-center justify-between border-b px-4 md:px-6"
@@ -152,7 +161,23 @@ function TopRuler() {
       data-oid="5jczr8k"
     >
       <SiteNav data-oid="ewgv63b" />
-      <ThemeToggle data-oid="7m.k6vy" />
+      <div className="flex items-center gap-3 md:gap-4">
+        <button
+          type="button"
+          onClick={() => {
+            trigger([20, 30]);
+            openAssistant();
+          }}
+          className="group hidden items-center gap-2 px-1 py-1 text-[10px] tracking-[0.14em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)] md:inline-flex"
+          aria-label="Ask about my work"
+        >
+          <Sparkles className="h-3.5 w-3.5" />
+          <AnimatedShinyText className="transition-colors group-hover:text-[var(--scaffold-toggle-text-active)]">
+            Ask about my work
+          </AnimatedShinyText>
+        </button>
+        <ThemeToggle data-oid="7m.k6vy" />
+      </div>
     </header>
   );
 }
@@ -330,27 +355,29 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
 
   return (
     <MachineModeController machineContent={machineContent} data-oid="qjc9v6m">
-      <div
-        className="site-scaffold relative min-h-screen w-full"
-        style={scaffoldVars}
-        data-oid="3agt0b."
-      >
+      <AssistantProvider>
         <div
-          aria-hidden
-          className="pointer-events-none fixed inset-0 -z-10 bg-[var(--scaffold-bg)]"
-          data-oid="fa-a6lb"
-        />
-
-        <div
-          className="mx-auto grid w-full grid-cols-1 grid-rows-[1fr] px-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0"
-          style={{
-            maxWidth: siteScaffoldConfig.canvasMaxWidth + 128,
-            paddingTop: siteScaffoldConfig.pageTopPadding,
-            minHeight: "100dvh",
-          }}
-          data-oid="99hwvs7"
+          className="site-scaffold relative min-h-screen w-full"
+          style={scaffoldVars}
+          data-oid="3agt0b."
         >
-          <SideRuler align="left" data-oid="683xp1t" />
+          <AssistantShell />
+          <div
+            aria-hidden
+            className="pointer-events-none fixed inset-0 -z-10 bg-[var(--scaffold-bg)]"
+            data-oid="fa-a6lb"
+          />
+
+          <div
+            className="mx-auto grid w-full grid-cols-1 grid-rows-[1fr] px-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0"
+            style={{
+              maxWidth: siteScaffoldConfig.canvasMaxWidth + 128,
+              paddingTop: siteScaffoldConfig.pageTopPadding,
+              minHeight: "100dvh",
+            }}
+            data-oid="99hwvs7"
+          >
+            <SideRuler align="left" data-oid="683xp1t" />
 
           <div
             className="relative flex h-full flex-col overflow-visible"
@@ -433,9 +460,10 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
             </div>
           </div>
 
-          <SideRuler align="right" data-oid="foc6re8" />
+            <SideRuler align="right" data-oid="foc6re8" />
+          </div>
         </div>
-      </div>
+      </AssistantProvider>
     </MachineModeController>
   );
 }

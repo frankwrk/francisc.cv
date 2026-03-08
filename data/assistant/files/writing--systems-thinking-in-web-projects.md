@@ -1,0 +1,38 @@
+---
+id: "writing:systems-thinking-in-web-projects"
+title: "Systems thinking in web projects"
+sourceType: "writing"
+canonicalUrl: "/thinking/systems-thinking-in-web-projects"
+priority: 2
+topics: ["Systems", "WordPress", "Execution"]
+audiences: ["technical-peer", "hiring-manager"]
+---
+## A website is an operating system
+
+Across 60+ deliveries, the same pattern: teams treat launch as the finish line, then struggle in maintenance. Real quality shows up after handover.
+
+## Design for run-state, not demo-state
+
+Before implementation, I now define:
+
+- who updates content,
+- who owns hosting and security,
+- what gets monitored,
+- what happens when something breaks.
+
+This changes technical decisions early. For example, component and CMS choices become easier when operational constraints are explicit.
+
+## Connect UX and infrastructure
+
+Users feel slow pages, broken forms, expired SSL, and confusing navigation as one problem. They do not separate design from systems.
+
+That is why delivery plans should combine:
+
+1. information architecture,
+2. performance baselines,
+3. security controls,
+4. handover documentation.
+
+## Practical rule
+
+If your project plan has no maintenance section, it is not a project plan. It is a launch checklist.
