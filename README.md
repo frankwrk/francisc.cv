@@ -33,6 +33,8 @@ OPENAI_PROJECT_ID=
 
 `gpt-5-mini` is the default because it is fast, relatively inexpensive, and strong enough for short retrieval-grounded portfolio answers. The assistant request intentionally does not send `temperature`, because GPT-5 Responses requests in this flow reject that parameter.
 
+The deployed chat route also exports `maxDuration = 60` so Vercel gives the assistant enough execution time for hosted `file_search` and structured output. Without that explicit budget, production can fail with `FUNCTION_INVOCATION_TIMEOUT` even when local development works.
+
 ### Assistant Corpus Workflow
 
 The assistant corpus is normalized from the existing authored content plus assistant-specific markdown under `content/assistant/`.

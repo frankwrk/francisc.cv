@@ -18,6 +18,7 @@ import {
   getSuggestedQuestions,
   resolveAssistantRouteContext,
 } from "@/lib/ai/suggestions";
+import { parseAssistantResponse } from "@/lib/ai/assistant-http";
 import { useMachineMode } from "@/components/machine/machine-mode-controller";
 import { createId } from "@/utils/create-id";
 
@@ -104,20 +105,6 @@ function buildRequestMessages(messages: UiMessage[]): AssistantChatRequest["mess
       ? { role: "user", content: message.content }
       : { role: "assistant", content: message.response.answer },
   );
-}
-
-async function parseAssistantResponse(response: Response) {
-  const rawText = await response.text();
-
-  if (!rawText) {
-    throw new Error("The assistant returned an empty response.");
-  }
-
-  try {
-    return JSON.parse(rawText) as AssistantChatResponse | { message?: string };
-  } catch {
-    throw new Error("The assistant returned an invalid response.");
-  }
 }
 
 export function AssistantProvider({ children }: { children: ReactNode }) {

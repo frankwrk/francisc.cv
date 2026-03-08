@@ -90,6 +90,8 @@ The assistant request does not send `temperature`. This is intentional: GPT-5 Re
 
 The server treats incomplete structured output as recoverable. If the model is cut off before it finishes valid JSON, the route returns a narrow fallback answer instead of failing the request.
 
+The deployed route also exports an explicit Vercel function budget with `maxDuration = 60`. This matters because hosted `file_search` plus structured output can run longer than the platform default, especially with GPT-5-class models. Without that budget, production can fail with `FUNCTION_INVOCATION_TIMEOUT`, which otherwise surfaces in the UI as a generic invalid-response path.
+
 ## UI behavior
 
 - The assistant is mounted globally from the scaffold, not page-by-page.
@@ -118,3 +120,5 @@ Server logs include:
 - `tool`
 - `citationCount`
 - `failureStage` on errors
+
+The client also maps plain-text Vercel timeout bodies into a specific user-facing timeout message instead of showing `The assistant returned an invalid response.` This does not fix the timeout by itself, but it makes live failures legible when an upstream deployment budget issue reappears.

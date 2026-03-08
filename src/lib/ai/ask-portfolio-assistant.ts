@@ -146,14 +146,14 @@ export async function askPortfolioAssistant(
       content: message.content,
     })),
     include: ["file_search_call.results"],
-    max_output_tokens: 1200,
+    max_output_tokens: 800,
     store: false,
     tools: [
       {
         type: "file_search",
         vector_store_ids: [vectorStoreId],
         filters: buildFileSearchFilters(context),
-        max_num_results: 6,
+        max_num_results: 4,
         ranking_options: {
           score_threshold: 0.22,
         },

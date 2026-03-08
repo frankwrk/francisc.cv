@@ -4,6 +4,7 @@ import { logAssistantError, logAssistantInfo } from "@/lib/telemetry/logger";
 import { createId } from "@/utils/create-id";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   const startedAt = Date.now();
