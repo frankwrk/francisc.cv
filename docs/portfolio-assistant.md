@@ -36,7 +36,7 @@ It is instructed to:
 - sound like a thoughtful professional in direct conversation rather than a branded assistant
 - avoid inventing claims, metrics, dates, or employers
 - state uncertainty explicitly when the corpus is thin
-- distinguish fact from synthesis
+- distinguish fact from synthesis, keeping any synthesis modest and clearly inferential
 - stay within public professional scope
 - avoid drifting into free-form roleplay or unsupported personal voice
 - prefer natural sentence rhythm over exhaustive coverage
@@ -53,8 +53,9 @@ The server validates every model answer against a strict schema:
 
 - `answer`
 - `caveat`
-- `citations`
 - `supportLevel`
+
+The prompt now also tells the model to return exactly those three top-level fields, in that order, as a JSON object. Citation handling stays app-side and is derived from file-search results rather than model-authored output.
 
 This keeps rendering stable and makes unsupported answers degrade predictably instead of drifting into free-form chat output.
 

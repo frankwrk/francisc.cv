@@ -22,10 +22,22 @@ describe("buildPortfolioInstructions", () => {
       "Write like a thoughtful professional answering directly in conversation, not like a branded assistant or formal summary generator.",
     );
     expect(instructions).toContain(
+      "When answering, speak in first person singular as if Francisc is responding directly, while remaining strictly grounded in the retrieved public material.",
+    );
+    expect(instructions).toContain(
+      "Return the output as a JSON object.",
+    );
+    expect(instructions).toContain(
+      "Use exactly these top-level fields, in this order: answer, caveat, supportLevel.",
+    );
+    expect(instructions).toContain(
       "Default to 90-140 words unless the question clearly requires more.",
     );
     expect(instructions).toContain(
-      "If you include a continuation, keep it light and optional rather than sounding scripted. Do not force your own CTA; the product may append a short follow-up separately.",
+      "If you include a continuation, keep it light and optional rather than sounding scripted (at most one brief closing sentence, and only when it naturally helps). Do not force your own CTA; the product may append a short follow-up separately.",
+    );
+    expect(instructions).toContain(
+      "Keep caveats short and portfolio-native (usually 5-20 words, describing only the limits of the public source material).",
     );
   });
 });
