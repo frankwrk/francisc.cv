@@ -5,19 +5,20 @@ type UseIsInViewportResult<T extends HTMLElement> = {
   isInView: boolean;
 };
 
+const hasIntersectionObserver = typeof IntersectionObserver !== "undefined";
+
 export function useIsInViewport<T extends HTMLElement = HTMLElement>(): UseIsInViewportResult<T> {
   const ref = useRef<T | null>(null);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(() => !hasIntersectionObserver);
 
   useEffect(() => {
-    const node = ref.current;
-
-    if (!node) {
+    if (!hasIntersectionObserver) {
       return;
     }
 
-    if (typeof IntersectionObserver === "undefined") {
-      setIsInView(true);
+    const node = ref.current;
+
+    if (!node) {
       return;
     }
 
