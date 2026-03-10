@@ -1,9 +1,9 @@
-# Dependency updates for francisc.cv (personal portfolio).
+# Dependency updates for francisc.cv (personal portfolio; package manager: bun).
 # Monthly PRs for minor/patch; security advisories open PRs as needed.
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: "bun"
     directory: "/"
     schedule:
       interval: "monthly"
