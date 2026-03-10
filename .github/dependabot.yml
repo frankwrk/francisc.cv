@@ -1,0 +1,15 @@
+# Dependency updates for francisc.cv (personal portfolio).
+# Monthly PRs for minor/patch; security advisories open PRs as needed.
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    labels:
+      - "dependencies"
