@@ -40,6 +40,9 @@ export type ProfileSummary = {
     github?: string;
     website?: string;
     externalProject?: string;
+    x?: string;
+    linkedin?: string;
+    instagram?: string;
   };
 };
 
@@ -155,6 +158,9 @@ export const profileSummary: ProfileSummary = {
     github: "https://github.com/frankwrk",
     website: siteUrl,
     externalProject: "https://synqengine.com",
+    x: "https://x.com/twosix_ltd",
+    linkedin: "https://www.linkedin.com/in/franciscfurdui/",
+    instagram: "https://www.instagram.com/francisc_frd/",
   },
 };
 
@@ -169,6 +175,13 @@ export function createPersonSchema() {
     jobTitle: profileSummary.role,
     description: homepageIdentitySupport.description,
     knowsAbout: profileSummary.focus,
-    sameAs: [profileSummary.links?.github].filter(Boolean),
+    sameAs: [
+      profileSummary.links?.github,
+      profileSummary.links?.website,
+      profileSummary.links?.externalProject,
+      profileSummary.links?.x,
+      profileSummary.links?.linkedin,
+      profileSummary.links?.instagram,
+    ].filter(Boolean),
   };
 }

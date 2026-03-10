@@ -21,11 +21,13 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 const siteName = "francisc.cv";
-const siteDescription = homepageIdentitySupport.description;
+const defaultTitle = "AI adoption & workflow systems — Francisc Furdui";
+const siteDescription =
+  "Technical program manager focused on AI adoption systems, workflow design, and knowledge structures teams can actually use.";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: siteName,
+    default: defaultTitle,
     template: `%s — ${siteName}`,
   },
   description: siteDescription,
@@ -61,6 +63,9 @@ export const metadata: Metadata = {
   },
 };
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
   themeColor: [
     {
       media: "(prefers-color-scheme: light)",
