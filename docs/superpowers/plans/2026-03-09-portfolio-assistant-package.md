@@ -3250,7 +3250,7 @@ export default defineConfig({
 
 ```typescript
 import { createAssistantHandler } from '@portfolio-assistant/next'
-import config from '../../../portfolio-assistant.config'
+import config from '../../../../portfolio-assistant.config'
 
 export const { POST } = createAssistantHandler(config)
 export const maxDuration = 60
@@ -3260,7 +3260,7 @@ export const maxDuration = 60
 
 ```typescript
 import { AssistantProvider, AssistantTrigger, AssistantPanel } from '@portfolio-assistant/next'
-import config from '../portfolio-assistant.config'
+import config from '../../portfolio-assistant.config'
 import '@portfolio-assistant/react/styles.css'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
