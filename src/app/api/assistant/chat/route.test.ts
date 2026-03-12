@@ -1,3 +1,4 @@
+import type { Mock } from "vitest";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
 vi.mock("@/lib/ai/ask-portfolio-assistant", () => ({
@@ -18,7 +19,7 @@ describe("POST /api/assistant/chat", () => {
   });
 
   it("returns a structured assistant payload", async () => {
-    vi.mocked(askPortfolioAssistant).mockResolvedValue({
+    (askPortfolioAssistant as Mock).mockResolvedValue({
       payload: {
         requestId: "resp_123",
         answer: "Direct answer",

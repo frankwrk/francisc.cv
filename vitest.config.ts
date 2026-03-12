@@ -3,8 +3,10 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    environment: "node",
+    environment: "jsdom",
     globals: true,
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    exclude: ["node_modules/**", "e2e/**", "playwright.config.*"],
   },
   resolve: {
     alias: {
