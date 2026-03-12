@@ -34,7 +34,6 @@ export type SiteScaffoldConfig = {
     light: ScaffoldPalette;
     dark: ScaffoldPalette;
   };
-  rulerTopValues: number[];
   rulerSide: {
     start: number;
     end: number;
@@ -82,7 +81,6 @@ export const siteScaffoldConfig: SiteScaffoldConfig = {
       toggleTextInactive: "oklch(65% 0 89.88)", // was 61.05% → 4.94:1 vs dark surface ✓
     },
   },
-  rulerTopValues: [0, 120, 240, 360, 480, 600, 720, 840, 960],
   rulerSide: {
     start: 0,
     end: 900,

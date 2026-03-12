@@ -110,30 +110,6 @@ function SideRuler({ align }: { align: "left" | "right" }) {
   );
 }
 
-function TopOuterRuler() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-x-0 -top-8 z-20 hidden md:block"
-    >
-      <ol
-        className="flex items-start justify-between px-6"
-        style={{ color: "var(--scaffold-ruler)" }}
-      >
-        {siteScaffoldConfig.rulerTopValues.map((value) => (
-          <li
-            key={`top-outer-${value}`}
-            className="flex flex-col items-center gap-1 font-mono tracking-[0.22em] [font-family:var(--font-geist-pixel-grid)]"
-          >
-            <span className="text-[11px] leading-none">{value}</span>
-            <span className="h-1.5 w-px bg-[var(--scaffold-ruler)] opacity-70" />
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
-
 function TopRuler() {
   const { openAssistant } = useAssistant();
   const { trigger } = useWebHaptics();
@@ -367,7 +343,6 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
               }}
             >
               <CornerMarkers />
-              <TopOuterRuler />
               <BorderExtensions />
               <a
                 href="#main-content"
