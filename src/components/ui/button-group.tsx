@@ -18,7 +18,7 @@ export const buttonGroupVariants = tv({
       "focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)] focus-visible:ring-offset-0",
       "data-[state=on]:z-[1] data-[state=on]:bg-[color-mix(in_oklab,var(--scaffold-toggle-thumb)_92%,var(--scaffold-surface))] data-[state=on]:text-[var(--scaffold-toggle-text-active)]",
       "disabled:pointer-events-none disabled:opacity-50",
-      "[font-family:var(--font-geist-pixel-circle)]",
+      "[font-family:var(--font-geist-sans)]",
     ],
 
     icon: "shrink-0",

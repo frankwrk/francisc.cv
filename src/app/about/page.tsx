@@ -38,13 +38,13 @@ export default async function AboutPage() {
     >
       <header className="space-y-1">
         <p
-          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           ABOUT
         </p>
         <h1
-          className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]"
+          className="text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl"
          
         >
           {meta.title}

@@ -26,7 +26,7 @@ export function Figure({ src, alt, caption, width, height }: FigureProps) {
       </div>
       {caption && (
         <figcaption
-          className="text-[11px] tracking-[0.06em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[11px] tracking-[0.06em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           {caption}

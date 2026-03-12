@@ -43,13 +43,13 @@ function ResumeContent() {
     >
       <header className="space-y-1">
         <p
-          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           RESUME
         </p>
         <h1
-          className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]"
+          className="text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl"
          
         >
           Francisc Furdui
@@ -59,7 +59,7 @@ function ResumeContent() {
       {/* Role selector */}
       <div className="space-y-3">
         <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           Filter by role
@@ -80,7 +80,7 @@ function ResumeContent() {
           >
             <SegmentedControl.Trigger
               value="all"
-              className="h-7 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-circle)]"
+              className="h-7 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)]"
              
             >
               All
@@ -89,7 +89,7 @@ function ResumeContent() {
               <SegmentedControl.Trigger
                 key={role}
                 value={role}
-                className="h-7 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-circle)]"
+                className="h-7 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)]"
                
               >
                 {resumeRoleLabels[role]}
@@ -102,7 +102,7 @@ function ResumeContent() {
       {/* Summary */}
       <section className="space-y-2">
         <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           Summary
@@ -118,7 +118,7 @@ function ResumeContent() {
       {/* Experience */}
       <section className="space-y-4">
         <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           Experience
@@ -149,7 +149,7 @@ function ResumeContent() {
                     {entry.title}
                   </h3>
                   <span
-                    className="text-[11px] tracking-[0.06em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+                    className="text-[11px] tracking-[0.06em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
                    
                   >
                     {entry.period}
@@ -189,7 +189,7 @@ function ResumeContent() {
       {/* Skills */}
       <section className="space-y-3">
         <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           Skills
@@ -224,7 +224,7 @@ function ResumeContent() {
       {/* Education */}
       <section className="space-y-2">
         <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           Education
@@ -257,7 +257,7 @@ function ResumeContent() {
       {/* Certifications */}
       <section className="space-y-2">
         <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           Certifications

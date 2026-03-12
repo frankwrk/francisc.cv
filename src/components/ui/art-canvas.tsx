@@ -155,7 +155,7 @@ function EditorLink({ href }: { href: string }) {
     <Link
       href={href}
       aria-label="Open art editor"
-      className="absolute right-2 top-2 z-10 inline-flex h-8 w-8 items-center justify-center rounded-none border border-white/30 bg-black/55 text-white/80 backdrop-blur transition-colors hover:border-white/55 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+      className="absolute right-2 top-2 z-10 inline-flex aspect-square w-7 items-center justify-center rounded-full bg-[var(--scaffold-toggle-track)] text-[var(--scaffold-toggle-text-inactive)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]"
     >
       <RiSettings3Line className="h-4 w-4" />
     </Link>

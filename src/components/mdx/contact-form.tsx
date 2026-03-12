@@ -9,7 +9,7 @@ export function ContactForm() {
      
     >
       <p
-        className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+        className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
        
       >
         CONTACT

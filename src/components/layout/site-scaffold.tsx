@@ -66,9 +66,13 @@ function SideRuler({
   const { stepPx, fadeZonePx } = siteScaffoldConfig.rulerSide;
 
   const tickValues: number[] = [];
+  const minorTickValues: number[] = [];
   if (height !== null && height > 0) {
     for (let value = stepPx; value <= height; value += stepPx) {
       tickValues.push(value);
+    }
+    for (let value = stepPx / 2; value <= height; value += stepPx) {
+      minorTickValues.push(value);
     }
   }
 
@@ -85,15 +89,30 @@ function SideRuler({
       }}
     >
       <ul className="relative h-full w-full">
+        {minorTickValues.map((value) => {
+          const opacity = sideRulerOpacity(value, height ?? 0, fadeZonePx);
+          return (
+            <li
+              key={`${align}-minor-${value}`}
+              className={cn(
+                "absolute flex -translate-y-1/2 items-center",
+                align === "left" ? "right-0" : "left-0",
+              )}
+              style={{ top: `${value}px`, opacity }}
+            >
+              <span className="block h-px w-1 bg-current opacity-50" />
+            </li>
+          );
+        })}
         {tickValues.map((value) => {
           const opacity = sideRulerOpacity(value, height ?? 0, fadeZonePx);
-          const tick = <span className="opacity-70">-</span>;
+          const tick = <span className="block h-px w-2 bg-current opacity-70" />;
 
           return (
             <li
               key={`${align}-${value}`}
               className={cn(
-                "absolute flex items-center gap-1.5 [font-family:var(--font-geist-pixel-square)]",
+                "absolute flex -translate-y-1/2 items-center gap-1.5 [font-family:var(--font-geist-sans)]",
                 align === "left"
                   ? "right-0 justify-end"
                   : "left-0 justify-start",
@@ -143,7 +162,7 @@ function TopRuler() {
             trigger([20, 30]);
             openAssistant();
           }}
-          className="flex items-center gap-1 px-1 py-1 text-[11px] uppercase tracking-[0.2em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-pixel-circle)] md:hidden"
+          className="flex items-center gap-1 px-1 py-1 text-[11px] uppercase tracking-[0.2em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-sans)] md:hidden"
           aria-label="Ask about my work"
         >
           <Sparkles className="h-3.5 w-3.5" />
@@ -158,7 +177,7 @@ function TopRuler() {
             trigger([20, 30]);
             openAssistant();
           }}
-          className="group hidden items-center gap-2 px-1 py-1 text-[10px] tracking-[0.14em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-pixel-circle)] md:inline-flex"
+          className="group hidden items-center gap-2 px-1 py-1 text-[10px] tracking-[0.14em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-sans)] md:inline-flex"
           aria-label="Ask about my work"
         >
           <Sparkles className="h-3.5 w-3.5" />
@@ -333,6 +352,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
           document.body.appendChild(el);
           el.select();
           try {
+            // @ts-ignore -- execCommand is deprecated but is the only option in non-secure contexts where navigator.clipboard is unavailable
             document.execCommand("copy");
           } catch {
             /* ignore */
@@ -390,7 +410,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
               <BorderExtensions />
               <a
                 href="#main-content"
-                className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-(--scaffold-skip-link-top) focus-visible:z-100 focus-visible:rounded focus-visible:bg-(--scaffold-surface) focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-(--scaffold-toggle-text-active) focus-visible:ring-2 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-pixel-circle)]"
+                className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-(--scaffold-skip-link-top) focus-visible:z-100 focus-visible:rounded focus-visible:bg-(--scaffold-surface) focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-(--scaffold-toggle-text-active) focus-visible:ring-2 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-sans)]"
               >
                 Skip to main content
               </a>

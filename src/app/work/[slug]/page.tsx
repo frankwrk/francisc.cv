@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { RiHashtag } from "@remixicon/react";
+import * as Badge from "@/components/ui/badge";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
@@ -8,6 +10,8 @@ import { Figure } from "@/components/mdx/figure";
 import { Callout } from "@/components/mdx/callout";
 import { MdxContent } from "@/components/mdx/mdx-content";
 import { ArtCanvas } from "@/components/ui/art-canvas";
+import { ShareButtons } from "@/components/ui/share-buttons";
+import { siteUrl } from "@/config/site-url";
 import { artAssignments } from "@/config/art-assignments";
 import { getAssignmentRecordValue } from "@/lib/art-assignments";
 
@@ -45,12 +49,12 @@ export default async function WorkDetailPage({ params }: Props) {
 
   return (
     <article
-      className="space-y-8 pt-2 [font-family:var(--font-geist-sans)]"
+      className="space-y-8 [font-family:var(--font-geist-sans)]"
      
     >
       {/* Hero header — art canvas background with text overlaid */}
       <header
-        className="relative overflow-hidden border border-[var(--scaffold-line)]"
+        className="relative overflow-hidden -mx-(--scaffold-main-padding-x) -mt-(--scaffold-main-padding-y) md:-mx-(--scaffold-main-padding-x-md) md:-mt-(--scaffold-main-padding-y-md)"
        
       >
         {/* Background art canvas */}
@@ -82,18 +86,18 @@ export default async function WorkDetailPage({ params }: Props) {
 
         {/* Text content pinned to the bottom-left */}
         <div
-          className="pointer-events-none relative z-10 flex flex-col justify-end px-5 pb-5 pt-32 space-y-2"
+          className="pointer-events-none relative z-10 flex flex-col justify-end px-(--scaffold-main-padding-x) pb-(--scaffold-main-padding-y) pt-32 space-y-2 md:px-(--scaffold-main-padding-x-md) md:pb-(--scaffold-main-padding-y-md)"
           style={{ minHeight: 280 }}
          
         >
           <p
-            className="text-[10px] tracking-[0.22em] text-white/60 [font-family:var(--font-geist-pixel-square)]"
+            className="text-[10px] tracking-[0.22em] text-white/60 [font-family:var(--font-geist-sans)]"
            
           >
             WORK
           </p>
           <h1
-            className="text-2xl font-semibold tracking-tight text-white"
+            className="text-4xl font-medium tracking-tight text-white [font-family:var(--font-geist-pixel-square)] md:text-5xl"
            
           >
             {meta.title}
@@ -104,7 +108,7 @@ export default async function WorkDetailPage({ params }: Props) {
           >
             {meta.role && (
               <span
-                className="text-[10px] tracking-[0.1em] text-white/70 [font-family:var(--font-geist-pixel-square)]"
+                className="text-[10px] tracking-[0.1em] text-white/70 [font-family:var(--font-geist-sans)]"
                
               >
                 {meta.role}
@@ -116,13 +120,10 @@ export default async function WorkDetailPage({ params }: Props) {
               </span>
             )}
             {meta.stack?.map((item) => (
-              <span
-                key={item}
-                className="border border-white/25 px-2 py-0.5 text-[10px] tracking-[0.08em] text-white/70"
-               
-              >
+              <Badge.Root key={item} color="teal">
+                <Badge.Icon as={RiHashtag} />
                 {item}
-              </span>
+              </Badge.Root>
             ))}
           </div>
         </div>
@@ -130,6 +131,7 @@ export default async function WorkDetailPage({ params }: Props) {
 
       {/* Prose body — constrained width, centered */}
       <div className="mx-auto max-w-2xl space-y-8">
+        <ShareButtons url={`${siteUrl}/work/${slug}`} title={meta.title} variant="inline" />
         {(meta.description || (meta.outcomes && meta.outcomes.length > 0)) && (
           <div
             className="space-y-4 border-b border-[var(--scaffold-line)] pb-6"
@@ -146,7 +148,7 @@ export default async function WorkDetailPage({ params }: Props) {
             {meta.outcomes && meta.outcomes.length > 0 && (
               <div className="space-y-2">
                 <p
-                  className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+                  className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
                  
                 >
                   Outcomes
@@ -186,9 +188,11 @@ export default async function WorkDetailPage({ params }: Props) {
                 ],
               },
             }}
-           
+
           />
         </MdxContent>
+
+        <ShareButtons url={`${siteUrl}/work/${slug}`} title={meta.title} variant="section" />
       </div>
     </article>
   );

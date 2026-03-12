@@ -63,7 +63,7 @@ export type SiteScaffoldConfig = {
 // Update values in this object to customize the global scaffold.
 // When topBarHeightPx === rulerSide.stepPx (e.g. 50), the first ruler tick aligns with the top bar bottom.
 export const siteScaffoldConfig: SiteScaffoldConfig = {
-  topBarHeightPx: 54,
+  topBarHeightPx: 49.5,
   skipLinkOffsetBelowTopBarPx: 4,
   topBarPaddingPx: { x: 16, xMd: 24 },
   canvasMaxWidth: 980,

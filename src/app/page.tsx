@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { RiFlashlightFill } from "@remixicon/react";
 import { ProfileAvatar } from "@/components/profile/profile-avatar";
 import { Signature } from "@/components/brand/signature";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import * as Badge from "@/components/ui/badge";
 import { siteProfileConfig } from "@/config/site-profile";
 import {
   homepageCapabilities,
@@ -24,7 +26,7 @@ export default function Home() {
             initials={siteProfileConfig.initials}
           />
 
-          <h1 className="text-3xl tracking-tight text-[var(--scaffold-toggle-text-active)] md:text-4xl">
+          <h1 className="text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl">
             {siteProfileConfig.name}
           </h1>
         </header>
@@ -54,7 +56,7 @@ export default function Home() {
 
       <SpotlightPanel className="px-5 py-6 md:px-7 md:py-7">
         <div className="space-y-3">
-          <p className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]">
+          <p className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]">
             {homepageIdentitySupport.eyebrow}
           </p>
           <h2 className="max-w-2xl text-xl tracking-tight text-[var(--scaffold-toggle-text-active)] md:text-2xl">
@@ -65,12 +67,9 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap gap-2 pt-1">
             {homepageIdentitySupport.signalLine.map((signal) => (
-              <span
-                key={signal}
-                className="border border-[var(--scaffold-line)] px-2.5 py-1 text-[10px] tracking-[0.12em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-              >
+              <Badge.Root key={signal} color="teal">
                 {signal}
-              </span>
+              </Badge.Root>
             ))}
           </div>
         </div>
@@ -78,10 +77,10 @@ export default function Home() {
 
       <section className="space-y-5">
         <div className="space-y-2">
-          <p className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]">
+          <p className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]">
             SYSTEMS I BUILD
           </p>
-          <h2 className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]">
+          <h2 className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)] md:text-3xl">
             Capability before abstraction.
           </h2>
         </div>
@@ -97,7 +96,7 @@ export default function Home() {
               >
                 <div className="flex h-full flex-col justify-between gap-8">
                   <div className="space-y-4">
-                    <div className="flex h-10 w-10 items-center justify-center border border-[var(--scaffold-line)] text-[var(--scaffold-toggle-text-active)]">
+                    <div className="flex h-10 w-10 items-center justify-center text-[var(--scaffold-toggle-text-active)]">
                       <Icon className="h-4 w-4" strokeWidth={1.75} />
                     </div>
                     <div className="space-y-2">
@@ -120,9 +119,10 @@ export default function Home() {
                         <span aria-hidden>↗</span>
                       </Link>
                     ) : (
-                      <span className="inline-flex w-fit items-center border border-[var(--scaffold-line)] px-2.5 py-1 text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)]">
+                      <Badge.Root color="blue">
+                        <Badge.Icon as={RiFlashlightFill} />
                         {capability.evidenceLabel}
-                      </span>
+                      </Badge.Root>
                     )
                   ) : null}
                 </div>
@@ -132,15 +132,15 @@ export default function Home() {
         </div>
 
         <div className="border border-[var(--scaffold-line)] px-4 py-4 md:px-5">
-          <p className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]">
+          <p className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]">
             SYSTEM PATH
           </p>
-          <div className="mt-3 flex flex-wrap items-center gap-2 text-[12px] tracking-[0.12em] text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-circle)] md:text-[13px]">
+          <div className="mt-3 flex flex-wrap items-center gap-2">
             {homepageSystemsDiagram.map((step, index) => (
               <div key={step} className="flex items-center gap-2">
-                <span className="border border-[var(--scaffold-line)] px-2.5 py-1.5">
+                <Badge.Root color="gray" size="medium">
                   {step}
-                </span>
+                </Badge.Root>
                 {index < homepageSystemsDiagram.length - 1 ? (
                   <span className="text-[var(--scaffold-ruler)]" aria-hidden>
                     →
@@ -154,10 +154,10 @@ export default function Home() {
 
       <section className="space-y-5 pb-6">
         <div className="space-y-2">
-          <p className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]">
+          <p className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]">
             SELECTED WORK
           </p>
-          <h2 className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]">
+          <h2 className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)] md:text-3xl">
             Proof artifacts and current systems.
           </h2>
         </div>
@@ -169,9 +169,21 @@ export default function Home() {
                 <div className="flex h-full flex-col justify-between gap-6">
                   <div className="space-y-3">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="border border-[var(--scaffold-line)] px-2 py-0.5 text-[10px] tracking-[0.08em] text-[var(--scaffold-ruler)]">
-                        {item.status}
-                      </span>
+                      {item.kind === "external" ? (
+                        <Badge.Root color="green">
+                          <Badge.Icon as={RiFlashlightFill} />
+                          {item.status}
+                        </Badge.Root>
+                      ) : item.kind === "current" ? (
+                        <Badge.Root color="blue">
+                          <Badge.Icon as={RiFlashlightFill} />
+                          {item.status}
+                        </Badge.Root>
+                      ) : (
+                        <Badge.Root color="gray">
+                          {item.status}
+                        </Badge.Root>
+                      )}
                       <span className="text-[10px] tracking-[0.08em] text-[var(--scaffold-ruler)] opacity-70">
                         {item.kind === "documented"
                           ? "Portfolio artifact"

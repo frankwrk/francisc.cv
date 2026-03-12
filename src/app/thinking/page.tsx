@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { RiHashtag } from "@remixicon/react";
 import { getAllArticles, getArtAssignmentKey } from "@/lib/content";
+import * as Badge from "@/components/ui/badge";
 import { ArtCanvas } from "@/components/ui/art-canvas";
 import { artAssignments } from "@/config/art-assignments";
 import { getAssignmentRecordValue } from "@/lib/art-assignments";
@@ -28,13 +30,13 @@ export default async function ThinkingPage() {
     >
       <header className="space-y-1">
         <p
-          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
          
         >
           THINKING
         </p>
         <h1
-          className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]"
+          className="text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl"
          
         >
           Writing and notes
@@ -71,7 +73,7 @@ export default async function ThinkingPage() {
                 {article.date && (
                   <time
                     dateTime={article.date}
-                    className="block text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
+                    className="block text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
                    
                   >
                     {new Date(article.date).toLocaleDateString("en-US", {
@@ -101,13 +103,10 @@ export default async function ThinkingPage() {
               {article.tags && article.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
                   {article.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="border border-[var(--scaffold-line)] px-2 py-0.5 text-[10px] tracking-[0.08em] text-[var(--scaffold-ruler)]"
-                     
-                    >
+                    <Badge.Root key={tag} color="purple">
+                      <Badge.Icon as={RiHashtag} />
                       {tag}
-                    </span>
+                    </Badge.Root>
                   ))}
                 </div>
               )}
