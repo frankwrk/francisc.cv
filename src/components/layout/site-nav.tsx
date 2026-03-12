@@ -5,9 +5,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Sparkles } from "lucide-react";
+import {
+  RiTwitterXFill,
+  RiLinkedinFill,
+  RiInstagramLine,
+} from "@remixicon/react";
 import { useWebHaptics } from "web-haptics/react";
 import { useAssistant } from "@/components/ai/assistant-context";
 import { FlipWords } from "@/components/ui/flip-words";
+import { profileSummary } from "@/config/site-home";
 import { cn } from "@/utils/cn";
 
 const flipNavWords = ["Thinking", "Writing", "Notes"];
@@ -20,6 +26,59 @@ const links = [
 ];
 
 const OUTSIDE_CLICK_GRACE_MS = 400;
+
+function NavSocialLinks({
+  variant,
+}: {
+  variant: "desktop" | "mobile";
+}) {
+  const linkBaseCls =
+    "inline-flex items-center justify-center text-[var(--scaffold-ruler)] hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] rounded-sm transition-colors";
+
+  const sizeCls =
+    variant === "desktop"
+      ? "h-6 w-6 text-[15px]"
+      : "h-9 w-9 text-[18px]";
+
+  const iconLinks = [
+    {
+      href: profileSummary.links?.x ?? "https://x.com/twosix_ltd",
+      label: "Visit my X profile",
+      Icon: RiTwitterXFill,
+    },
+    {
+      href:
+        profileSummary.links?.linkedin ??
+        "https://www.linkedin.com/in/franciscfurdui/",
+      label: "Visit my LinkedIn profile",
+      Icon: RiLinkedinFill,
+    },
+    {
+      href:
+        profileSummary.links?.instagram ??
+        "https://www.instagram.com/francisc_frd/",
+      label: "Visit my Instagram profile",
+      Icon: RiInstagramLine,
+    },
+  ] as const;
+
+  return (
+    <div className="flex items-center gap-2" aria-label="Social profiles">
+      {iconLinks.map(({ href, label, Icon }) => (
+        <a
+          key={href}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={label}
+          className={cn(linkBaseCls, sizeCls)}
+        >
+          <Icon aria-hidden className="h-[1em] w-[1em]" />
+        </a>
+      ))}
+    </div>
+  );
+}
 
 export function SiteNav() {
   const pathname = usePathname();
@@ -139,6 +198,9 @@ export function SiteNav() {
                   {label}
                 </Link>
               ))}
+              <div className="flex items-center justify-start gap-3 border-t border-[var(--scaffold-line)] px-5 py-3">
+                <NavSocialLinks variant="mobile" />
+              </div>
               <button
                 type="button"
                 onClick={() => {

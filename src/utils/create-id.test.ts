@@ -5,24 +5,26 @@ describe("createId", () => {
   it("returns a usable id when randomUUID is unavailable", () => {
     const originalCrypto = globalThis.crypto;
 
-    Object.defineProperty(globalThis, "crypto", {
-      value: {
-        getRandomValues(buffer: Uint32Array) {
-          buffer.set([1, 2, 3, 4]);
-          return buffer;
+    try {
+      Object.defineProperty(globalThis, "crypto", {
+        value: {
+          getRandomValues(buffer: Uint32Array) {
+            buffer.set([1, 2, 3, 4]);
+            return buffer;
+          },
         },
-      },
-      writable: true,
-    });
+        writable: true,
+      });
 
-    const id = createId();
+      const id = createId();
 
-    expect(id).toContain("-");
-    expect(id.length).toBeGreaterThan(10);
-
-    Object.defineProperty(globalThis, "crypto", {
-      value: originalCrypto,
-      writable: true,
-    });
+      expect(id).toContain("-");
+      expect(id.length).toBeGreaterThan(10);
+    } finally {
+      Object.defineProperty(globalThis, "crypto", {
+        value: originalCrypto,
+        writable: true,
+      });
+    }
   });
 });
