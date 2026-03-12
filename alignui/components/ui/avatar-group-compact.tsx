@@ -71,7 +71,7 @@ function AvatarGroupCompactRoot({
   );
 
   return (
-    <div className={root({ class: className })} {...rest} data-oid='2npsywb'>
+    <div className={root({ class: className })} {...rest}>
       {extendedChildren}
     </div>
   );
@@ -86,7 +86,7 @@ function AvatarGroupCompactStack({
   const { stack } = avatarGroupCompactVariants();
 
   return (
-    <div className={stack({ class: className })} {...rest} data-oid='zew.hes'>
+    <div className={stack({ class: className })} {...rest}>
       {children}
     </div>
   );
@@ -105,7 +105,7 @@ function AvatarGroupCompactOverflow({
     <div
       className={overflow({ class: className })}
       {...rest}
-      data-oid='7a-q3uo'
+     
     >
       {children}
     </div>

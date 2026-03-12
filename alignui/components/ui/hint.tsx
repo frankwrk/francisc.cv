@@ -57,7 +57,7 @@ function HintRoot({
   );
 
   return (
-    <div className={root({ class: className })} {...rest} data-oid='zx1por6'>
+    <div className={root({ class: className })} {...rest}>
       {extendedChildren}
     </div>
   );
@@ -78,7 +78,7 @@ function HintIcon<T extends React.ElementType>({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid='f7d4ea.'
+     
     />
   );
 }

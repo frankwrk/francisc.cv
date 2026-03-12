@@ -38,7 +38,7 @@ const AccordionItem = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid='l19gx99'
+     
     />
   );
 });
@@ -61,7 +61,7 @@ const AccordionTrigger = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid='._.fznw'
+     
     >
       {children}
     </AccordionPrimitive.Trigger>
@@ -80,7 +80,7 @@ function AccordionIcon<T extends React.ElementType>({
     <Component
       className={cn('size-5 text-text-sub-600', className)}
       {...rest}
-      data-oid='arft9j:'
+     
     />
   );
 }
@@ -111,7 +111,7 @@ function AccordionArrow({
           className,
         )}
         {...rest}
-        data-oid='t47o-ny'
+       
       />
 
       <CloseIcon
@@ -122,7 +122,7 @@ function AccordionArrow({
           className,
         )}
         {...rest}
-        data-oid='n-84z:x'
+       
       />
     </>
   );
@@ -138,11 +138,11 @@ const AccordionContent = React.forwardRef<
       ref={forwardedRef}
       className='overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down'
       {...rest}
-      data-oid='st70_xd'
+     
     >
       <div
         className={cn('pt-1.5 text-paragraph-sm text-text-sub-600', className)}
-        data-oid=':x6jaeh'
+       
       >
         {children}
       </div>

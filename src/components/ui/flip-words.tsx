@@ -28,7 +28,7 @@ export function FlipWords({
   }, [currentIndex, duration, startAnimation]);
 
   return (
-    <AnimatePresence mode="wait" data-oid="i9tq7o_">
+    <AnimatePresence mode="wait">
       <motion.span
         key={words[currentIndex]}
         initial={prefersReducedMotion ? false : { opacity: 0, y: 6 }}
@@ -40,7 +40,7 @@ export function FlipWords({
             : { duration: 0.2, ease: "easeInOut" }
         }
         className={cn("inline-block", className)}
-        data-oid="3k0i0_7"
+       
       >
         {words[currentIndex]}
       </motion.span>

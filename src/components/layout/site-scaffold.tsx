@@ -29,7 +29,7 @@ const ThemeToggle = dynamic(
       <div
         className="h-7 w-[96px] rounded-full border border-[var(--scaffold-line)]"
         aria-hidden
-        data-oid="_np5p2q"
+       
       />
     ),
   },
@@ -62,12 +62,12 @@ function SideRuler({ align }: { align: "left" | "right" }) {
         width: siteScaffoldConfig.sideRailWidth,
         color: "var(--scaffold-ruler)",
       }}
-      data-oid="vw5k_ez"
+     
     >
       <ul
         className="relative h-full w-full"
         style={{ marginTop: `-${siteScaffoldConfig.borderWidth}px` }}
-        data-oid="69wpjcc"
+       
       >
         {sideRulerValues.map((value) => {
           const relativeValue = value - siteScaffoldConfig.rulerSide.start;
@@ -79,7 +79,7 @@ function SideRuler({ align }: { align: "left" | "right" }) {
           const ratio = range === 0 ? 0 : relativeValue / range;
           const opacity = Math.max(0.2, 0.95 - ratio * 0.72);
           const tick = (
-            <span className="opacity-70" data-oid="yxp-rhe">
+            <span className="opacity-70">
               -
             </span>
           );
@@ -97,17 +97,17 @@ function SideRuler({ align }: { align: "left" | "right" }) {
                 top: `${positionPx}px`,
                 opacity,
               }}
-              data-oid="shelg9n"
+             
             >
               {align === "left" ? (
                 <>
-                  <span data-oid="us12oyu">{String(value)}</span>
+                  <span>{String(value)}</span>
                   {tick}
                 </>
               ) : (
                 <>
                   {tick}
-                  <span data-oid="n:hlfa_">{String(value)}</span>
+                  <span>{String(value)}</span>
                 </>
               )}
             </li>
@@ -123,25 +123,25 @@ function TopOuterRuler() {
     <div
       aria-hidden
       className="pointer-events-none absolute inset-x-0 -top-8 z-20 hidden md:block"
-      data-oid="s8.grjw"
+     
     >
       <ol
         className="flex items-start justify-between px-6"
         style={{ color: "var(--scaffold-ruler)" }}
-        data-oid="4fi1:2."
+       
       >
         {siteScaffoldConfig.rulerTopValues.map((value) => (
           <li
             key={`top-outer-${value}`}
             className="flex flex-col items-center gap-1 font-mono tracking-[0.22em] [font-family:var(--font-geist-pixel-grid)]"
-            data-oid="..z_l3z"
+           
           >
-            <span className="text-[10px] leading-none" data-oid="58gy:d:">
+            <span className="text-[10px] leading-none">
               {value}
             </span>
             <span
               className="h-1.5 w-px bg-[var(--scaffold-ruler)] opacity-70"
-              data-oid="qtp0jyo"
+             
             />
           </li>
         ))}
@@ -158,9 +158,9 @@ function TopRuler() {
     <header
       className="flex h-[50px] items-center justify-between border-b px-4 md:px-6"
       style={{ borderColor: "var(--scaffold-line)" }}
-      data-oid="5jczr8k"
+     
     >
-      <SiteNav data-oid="ewgv63b" />
+      <SiteNav />
       <div className="flex items-center gap-3 md:gap-4">
         <button
           type="button"
@@ -176,7 +176,7 @@ function TopRuler() {
             Ask about my work
           </AnimatedShinyText>
         </button>
-        <ThemeToggle data-oid="7m.k6vy" />
+        <ThemeToggle />
       </div>
     </header>
   );
@@ -193,7 +193,7 @@ function BorderExtensions() {
     <div
       aria-hidden
       className="pointer-events-none absolute inset-0 z-10 hidden md:block"
-      data-oid="ya:_to7"
+     
     >
       <div
         className="absolute left-0 top-0 h-px -translate-x-full"
@@ -202,7 +202,7 @@ function BorderExtensions() {
           background:
             "linear-gradient(to left, var(--scaffold-line), transparent)",
         }}
-        data-oid="9xzf0ce"
+       
       />
 
       <div
@@ -212,7 +212,7 @@ function BorderExtensions() {
           background:
             "linear-gradient(to right, var(--scaffold-line), transparent)",
         }}
-        data-oid="6you_5d"
+       
       />
 
       <div
@@ -222,7 +222,7 @@ function BorderExtensions() {
           background:
             "linear-gradient(to left, var(--scaffold-line), transparent)",
         }}
-        data-oid="siqbjbb"
+       
       />
 
       <div
@@ -232,7 +232,7 @@ function BorderExtensions() {
           background:
             "linear-gradient(to right, var(--scaffold-line), transparent)",
         }}
-        data-oid="w0jap97"
+       
       />
 
       <div
@@ -242,7 +242,7 @@ function BorderExtensions() {
           background:
             "linear-gradient(to top, var(--scaffold-line), transparent)",
         }}
-        data-oid="rxg4r2h"
+       
       />
 
       <div
@@ -252,7 +252,7 @@ function BorderExtensions() {
           background:
             "linear-gradient(to top, var(--scaffold-line), transparent)",
         }}
-        data-oid="h:12f:c"
+       
       />
 
       <div
@@ -262,7 +262,7 @@ function BorderExtensions() {
           background:
             "linear-gradient(to bottom, var(--scaffold-line), transparent)",
         }}
-        data-oid="w6h-7:o"
+       
       />
 
       <div
@@ -272,7 +272,7 @@ function BorderExtensions() {
           background:
             "linear-gradient(to bottom, var(--scaffold-line), transparent)",
         }}
-        data-oid="6u0lpl7"
+       
       />
     </div>
   );
@@ -292,24 +292,24 @@ function CornerMarkers() {
     <div
       aria-hidden
       className="pointer-events-none absolute inset-0 z-20"
-      data-oid="owpl7ga"
+     
     >
       <div
         className="absolute rounded-full border"
         style={{ ...markerStyle, left: -marker.offset, top: -marker.offset }}
-        data-oid=".z3b50m"
+       
       />
 
       <div
         className="absolute rounded-full border"
         style={{ ...markerStyle, right: -marker.offset, top: -marker.offset }}
-        data-oid="8.ob8_z"
+       
       />
 
       <div
         className="absolute rounded-full border"
         style={{ ...markerStyle, left: -marker.offset, bottom: -marker.offset }}
-        data-oid="9y:i8cy"
+       
       />
 
       <div
@@ -319,7 +319,7 @@ function CornerMarkers() {
           right: -marker.offset,
           bottom: -marker.offset,
         }}
-        data-oid="ju3i3yl"
+       
       />
     </div>
   );
@@ -354,18 +354,18 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
   const scaffoldVars = buildShellVars();
 
   return (
-    <MachineModeController machineContent={machineContent} data-oid="qjc9v6m">
+    <MachineModeController machineContent={machineContent}>
       <AssistantProvider>
         <div
           className="site-scaffold relative min-h-screen w-full"
           style={scaffoldVars}
-          data-oid="3agt0b."
+         
         >
           <AssistantShell />
           <div
             aria-hidden
             className="pointer-events-none fixed inset-0 -z-10 bg-[var(--scaffold-bg)]"
-            data-oid="fa-a6lb"
+           
           />
 
           <div
@@ -375,9 +375,9 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
               paddingTop: siteScaffoldConfig.pageTopPadding,
               minHeight: "100dvh",
             }}
-            data-oid="99hwvs7"
+           
           >
-            <SideRuler align="left" data-oid="683xp1t" />
+            <SideRuler align="left" />
 
           <div
             className="relative flex h-full flex-col overflow-visible"
@@ -387,21 +387,21 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
               borderWidth: siteScaffoldConfig.borderWidth,
               borderColor: "var(--scaffold-line)",
             }}
-            data-oid="d_k:s-4"
+           
           >
-            <CornerMarkers data-oid="::ym1gc" />
-            <TopOuterRuler data-oid="ofitbx1" />
-            <BorderExtensions data-oid="hfwg8c." />
+            <CornerMarkers />
+            <TopOuterRuler />
+            <BorderExtensions />
             <a
               href="#main-content"
               className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-[54px] focus-visible:z-[100] focus-visible:rounded focus-visible:bg-[var(--scaffold-surface)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-[var(--scaffold-toggle-text-active)] focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)]"
-              data-oid="2.:9sr-"
+             
             >
               Skip to main content
             </a>
-            <TopRuler data-oid="nf0:4yk" />
+            <TopRuler />
 
-            <div className="flex flex-1 flex-col" data-oid="vdj7_hw">
+            <div className="flex flex-1 flex-col">
               {siteScaffoldConfig.sections.map((section, index) => (
                 <section
                   key={section.id}
@@ -412,7 +412,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
                   style={{
                     minHeight: section.minHeight,
                   }}
-                  data-oid=".hn_gx4"
+                 
                 >
                   {index > 0 ? (
                     <div
@@ -422,7 +422,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
                         height: "var(--scaffold-section-divider-width)",
                         background: "var(--scaffold-section-divider)",
                       }}
-                      data-oid="6oi6wvf"
+                     
                     />
                   ) : null}
 
@@ -431,26 +431,26 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
                     style={{
                       maxWidth: section.maxInnerWidth ?? undefined,
                     }}
-                    data-oid="15iyxue"
+                   
                   >
                     {index === 0 ? (
                       <main
                         id="main-content"
                         tabIndex={-1}
                         className="h-full overflow-y-auto px-5 py-6 outline-none md:px-10 md:py-10"
-                        data-oid="iokgfom"
+                       
                       >
                         {children}
                       </main>
                     ) : (
                       <div
                         className="h-full min-h-24 p-4 md:p-8"
-                        data-oid="2pobn4j"
+                       
                       >
                         <div
                           className="h-px w-full"
                           style={{ background: "var(--scaffold-line)" }}
-                          data-oid="fqfidir"
+                         
                         />
                       </div>
                     )}
@@ -460,7 +460,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
             </div>
           </div>
 
-            <SideRuler align="right" data-oid="foc6re8" />
+            <SideRuler align="right" />
           </div>
         </div>
       </AssistantProvider>

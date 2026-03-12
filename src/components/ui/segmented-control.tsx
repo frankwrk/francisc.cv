@@ -32,9 +32,9 @@ const SegmentedControlList = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid="s4zn4nz"
+     
     >
-      <Slottable data-oid="a_zzx9z">{children}</Slottable>
+      <Slottable>{children}</Slottable>
 
       <div
         className={cn(
@@ -47,7 +47,7 @@ const SegmentedControlList = React.forwardRef<
           transitionTimingFunction: "cubic-bezier(0.65, 0, 0.35, 1)",
         }}
         aria-hidden="true"
-        data-oid="pv.1vsf"
+       
       />
     </TabsPrimitive.List>
   );
@@ -71,7 +71,7 @@ const SegmentedControlTrigger = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid="yji:jn9"
+     
     />
   );
 });
@@ -82,7 +82,7 @@ const SegmentedControlContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
 >((props, forwardedRef) => {
   return (
-    <TabsPrimitive.Content ref={forwardedRef} {...props} data-oid="l7dxg3w" />
+    <TabsPrimitive.Content ref={forwardedRef} {...props} />
   );
 });
 SegmentedControlContent.displayName = "SegmentedControlContent";

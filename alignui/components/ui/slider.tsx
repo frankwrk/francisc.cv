@@ -19,15 +19,15 @@ const SliderRoot = React.forwardRef<
       className,
     )}
     {...rest}
-    data-oid='5gt1-ys'
+   
   >
     <SliderPrimitive.Track
       className='relative h-1.5 w-full overflow-hidden rounded-full bg-bg-soft-200'
-      data-oid='p6qfdyc'
+     
     >
       <SliderPrimitive.Range
         className='absolute h-full bg-primary-base'
-        data-oid='3wkemg6'
+       
       />
     </SliderPrimitive.Track>
     {children}
@@ -53,7 +53,7 @@ const SliderThumb = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid='kcj9rdp'
+     
     />
   );
 });

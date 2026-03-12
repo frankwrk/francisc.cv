@@ -261,11 +261,11 @@ const AlertRoot = React.forwardRef<HTMLDivElement, AlertProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid='u7fqr4k'
+       
       >
         <div
           className={wrapper({ class: wrapperClassName })}
-          data-oid='_80:dqj'
+         
         >
           {extendedChildren}
         </div>
@@ -286,7 +286,7 @@ function AlertIcon<T extends React.ElementType>({
   const { icon } = alertVariants({ size, variant, status });
 
   return (
-    <Component className={icon({ class: className })} data-oid='8udioka' />
+    <Component className={icon({ class: className })} />
   );
 }
 AlertIcon.displayName = ALERT_ICON_NAME;
@@ -302,7 +302,7 @@ function AlertCloseIcon<T extends React.ElementType>({
   const { closeIcon } = alertVariants({ size, variant, status });
 
   return (
-    <Component className={closeIcon({ class: className })} data-oid='8yrcy_.' />
+    <Component className={closeIcon({ class: className })} />
   );
 }
 AlertCloseIcon.displayName = ALERT_CLOSE_ICON_NAME;

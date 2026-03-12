@@ -62,7 +62,7 @@ export function EncryptedText({ text, className }: EncryptedTextProps) {
   }, [normalizedText, prefersReducedMotion]);
 
   return (
-    <span className={className} data-oid="1wty8v:">
+    <span className={className}>
       {prefersReducedMotion ? normalizedText : displayText}
     </span>
   );

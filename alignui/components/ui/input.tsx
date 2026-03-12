@@ -195,7 +195,7 @@ function InputRoot({
     <Component
       className={root({ class: className })}
       {...rest}
-      data-oid='8.mpm5-'
+     
     >
       {extendedChildren}
     </Component>
@@ -223,7 +223,7 @@ function InputWrapper({
     <Component
       className={wrapper({ class: className })}
       {...rest}
-      data-oid='rs0p774'
+     
     >
       {children}
     </Component>
@@ -255,7 +255,7 @@ const Input = React.forwardRef<
         className={input({ class: className })}
         ref={forwardedRef}
         {...rest}
-        data-oid='_u0paep'
+       
       />
     );
   },
@@ -276,7 +276,7 @@ function InputIcon<T extends React.ElementType = 'div'>({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid='t583cdl'
+     
     />
   );
 }
@@ -295,7 +295,7 @@ function InputAffix({
   });
 
   return (
-    <div className={affix({ class: className })} {...rest} data-oid='5hao6q-'>
+    <div className={affix({ class: className })} {...rest}>
       {children}
     </div>
   );
@@ -318,7 +318,7 @@ function InputInlineAffix({
     <span
       className={inlineAffix({ class: className })}
       {...rest}
-      data-oid='zwz5tv8'
+     
     >
       {children}
     </span>

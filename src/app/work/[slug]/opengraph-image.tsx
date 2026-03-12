@@ -27,7 +27,7 @@ export default async function OgImage({ params }: Props) {
             "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
-        data-oid="kdagvo0"
+       
       >
         {/* Frame */}
         <div
@@ -37,7 +37,7 @@ export default async function OgImage({ params }: Props) {
             border: "1px solid rgba(255,255,255,0.08)",
             display: "flex",
           }}
-          data-oid="avc0h:g"
+         
         />
 
         <div
@@ -51,7 +51,7 @@ export default async function OgImage({ params }: Props) {
             borderLeft: "2px solid rgba(255,255,255,0.2)",
             display: "flex",
           }}
-          data-oid="e5p9p4p"
+         
         />
 
         <div
@@ -65,7 +65,7 @@ export default async function OgImage({ params }: Props) {
             borderRight: "2px solid rgba(255,255,255,0.2)",
             display: "flex",
           }}
-          data-oid="a:yn3b7"
+         
         />
 
         <div
@@ -79,7 +79,7 @@ export default async function OgImage({ params }: Props) {
             borderLeft: "2px solid rgba(255,255,255,0.2)",
             display: "flex",
           }}
-          data-oid="2sbd9q-"
+         
         />
 
         <div
@@ -93,13 +93,13 @@ export default async function OgImage({ params }: Props) {
             borderRight: "2px solid rgba(255,255,255,0.2)",
             display: "flex",
           }}
-          data-oid="r-_d:i6"
+         
         />
 
         {/* Breadcrumb */}
         <div
           style={{ display: "flex", alignItems: "center", gap: "8px" }}
-          data-oid="ng2tk4k"
+         
         >
           <span
             style={{
@@ -107,7 +107,7 @@ export default async function OgImage({ params }: Props) {
               fontSize: "11px",
               letterSpacing: "0.22em",
             }}
-            data-oid="3vin4n."
+           
           >
             FRANCISC.CV
           </span>
@@ -117,7 +117,7 @@ export default async function OgImage({ params }: Props) {
               fontSize: "11px",
               letterSpacing: "0.1em",
             }}
-            data-oid="b6vqhon"
+           
           >
             /
           </span>
@@ -127,7 +127,7 @@ export default async function OgImage({ params }: Props) {
               fontSize: "11px",
               letterSpacing: "0.22em",
             }}
-            data-oid="_:jrhm4"
+           
           >
             WORK
           </span>
@@ -136,7 +136,7 @@ export default async function OgImage({ params }: Props) {
         {/* Title + description */}
         <div
           style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-          data-oid="w4dlkt0"
+         
         >
           {meta.role && (
             <span
@@ -146,7 +146,7 @@ export default async function OgImage({ params }: Props) {
                 letterSpacing: "0.2em",
                 fontFamily: "monospace",
               }}
-              data-oid="u78cj9q"
+             
             >
               {meta.role.toUpperCase()}
             </span>
@@ -160,7 +160,7 @@ export default async function OgImage({ params }: Props) {
               letterSpacing: "-0.02em",
               maxWidth: "1000px",
             }}
-            data-oid="w5.gt17"
+           
           >
             {meta.title}
           </div>
@@ -171,7 +171,7 @@ export default async function OgImage({ params }: Props) {
               lineHeight: 1.5,
               maxWidth: "860px",
             }}
-            data-oid="9xm1nxg"
+           
           >
             {meta.description}
           </div>
@@ -184,9 +184,9 @@ export default async function OgImage({ params }: Props) {
             justifyContent: "space-between",
             alignItems: "flex-end",
           }}
-          data-oid="o78w00h"
+         
         >
-          <div style={{ display: "flex", gap: "8px" }} data-oid="_rg1k0a">
+          <div style={{ display: "flex", gap: "8px" }}>
             {(meta.tags ?? []).slice(0, 4).map((tag) => (
               <span
                 key={tag}
@@ -198,7 +198,7 @@ export default async function OgImage({ params }: Props) {
                   padding: "4px 10px",
                   display: "flex",
                 }}
-                data-oid="wnog4ge"
+               
               >
                 {tag.toUpperCase()}
               </span>
@@ -210,7 +210,7 @@ export default async function OgImage({ params }: Props) {
               fontSize: "10px",
               letterSpacing: "0.12em",
             }}
-            data-oid="aaqvfbl"
+           
           >
             francisc.cv
           </span>

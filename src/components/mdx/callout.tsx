@@ -19,17 +19,17 @@ export function Callout({ type = "note", title, children }: CalloutProps) {
           ? "border-[var(--scaffold-toggle-text-active)]"
           : "border-[var(--scaffold-line)]",
       )}
-      data-oid="tpjv-yn"
+     
     >
       {title && (
         <p
           className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="1a1wr6:"
+         
         >
           {title}
         </p>
       )}
-      <div className="text-[var(--scaffold-ruler)]" data-oid="2jur3_p">
+      <div className="text-[var(--scaffold-ruler)]">
         {children}
       </div>
     </aside>

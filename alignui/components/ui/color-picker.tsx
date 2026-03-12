@@ -35,7 +35,7 @@ function ColorSlider({ className, ...props }: AriaColorSliderProps) {
         cn('py-1', className),
       )}
       {...props}
-      data-oid='yl_-xtw'
+     
     />
   );
 }
@@ -47,7 +47,7 @@ function ColorArea({ className, ...props }: AriaColorAreaProps) {
         cn('h-[232px] w-full rounded-lg', className),
       )}
       {...props}
-      data-oid='4y5mzqp'
+     
     />
   );
 }
@@ -67,7 +67,7 @@ function SliderTrack({ className, style, ...props }: AriaSliderTrackProps) {
           0% -25%/6px 6px`,
       })}
       {...props}
-      data-oid='eplyszb'
+     
     />
   );
 }
@@ -79,7 +79,7 @@ function ColorThumb({ className, ...props }: AriaColorThumbProps) {
         cn('z-50 size-3 rounded-full ring-2 ring-stroke-white-0', className),
       )}
       {...props}
-      data-oid='25e_d1h'
+     
     />
   );
 }
@@ -94,7 +94,7 @@ function ColorSwatchPicker({
         cn('flex w-full flex-wrap gap-1', className),
       )}
       {...props}
-      data-oid='is0_e89'
+     
     />
   );
 }
@@ -112,7 +112,7 @@ function ColorSwatchPickerItem({
         ),
       )}
       {...props}
-      data-oid='i2cu76m'
+     
     />
   );
 }
@@ -135,7 +135,7 @@ function ColorSwatch({ className, style, ...props }: AriaColorSwatchProps) {
         0% -25%/6px 6px`,
       })}
       {...props}
-      data-oid='13_.k_7'
+     
     />
   );
 }
@@ -166,7 +166,7 @@ const EyeDropperButton = React.forwardRef<
           );
       }}
       {...rest}
-      data-oid='2v77l7c'
+     
     />
   );
 });

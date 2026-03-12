@@ -8,10 +8,10 @@ type FigureProps = {
 
 export function Figure({ src, alt, caption, width, height }: FigureProps) {
   return (
-    <figure className="my-8 space-y-2" data-oid=":j2k0bb">
+    <figure className="my-8 space-y-2">
       <div
         className="overflow-hidden rounded-sm border border-[var(--scaffold-line)]"
-        data-oid="hskcce0"
+       
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -21,13 +21,13 @@ export function Figure({ src, alt, caption, width, height }: FigureProps) {
           height={height}
           loading="lazy"
           className="w-full"
-          data-oid="e_lagty"
+         
         />
       </div>
       {caption && (
         <figcaption
           className="text-[11px] tracking-[0.06em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="8_m_igw"
+         
         >
           {caption}
         </figcaption>

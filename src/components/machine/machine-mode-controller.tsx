@@ -68,13 +68,13 @@ function MachineVersionToggle() {
   return (
     <div
       className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-[90]"
-      data-oid="74ojnxl"
+     
     >
       <ButtonGroup.Root
         size="xsmall"
         aria-label="Site version"
         className="rounded-xl border border-[oklch(0.9128_0_89.88)] bg-[color-mix(in_oklab,var(--scaffold-surface)_90%,var(--scaffold-bg))] p-0.5 shadow-[0_12px_30px_-18px_rgba(14,18,27,0.35)] backdrop-blur-md dark:border-[oklch(0.3052_0_89.88)]"
-        data-oid="qkk6qqv"
+       
       >
         <ButtonGroup.Item
           type="button"
@@ -82,10 +82,10 @@ function MachineVersionToggle() {
           aria-pressed={ctx.displayMode === "human"}
           onClick={() => ctx.switchMode("human")}
           className="border-transparent bg-[color-mix(in_oklab,var(--scaffold-surface)_94%,var(--scaffold-bg))] text-[oklch(0.5521_0_89.88)] hover:text-[oklch(0.5521_0_89.88)] data-[state=on]:text-[oklch(0.5521_0_89.88)] dark:text-[oklch(0.65_0_89.88)] dark:hover:text-[oklch(0.65_0_89.88)] dark:data-[state=on]:text-[oklch(0.65_0_89.88)]"
-          data-oid="gcvt9g1"
+         
         >
-          <ButtonGroup.Icon as={UserRound} aria-hidden data-oid="1dv_qdb" />
-          <span data-oid="aitur5j">HUMAN</span>
+          <ButtonGroup.Icon as={UserRound} aria-hidden />
+          <span>HUMAN</span>
         </ButtonGroup.Item>
         <ButtonGroup.Item
           type="button"
@@ -93,10 +93,10 @@ function MachineVersionToggle() {
           aria-pressed={ctx.displayMode === "machine"}
           onClick={() => ctx.switchMode("machine")}
           className="border-transparent bg-[color-mix(in_oklab,var(--scaffold-surface)_94%,var(--scaffold-bg))] text-[oklch(0.5521_0_89.88)] hover:text-[oklch(0.5521_0_89.88)] data-[state=on]:text-[oklch(0.5521_0_89.88)] dark:text-[oklch(0.65_0_89.88)] dark:hover:text-[oklch(0.65_0_89.88)] dark:data-[state=on]:text-[oklch(0.65_0_89.88)]"
-          data-oid="zi4vrwk"
+         
         >
-          <ButtonGroup.Icon as={Cpu} aria-hidden data-oid=":g6:mk9" />
-          <span data-oid="st7aj9o">MACHINE</span>
+          <ButtonGroup.Icon as={Cpu} aria-hidden />
+          <span>MACHINE</span>
         </ButtonGroup.Item>
       </ButtonGroup.Root>
     </div>
@@ -117,7 +117,7 @@ function MachineLoadingOverlay({
       : "Loading Human version";
 
   return (
-    <AnimatePresence data-oid="ygcy.y1">
+    <AnimatePresence>
       {loadingTarget ? (
         <motion.div
           key={loadingTarget}
@@ -133,12 +133,12 @@ function MachineLoadingOverlay({
             ...tokens.cssVars,
             backgroundColor: tokens.overlayBackgroundColor,
           }}
-          data-oid="8h.lvd-"
+         
         >
           <EncryptedText
             text={label}
             className="text-[11px] tracking-[0.2em] text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-circle)]"
-            data-oid="hgei2.l"
+           
           />
         </motion.div>
       ) : null}
@@ -162,12 +162,12 @@ function MachineSurface({ children }: { children: ReactNode }) {
         ...tokens.cssVars,
         backgroundColor: tokens.backgroundColor,
       }}
-      data-oid="7h8m6p5"
+     
     >
       <div
         className="mx-auto max-w-[980px] border border-[var(--scaffold-line)] p-5 md:p-8"
         style={{ backgroundColor: tokens.backgroundColor }}
-        data-oid="4j4wa:j"
+       
       >
         {children}
       </div>
@@ -228,15 +228,15 @@ export function MachineModeController({
   );
 
   return (
-    <MachineModeContext.Provider value={value} data-oid="a-oxcah">
+    <MachineModeContext.Provider value={value}>
       {children}
-      <AnimatePresence data-oid="ga_jtbo">
+      <AnimatePresence>
         {mode === "machine" ? (
-          <MachineSurface data-oid="w44cou_">{machineContent}</MachineSurface>
+          <MachineSurface>{machineContent}</MachineSurface>
         ) : null}
       </AnimatePresence>
-      <MachineLoadingOverlay loadingTarget={loadingTarget} data-oid="8dvkvy4" />
-      <MachineVersionToggle data-oid="1t6pras" />
+      <MachineLoadingOverlay loadingTarget={loadingTarget} />
+      <MachineVersionToggle />
     </MachineModeContext.Provider>
   );
 }
@@ -264,7 +264,7 @@ export function MachineLink({
 
   if (!href) {
     return (
-      <span className={className} data-oid="q:_tk5_">
+      <span className={className}>
         {children}
       </span>
     );
@@ -279,7 +279,7 @@ export function MachineLink({
           className,
         )}
         onClick={() => switchMode("human")}
-        data-oid=":ki9bt4"
+       
       >
         {children}
       </Link>
@@ -295,7 +295,7 @@ export function MachineLink({
         "underline decoration-[var(--scaffold-line)] underline-offset-2",
         className,
       )}
-      data-oid="f1.lk-0"
+     
     >
       {children}
     </a>

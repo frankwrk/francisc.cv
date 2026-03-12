@@ -446,7 +446,7 @@ export function ArtPageClient({
   }
 
   return (
-    <div className={styles.root} data-oid="art-lab-root">
+    <div className={styles.root}>
       <header className={styles.header}>
         <div>
           <p className={styles.kicker}>ART / HERO ASSIGNMENTS</p>

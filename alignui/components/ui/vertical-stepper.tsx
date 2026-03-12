@@ -24,7 +24,7 @@ function VerticalStepperRoot({
     <Component
       className={cn('w-full space-y-2', className)}
       {...rest}
-      data-oid='fzk:myc'
+     
     >
       {children}
     </Component>
@@ -43,7 +43,7 @@ function VerticalStepperArrow<T extends React.ElementType>({
     <Component
       className={cn('size-5 shrink-0 text-text-sub-600', className)}
       {...rest}
-      data-oid='y01nw.q'
+     
     />
   );
 }
@@ -116,7 +116,7 @@ const VerticalStepperItem = React.forwardRef<
       ref={forwardedRef}
       className={root({ class: className })}
       {...rest}
-      data-oid='3q6s0mp'
+     
     >
       {extendedChildren}
     </Component>
@@ -137,18 +137,18 @@ function VerticalStepperItemIndicator({
       <div
         className={indicator({ class: className })}
         {...rest}
-        data-oid='clxxohj'
+       
       >
         <svg
           viewBox='0 0 20 20'
           xmlns='http://www.w3.org/2000/svg'
           fill='none'
-          data-oid='n4poqd:'
+         
         >
           <path
             fill='currentColor'
             d='M15.1 7.453 8.726 13.82 4.9 10l1.275-1.274 2.55 2.548 5.1-5.094L15.1 7.453Z'
-            data-oid='8cdf656'
+           
           />
         </svg>
       </div>
@@ -159,7 +159,7 @@ function VerticalStepperItemIndicator({
     <div
       className={indicator({ class: className })}
       {...rest}
-      data-oid='ckfwv_t'
+     
     >
       {children}
     </div>

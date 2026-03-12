@@ -71,7 +71,7 @@ function DotStepperRoot({
     <Component
       className={root({ class: className })}
       {...rest}
-      data-oid='.5pmubx'
+     
     >
       {extendedChildren}
     </Component>
@@ -97,7 +97,7 @@ const DotStepperItem = React.forwardRef<HTMLButtonElement, DotStepperItemProps>(
           'bg-primary-base': active,
         })}
         {...rest}
-        data-oid='a-jfkt-'
+       
       />
     );
   },

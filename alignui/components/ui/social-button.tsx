@@ -213,7 +213,7 @@ const SocialButtonRoot = React.forwardRef<HTMLButtonElement, SocialButtonProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid='g81g2hj'
+       
       >
         {extendedChildren}
       </Component>
@@ -236,7 +236,7 @@ function SocialButtonIcon<T extends React.ElementType>({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid='i0zscdg'
+     
     />
   );
 }

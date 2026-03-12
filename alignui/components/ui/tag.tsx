@@ -112,7 +112,7 @@ const TagRoot = React.forwardRef<HTMLDivElement, TagProps>(
         className={root({ class: className })}
         aria-disabled={disabled}
         {...rest}
-        data-oid='.9hh5.o'
+       
       >
         {extendedChildren}
       </Component>
@@ -135,7 +135,7 @@ function TagIcon<T extends React.ElementType>({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid='joj.-7u'
+     
     />
   );
 }
@@ -162,14 +162,14 @@ const TagDismissButton = React.forwardRef<
         ref={forwardedRef}
         className={dismissButton({ class: className })}
         {...rest}
-        data-oid='67zxnqb'
+       
       >
         {children ?? (
           <TagDismissIcon
             variant={variant}
             disabled={disabled}
             as={RiCloseFill}
-            data-oid='i1t1mac'
+           
           />
         )}
       </Component>
@@ -192,7 +192,7 @@ function TagDismissIcon<T extends React.ElementType>({
     <Component
       className={dismissIcon({ class: className })}
       {...rest}
-      data-oid='sg6lgqp'
+     
     />
   );
 }

@@ -283,7 +283,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid='ny3oa9-'
+       
       >
         {extendedChildren}
       </Component>
@@ -307,7 +307,7 @@ function ButtonIcon<T extends React.ElementType>({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid='t1m3tw4'
+     
     />
   );
 }

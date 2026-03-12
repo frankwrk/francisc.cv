@@ -22,7 +22,7 @@ const TabMenuVerticalRoot = React.forwardRef<
       ref={forwardedRef}
       orientation='vertical'
       {...rest}
-      data-oid='sdxm0j3'
+     
     />
   );
 });
@@ -37,7 +37,7 @@ const TabMenuVerticalList = React.forwardRef<
       ref={forwardedRef}
       className={cn('w-full space-y-2', className)}
       {...rest}
-      data-oid='rosnp51'
+     
     />
   );
 });
@@ -64,7 +64,7 @@ const TabMenuVerticalTrigger = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid='u:y37hl'
+     
     />
   );
 });
@@ -88,7 +88,7 @@ function TabMenuVerticalIcon<T extends React.ElementType>({
         className,
       )}
       {...rest}
-      data-oid='6s_b.79'
+     
     />
   );
 }
@@ -113,7 +113,7 @@ function TabMenuVerticalArrowIcon<T extends React.ElementType>({
         className,
       )}
       {...rest}
-      data-oid='.-.89p5'
+     
     />
   );
 }

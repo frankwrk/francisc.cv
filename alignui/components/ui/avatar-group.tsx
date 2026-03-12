@@ -85,7 +85,7 @@ function AvatarGroupRoot({
   );
 
   return (
-    <div className={root({ class: className })} {...rest} data-oid='cyvu7no'>
+    <div className={root({ class: className })} {...rest}>
       {extendedChildren}
     </div>
   );
@@ -104,7 +104,7 @@ function AvatarGroupOverflow({
     <div
       className={overflow({ class: className })}
       {...rest}
-      data-oid='60n-e7i'
+     
     >
       {children}
     </div>

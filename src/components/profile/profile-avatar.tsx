@@ -25,7 +25,7 @@ export function ProfileAvatar({ sources, alt, initials }: ProfileAvatarProps) {
     <Avatar.Root
       size="80"
       className="border border-[var(--scaffold-line)] bg-[var(--scaffold-surface)] text-[var(--scaffold-toggle-text-active)]"
-      data-oid="tr30iof"
+     
     >
       {hasImageSource ? (
         <Avatar.Image
@@ -40,10 +40,10 @@ export function ProfileAvatar({ sources, alt, initials }: ProfileAvatarProps) {
               return prev + 1;
             });
           }}
-          data-oid="21bivg8"
+         
         />
       ) : (
-        <span className="text-base tracking-[0.16em]" data-oid="tl40ux5">
+        <span className="text-base tracking-[0.16em]">
           {initials}
         </span>
       )}

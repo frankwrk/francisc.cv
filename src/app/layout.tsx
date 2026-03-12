@@ -82,36 +82,32 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning data-oid="_x6w6a_">
-      <head data-oid="-pg:75p">
+    <html lang="en" suppressHydrationWarning>
+      <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(personSchema),
           }}
-          data-oid="k3kq0vs"
         />
       </head>
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} ${GeistPixelCircle.variable} ${GeistPixelTriangle.variable} ${GeistPixelLine.variable}`}
-        data-oid="f2allvw"
       >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-          data-oid="x08uk99"
         >
           <AppShell
-            machineContent={<MachineVersionContent data-oid="nrgiw42" />}
-            data-oid="dd_hx.4"
+            machineContent={<MachineVersionContent />}
           >
             {children}
           </AppShell>
         </ThemeProvider>
-        <Analytics data-oid=".vpe1uj" />
-        <SpeedInsights data-oid="3f2dzp:" />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

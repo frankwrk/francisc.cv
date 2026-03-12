@@ -90,7 +90,7 @@ const ProgressCircleRoot = React.forwardRef<
 
     return (
       <>
-        <div className={cn('relative', className)} data-oid='d:79gip'>
+        <div className={cn('relative', className)}>
           <svg
             ref={forwardedRef}
             width={radius * 2}
@@ -102,7 +102,7 @@ const ProgressCircleRoot = React.forwardRef<
             aria-valuemin={0}
             aria-valuemax={max}
             {...rest}
-            data-oid='bv.o9:g'
+           
           >
             <circle
               r={normalizedRadius}
@@ -111,7 +111,7 @@ const ProgressCircleRoot = React.forwardRef<
               strokeWidth={strokeWidth}
               fill='none'
               className='stroke-bg-soft-200'
-              data-oid='-l-_cei'
+             
             />
 
             {safeValue >= 0 && (
@@ -124,7 +124,7 @@ const ProgressCircleRoot = React.forwardRef<
                 strokeDashoffset={offset}
                 fill='none'
                 className='stroke-primary-base transition-all duration-300 ease-out'
-                data-oid='in6_adi'
+               
               />
             )}
           </svg>
@@ -134,7 +134,7 @@ const ProgressCircleRoot = React.forwardRef<
                 class:
                   'absolute inset-0 flex items-center justify-center text-center',
               })}
-              data-oid='xdkqj:.'
+             
             >
               {children}
             </div>

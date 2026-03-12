@@ -122,7 +122,7 @@ const StatusBadgeRoot = React.forwardRef<HTMLDivElement, StatusBadgeRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid='l1:ruj-'
+       
       >
         {extendedChildren}
       </Component>
@@ -141,7 +141,7 @@ function StatusBadgeIcon<T extends React.ElementType = 'div'>({
   const { icon } = statusBadgeVariants({ variant, status });
 
   return (
-    <Component className={icon({ class: className })} data-oid='lvo584h' />
+    <Component className={icon({ class: className })} />
   );
 }
 StatusBadgeIcon.displayName = STATUS_BADGE_ICON_NAME;
@@ -155,7 +155,7 @@ function StatusBadgeDot({
   const { dot } = statusBadgeVariants({ variant, status });
 
   return (
-    <div className={dot({ class: className })} {...rest} data-oid='_zry2bo' />
+    <div className={dot({ class: className })} {...rest} />
   );
 }
 StatusBadgeDot.displayName = STATUS_BADGE_DOT_NAME;

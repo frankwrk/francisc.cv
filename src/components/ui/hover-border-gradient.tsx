@@ -77,14 +77,14 @@ export function HoverBorderGradient<TTag extends React.ElementType = "button">({
         containerClassName,
       )}
       {...props}
-      data-oid="59t7i_:"
+     
     >
       <div
         className={cn(
           "z-10 w-auto rounded-[inherit] bg-[var(--scaffold-surface)] px-4 py-2 text-[var(--scaffold-toggle-text-active)]",
           className,
         )}
-        data-oid="racrm_."
+       
       >
         {children}
       </div>
@@ -110,12 +110,12 @@ export function HoverBorderGradient<TTag extends React.ElementType = "button">({
           ease: "linear",
           duration: prefersReducedMotion ? 0 : (duration ?? 1),
         }}
-        data-oid="doxrq2j"
+       
       />
 
       <div
         className="absolute inset-[2px] z-[1] flex-none rounded-[100px] bg-[var(--scaffold-surface)]"
-        data-oid="diarr7i"
+       
       />
     </Tag>
   );

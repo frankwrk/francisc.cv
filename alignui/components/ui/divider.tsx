@@ -64,7 +64,7 @@ function Divider({
       role='separator'
       className={dividerVariants({ variant, class: className })}
       {...rest}
-      data-oid='g1tsdu.'
+     
     />
   );
 }

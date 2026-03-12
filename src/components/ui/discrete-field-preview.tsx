@@ -44,7 +44,7 @@ export function DiscreteFieldPreview({
         overflow: "hidden",
       }}
       aria-hidden="true"
-      data-oid="yj-8xe_"
+     
     >
       <div
         style={{
@@ -53,10 +53,10 @@ export function DiscreteFieldPreview({
           gridAutoRows: `${cellSize}px`,
           gap: `${gap}px`,
         }}
-        data-oid="plgolt1"
+       
       >
         {cells.map(({ color }, i) => (
-          <div key={i} style={{ backgroundColor: color }} data-oid="29dmvza" />
+          <div key={i} style={{ backgroundColor: color }} />
         ))}
       </div>
     </div>

@@ -67,7 +67,7 @@ const ButtonGroupRoot = React.forwardRef<HTMLDivElement, ButtonGroupRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid="hg:essy"
+       
       >
         {extendedChildren}
       </Component>
@@ -93,7 +93,7 @@ const ButtonGroupItem = React.forwardRef<
       ref={forwardedRef}
       className={item({ class: className })}
       {...rest}
-      data-oid=":koke.7"
+     
     >
       {children}
     </Component>
@@ -119,7 +119,7 @@ function ButtonGroupIcon({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid="6_gmr8q"
+     
     />
   );
 }

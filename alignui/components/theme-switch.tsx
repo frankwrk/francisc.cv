@@ -12,29 +12,29 @@ export default function ThemeSwitch() {
       value={theme}
       onValueChange={setTheme}
       defaultValue={theme}
-      data-oid='q0pk37n'
+     
     >
-      <SegmentedControl.List data-oid='.fvfn2p'>
+      <SegmentedControl.List>
         <SegmentedControl.Trigger
           value='light'
           className='aspect-square'
-          data-oid='bm45_0r'
+         
         >
-          <RiSunLine className='size-4' data-oid='15x:yj4' />
+          <RiSunLine className='size-4' />
         </SegmentedControl.Trigger>
         <SegmentedControl.Trigger
           value='dark'
           className='aspect-square'
-          data-oid='jp.8z7z'
+         
         >
-          <RiMoonLine className='size-4' data-oid='_3bagks' />
+          <RiMoonLine className='size-4' />
         </SegmentedControl.Trigger>
         <SegmentedControl.Trigger
           value='system'
           className='aspect-square'
-          data-oid='sfieo6e'
+         
         >
-          <RiEqualizer3Fill className='size-4' data-oid='2izsrgr' />
+          <RiEqualizer3Fill className='size-4' />
         </SegmentedControl.Trigger>
       </SegmentedControl.List>
     </SegmentedControl.Root>

@@ -33,32 +33,32 @@ export default async function NowPage() {
   return (
     <article
       className="max-w-2xl space-y-8 pt-2 [font-family:var(--font-geist-sans)]"
-      data-oid="f1yjj55"
+     
     >
-      <header className="space-y-1" data-oid="djbgnba">
+      <header className="space-y-1">
         <p
           className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="t-7c1lx"
+         
         >
           NOW
         </p>
         <h1
           className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]"
-          data-oid="4gf4_m1"
+         
         >
           {meta.title}
         </h1>
         {meta.description ? (
           <p
             className="max-w-[42rem] text-[14px] leading-6 text-[var(--scaffold-ruler)]"
-            data-oid="0m4u6n5"
+           
           >
             {meta.description}
           </p>
         ) : null}
       </header>
 
-      <MdxContent data-oid="r3r.5fj">
+      <MdxContent>
         <MDXRemote
           source={source}
           components={{ Figure }}
@@ -71,7 +71,7 @@ export default async function NowPage() {
               ],
             },
           }}
-          data-oid="78r8rz0"
+         
         />
       </MdxContent>
     </article>

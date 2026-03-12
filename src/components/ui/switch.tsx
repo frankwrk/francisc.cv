@@ -20,7 +20,7 @@ const Switch = React.forwardRef<
       ref={forwardedRef}
       disabled={disabled}
       {...rest}
-      data-oid="084n9_l"
+     
     >
       <div
         className={cn(
@@ -40,7 +40,7 @@ const Switch = React.forwardRef<
             "bg-bg-white-0 p-[3px] ring-1 ring-inset ring-stroke-soft-200",
           ],
         )}
-        data-oid="an-:5eg"
+       
       >
         <SwitchPrimitives.Thumb
           className={cn(
@@ -57,7 +57,7 @@ const Switch = React.forwardRef<
             disabled && ["size-2.5 rounded-full bg-bg-soft-200 shadow-none"],
           )}
           style={thumbMaskStyle}
-          data-oid="uwq8.._"
+         
         />
       </div>
     </SwitchPrimitives.Root>

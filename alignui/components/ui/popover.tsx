@@ -31,7 +31,7 @@ const PopoverContent = React.forwardRef<
     },
     forwardedRef,
   ) => (
-    <PopoverPrimitive.Portal data-oid='e.4-fhh'>
+    <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
         ref={forwardedRef}
         align={align}
@@ -53,14 +53,14 @@ const PopoverContent = React.forwardRef<
           className,
         )}
         {...rest}
-        data-oid='iunf.oc'
+       
       >
-        <Slottable data-oid='37f911a'>{children}</Slottable>
+        <Slottable>{children}</Slottable>
         {showArrow && (
-          <PopoverPrimitive.Arrow asChild data-oid='1fp.12.'>
+          <PopoverPrimitive.Arrow asChild>
             <div
               className='size-[11px] -translate-y-[calc(50%+1px)] -rotate-45 rounded-bl-[3px] border border-stroke-soft-200 bg-bg-white-0 [clip-path:polygon(0_100%,0_0,100%_100%)]'
-              data-oid='d89dm41'
+             
             ></div>
           </PopoverPrimitive.Arrow>
         )}
@@ -80,7 +80,7 @@ const PopoverClose = React.forwardRef<
     ref={forwardedRef}
     className={cn([!unstyled && 'absolute right-4 top-4'], className)}
     {...rest}
-    data-oid='60.0psx'
+   
   />
 ));
 PopoverClose.displayName = 'PopoverClose';

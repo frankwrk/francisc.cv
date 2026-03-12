@@ -15,7 +15,7 @@ const Switch = React.forwardRef<
       ref={forwardedRef}
       disabled={disabled}
       {...rest}
-      data-oid='kwl81r_'
+     
     >
       <div
         className={cn(
@@ -44,7 +44,7 @@ const Switch = React.forwardRef<
             'bg-bg-white-0 p-[3px] ring-1 ring-inset ring-stroke-soft-200',
           ],
         )}
-        data-oid='gcwl:ni'
+       
       >
         <SwitchPrimitives.Thumb
           className={cn(
@@ -70,7 +70,7 @@ const Switch = React.forwardRef<
             ['--mask']:
               'radial-gradient(circle farthest-side at 50% 50%, #0000 1.95px, #000 2.05px 100%) 50% 50%/100% 100% no-repeat',
           }}
-          data-oid='c-8a4_k'
+         
         />
       </div>
     </SwitchPrimitives.Root>

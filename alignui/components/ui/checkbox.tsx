@@ -13,13 +13,13 @@ function IconCheck({ ...rest }: React.SVGProps<SVGSVGElement>) {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       {...rest}
-      data-oid='v5lr7kn'
+     
     >
       <path
         d='M1 3.5L4 6.5L9 1.5'
         strokeWidth='1.5'
         className='stroke-static-white'
-        data-oid='8wjyfsn'
+       
       />
     </svg>
   );
@@ -34,13 +34,13 @@ function IconIndeterminate({ ...rest }: React.SVGProps<SVGSVGElement>) {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       {...rest}
-      data-oid='w61eq_o'
+     
     >
       <path
         d='M0 1H8'
         strokeWidth='1.5'
         className='stroke-static-white'
-        data-oid='_.9:x8j'
+       
       />
     </svg>
   );
@@ -66,7 +66,7 @@ const Checkbox = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid='-h:8bz6'
+     
     >
       <svg
         width='20'
@@ -74,7 +74,7 @@ const Checkbox = React.forwardRef<
         viewBox='0 0 20 20'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
-        data-oid='o8v-6k.'
+       
       >
         <rect
           x='2'
@@ -103,10 +103,10 @@ const Checkbox = React.forwardRef<
             'group-disabled/checkbox:group-data-[state=checked]/checkbox:fill-bg-soft-200',
             'group-disabled/checkbox:group-data-[state=indeterminate]/checkbox:fill-bg-soft-200',
           )}
-          data-oid='.nkrdp9'
+         
         />
 
-        <g filter={`url(#${filterId})`} data-oid='z24p126'>
+        <g filter={`url(#${filterId})`}>
           <rect
             x='3.5'
             y='3.5'
@@ -121,10 +121,10 @@ const Checkbox = React.forwardRef<
               'group-data-[state=checked]/checkbox:opacity-0',
               'group-data-[state=indeterminate]/checkbox:opacity-0',
             )}
-            data-oid='fbjd9t:'
+           
           />
         </g>
-        <defs data-oid='0z-cgls'>
+        <defs>
           <filter
             id={filterId}
             x='1.5'
@@ -133,34 +133,34 @@ const Checkbox = React.forwardRef<
             height='17'
             filterUnits='userSpaceOnUse'
             colorInterpolationFilters='sRGB'
-            data-oid='52_5quo'
+           
           >
             <feFlood
               floodOpacity='0'
               result='BackgroundImageFix'
-              data-oid='nh-87ws'
+             
             />
             <feColorMatrix
               in='SourceAlpha'
               type='matrix'
               values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
               result='hardAlpha'
-              data-oid='c51zbb_'
+             
             />
 
-            <feOffset dy='2' data-oid='vl9xys7' />
-            <feGaussianBlur stdDeviation='1' data-oid='8-l84dq' />
+            <feOffset dy='2' />
+            <feGaussianBlur stdDeviation='1' />
             <feColorMatrix
               type='matrix'
               values='0 0 0 0 0.105882 0 0 0 0 0.109804 0 0 0 0 0.113725 0 0 0 0.12 0'
-              data-oid='ji1n.-b'
+             
             />
 
             <feBlend
               mode='normal'
               in2='BackgroundImageFix'
               result='effect1_dropShadow_34646_2602'
-              data-oid='szo7ajh'
+             
             />
 
             <feBlend
@@ -168,7 +168,7 @@ const Checkbox = React.forwardRef<
               in='SourceGraphic'
               in2='effect1_dropShadow_34646_2602'
               result='shape'
-              data-oid='cdf8-p_'
+             
             />
           </filter>
         </defs>
@@ -176,7 +176,7 @@ const Checkbox = React.forwardRef<
       <CheckboxPrimitive.Indicator
         forceMount
         className='[&_path]:transition-all [&_path]:duration-300 [&_path]:ease-out [&_svg]:opacity-0'
-        data-oid='bq09zto'
+       
       >
         <IconCheck
           className={cn(
@@ -191,7 +191,7 @@ const Checkbox = React.forwardRef<
           style={{
             ['--total-length']: TOTAL_LENGTH_CHECK,
           }}
-          data-oid='x18g8if'
+         
         />
 
         <IconIndeterminate
@@ -207,7 +207,7 @@ const Checkbox = React.forwardRef<
           style={{
             ['--total-length']: TOTAL_LENGTH_INDETERMINATE,
           }}
-          data-oid='4fuz.24'
+         
         />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>

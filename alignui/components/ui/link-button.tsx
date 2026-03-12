@@ -113,7 +113,7 @@ const LinkButtonRoot = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid='tr6z9qo'
+       
       >
         {extendedChildren}
       </Component>
@@ -136,7 +136,7 @@ function LinkButtonIcon<T extends React.ElementType>({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid='e.ikmx.'
+     
     />
   );
 }

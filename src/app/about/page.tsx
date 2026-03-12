@@ -34,32 +34,32 @@ export default async function AboutPage() {
   return (
     <article
       className="max-w-2xl space-y-8 pt-2 [font-family:var(--font-geist-sans)]"
-      data-oid="6ejja1w"
+     
     >
-      <header className="space-y-1" data-oid="nch:1ho">
+      <header className="space-y-1">
         <p
           className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="7q7x1jq"
+         
         >
           ABOUT
         </p>
         <h1
           className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]"
-          data-oid="4202ajc"
+         
         >
           {meta.title}
         </h1>
         {meta.description ? (
           <p
             className="max-w-[42rem] text-[14px] leading-6 text-[var(--scaffold-ruler)]"
-            data-oid="uor3hu."
+           
           >
             {meta.description}
           </p>
         ) : null}
       </header>
 
-      <MdxContent data-oid="4r_a6hz">
+      <MdxContent>
         <MDXRemote
           source={source}
           components={{ Figure, ContactForm }}
@@ -72,7 +72,7 @@ export default async function AboutPage() {
               ],
             },
           }}
-          data-oid="k_hobft"
+         
         />
       </MdxContent>
     </article>

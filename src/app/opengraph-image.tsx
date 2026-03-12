@@ -22,7 +22,7 @@ export default function OgImage() {
             "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
-        data-oid="3xu8h7_"
+       
       >
         {/* Outer border frame */}
         <div
@@ -32,7 +32,7 @@ export default function OgImage() {
             border: "1px solid rgba(255,255,255,0.08)",
             display: "flex",
           }}
-          data-oid="hsyak6t"
+         
         />
 
         {/* Corner marks */}
@@ -47,7 +47,7 @@ export default function OgImage() {
             borderLeft: "2px solid rgba(255,255,255,0.2)",
             display: "flex",
           }}
-          data-oid="6u_ml10"
+         
         />
 
         <div
@@ -61,7 +61,7 @@ export default function OgImage() {
             borderRight: "2px solid rgba(255,255,255,0.2)",
             display: "flex",
           }}
-          data-oid="e12o477"
+         
         />
 
         <div
@@ -75,7 +75,7 @@ export default function OgImage() {
             borderLeft: "2px solid rgba(255,255,255,0.2)",
             display: "flex",
           }}
-          data-oid="h1bs1pr"
+         
         />
 
         <div
@@ -89,13 +89,13 @@ export default function OgImage() {
             borderRight: "2px solid rgba(255,255,255,0.2)",
             display: "flex",
           }}
-          data-oid="dzkijy3"
+         
         />
 
         {/* Top label */}
         <div
           style={{ display: "flex", alignItems: "center" }}
-          data-oid="lq96abx"
+         
         >
           <span
             style={{
@@ -104,7 +104,7 @@ export default function OgImage() {
               letterSpacing: "0.22em",
               fontFamily: "monospace",
             }}
-            data-oid="kb.zg.e"
+           
           >
             FRANCISC.CV
           </span>
@@ -113,7 +113,7 @@ export default function OgImage() {
         {/* Main content */}
         <div
           style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-          data-oid="m5um.j:"
+         
         >
           <div
             style={{
@@ -123,7 +123,7 @@ export default function OgImage() {
               lineHeight: 1.0,
               letterSpacing: "-0.03em",
             }}
-            data-oid="06muizn"
+           
           >
             francisc.cv
           </div>
@@ -134,7 +134,7 @@ export default function OgImage() {
               lineHeight: 1.5,
               maxWidth: "760px",
             }}
-            data-oid="a4.h3oq"
+           
           >
             Portfolio and systems-thinking artifact by Francisc Furdui.
           </div>
@@ -147,9 +147,9 @@ export default function OgImage() {
             justifyContent: "space-between",
             alignItems: "flex-end",
           }}
-          data-oid="t9:.hot"
+         
         >
-          <div style={{ display: "flex", gap: "20px" }} data-oid="1.gfqq2">
+          <div style={{ display: "flex", gap: "20px" }}>
             {["PRODUCT", "SYSTEMS", "DESIGN"].map((tag) => (
               <span
                 key={tag}
@@ -162,7 +162,7 @@ export default function OgImage() {
                   padding: "4px 10px",
                   display: "flex",
                 }}
-                data-oid="d1uo6hs"
+               
               >
                 {tag}
               </span>
@@ -175,7 +175,7 @@ export default function OgImage() {
               letterSpacing: "0.12em",
               fontFamily: "monospace",
             }}
-            data-oid="xog6vzc"
+           
           >
             francisc.cv
           </span>

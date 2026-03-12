@@ -73,29 +73,29 @@ function FileFormatIcon({
       xmlns='http://www.w3.org/2000/svg'
       className={root({ class: className })}
       {...rest}
-      data-oid='fvn5cde'
+     
     >
       <path
         d='M30 39.25H10C7.10051 39.25 4.75 36.8995 4.75 34V6C4.75 3.10051 7.10051 0.75 10 0.75H20.5147C21.9071 0.75 23.2425 1.30312 24.227 2.28769L33.7123 11.773C34.6969 12.7575 35.25 14.0929 35.25 15.4853V34C35.25 36.8995 32.8995 39.25 30 39.25Z'
         className='fill-bg-white-0 stroke-stroke-sub-300'
         strokeWidth='1.5'
-        data-oid='k4v8y9k'
+       
       />
 
       <path
         d='M23 1V9C23 11.2091 24.7909 13 27 13H35'
         className='stroke-stroke-sub-300'
         strokeWidth='1.5'
-        data-oid='sk15qa8'
+       
       />
 
-      <foreignObject x='0' y='0' width='40' height='40' data-oid='sjvnjm.'>
+      <foreignObject x='0' y='0' width='40' height='40'>
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
         <div
           xmlns='http://www.w3.org/1999/xhtml'
           className={formatBox()}
-          data-oid='0:.9_-0'
+         
         >
           {format}
         </div>

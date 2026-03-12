@@ -200,7 +200,7 @@ export async function MachineVersionContent() {
   });
 
   return (
-    <MachineMdxContent data-oid="hfqb_0:">
+    <MachineMdxContent>
       <MDXRemote
         source={source}
         components={{
@@ -211,7 +211,7 @@ export async function MachineVersionContent() {
             remarkPlugins: [remarkGfm],
           },
         }}
-        data-oid="zm55eg8"
+       
       />
     </MachineMdxContent>
   );

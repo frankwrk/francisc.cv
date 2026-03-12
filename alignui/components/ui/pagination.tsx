@@ -116,7 +116,7 @@ function PaginationRoot({
     <Component
       className={root({ class: className })}
       {...rest}
-      data-oid='7pz21ad'
+     
     >
       {extendedChildren}
     </Component>
@@ -145,7 +145,7 @@ const PaginationItem = React.forwardRef<HTMLButtonElement, PaginationItemProps>(
           'text-text-strong-950': current,
         })}
         {...rest}
-        data-oid='ortg845'
+       
       >
         {children}
       </Component>
@@ -171,7 +171,7 @@ const PaginationNavButton = React.forwardRef<
       ref={forwardedRef}
       className={navButton({ class: className })}
       {...rest}
-      data-oid='sq66bzw'
+     
     >
       {children}
     </Component>
@@ -192,7 +192,7 @@ function PaginationNavIcon<T extends React.ElementType>({
     <Component
       className={navIcon({ class: className })}
       {...rest}
-      data-oid='540ebu7'
+     
     />
   );
 }

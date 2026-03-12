@@ -24,7 +24,7 @@ const FileUpload = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid='bw5-j:f'
+     
     />
   );
 });
@@ -47,7 +47,7 @@ const FileUploadButton = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid='azazj4u'
+     
     />
   );
 });
@@ -64,7 +64,7 @@ function FileUploadIcon<T extends React.ElementType>({
     <Component
       className={cn('size-6 text-text-sub-600', className)}
       {...rest}
-      data-oid='2g:i92l'
+     
     />
   );
 }

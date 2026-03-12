@@ -70,7 +70,7 @@ const Textarea = React.forwardRef<
       ref={forwardedRef}
       disabled={disabled}
       {...rest}
-      data-oid='zuvz2y3'
+     
     />
   );
 });
@@ -80,7 +80,7 @@ function ResizeHandle() {
   return (
     <div
       className='pointer-events-none size-3 cursor-s-resize'
-      data-oid='y:-ls_q'
+     
     >
       <svg
         width='12'
@@ -88,12 +88,12 @@ function ResizeHandle() {
         viewBox='0 0 12 12'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
-        data-oid='7rsy.wo'
+       
       >
         <path
           d='M9.11111 2L2 9.11111M10 6.44444L6.44444 10'
           className='stroke-text-soft-400'
-          data-oid='kqt-gy.'
+         
         />
       </svg>
     </div>
@@ -129,7 +129,7 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           simple
           hasError={hasError}
           {...rest}
-          data-oid='s9xfse1'
+         
         />
       );
     }
@@ -164,30 +164,30 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
           containerClassName,
         )}
-        data-oid='4qj_ywr'
+       
       >
-        <div className='grid' data-oid='ajt2dii'>
+        <div className='grid'>
           <div
             className='pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]'
-            data-oid='vzc-vhu'
+           
           >
             <Textarea
               ref={forwardedRef}
               hasError={hasError}
               {...rest}
-              data-oid='cw45pfp'
+             
             />
             <div
               className='pointer-events-none flex items-center justify-end gap-1.5 pl-3 pr-2.5'
-              data-oid='.s_ogfc'
+             
             >
               {children}
-              <ResizeHandle data-oid='9zpfmq2' />
+              <ResizeHandle />
             </div>
           </div>
           <div
             className='min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]'
-            data-oid='sxam_tf'
+           
           />
         </div>
       </div>
@@ -216,7 +216,7 @@ function CharCounter({
         },
         className,
       )}
-      data-oid='pvpu-qh'
+     
     >
       {current}/{max}
     </span>

@@ -173,13 +173,13 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
         <div
           className={root({ class: className })}
           {...rest}
-          data-oid='1g48.0m'
+         
         >
-          <AvatarImage asChild data-oid='8ty:zg.'>
+          <AvatarImage asChild>
             {placeholderType === 'company' ? (
-              <IconEmptyCompany data-oid='th58fcz' />
+              <IconEmptyCompany />
             ) : (
-              <IconEmptyUser data-oid='z77t6uk' />
+              <IconEmptyUser />
             )}
           </AvatarImage>
         </div>
@@ -199,7 +199,7 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid='nmhu.6l'
+       
       >
         {extendedChildren}
       </Component>
@@ -223,7 +223,7 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
         ref={forwardedRef}
         className={image({ class: className })}
         {...rest}
-        data-oid='92pioj9'
+       
       />
     );
   },
@@ -247,7 +247,7 @@ function AvatarIndicator({
         'bottom-0 origin-bottom-right': position === 'bottom',
       })}
       {...rest}
-      data-oid='vgk_qss'
+     
     />
   );
 }
@@ -278,7 +278,7 @@ function AvatarStatus({
     <div
       className={avatarStatusVariants({ status, class: className })}
       {...rest}
-      data-oid='iso_7zo'
+     
     />
   );
 }
@@ -302,7 +302,7 @@ const AvatarBrandLogo = React.forwardRef<
         className,
       )}
       {...rest}
-      data-oid='40linxh'
+     
     />
   );
 });
@@ -319,7 +319,7 @@ function AvatarNotification({
         className,
       )}
       {...rest}
-      data-oid='-275.n0'
+     
     />
   );
 }

@@ -20,7 +20,7 @@ export function MdxContent({ children }: { children: ReactNode }) {
         [&_th]:border [&_th]:border-[var(--scaffold-line)] [&_th]:p-2 [&_th]:text-left [&_th]:text-[var(--scaffold-toggle-text-active)]
         [&_td]:border [&_td]:border-[var(--scaffold-line)] [&_td]:p-2
       "
-      data-oid="wj9t6ol"
+     
     >
       {children}
     </div>

@@ -454,7 +454,7 @@ const BadgeRoot = React.forwardRef<HTMLDivElement, BadgeRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid='l-s-7_d'
+       
       >
         {extendedChildren}
       </Component>
@@ -478,7 +478,7 @@ function BadgeIcon<T extends React.ElementType>({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid='undm5.u'
+     
     />
   );
 }
@@ -491,7 +491,7 @@ function BadgeDot({ size, variant, color, className, ...rest }: BadgeDotProps) {
   const { dot } = badgeVariants({ size, variant, color });
 
   return (
-    <div className={dot({ class: className })} {...rest} data-oid='6vkd1hy' />
+    <div className={dot({ class: className })} {...rest} />
   );
 }
 BadgeDot.displayName = BADGE_DOT_NAME;

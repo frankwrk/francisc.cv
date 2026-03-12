@@ -99,17 +99,17 @@ const TooltipContent = React.forwardRef<
     });
 
     return (
-      <TooltipPrimitive.Portal data-oid='2hf4v:.'>
+      <TooltipPrimitive.Portal>
         <TooltipPrimitive.Content
           ref={forwardedRef}
           sideOffset={sideOffset}
           className={content({ class: className })}
           {...rest}
-          data-oid='ev9t34j'
+         
         >
           {children}
-          <TooltipPrimitive.Arrow asChild data-oid='5sboph6'>
-            <div className={arrow()} data-oid='zhi.hja' />
+          <TooltipPrimitive.Arrow asChild>
+            <div className={arrow()} />
           </TooltipPrimitive.Arrow>
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>

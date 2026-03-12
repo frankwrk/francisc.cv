@@ -123,7 +123,7 @@ const CompactButtonRoot = React.forwardRef<
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid=':e.59-:'
+       
       >
         {extendedChildren}
       </Component>
@@ -146,7 +146,7 @@ function CompactButtonIcon<T extends React.ElementType>({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid='zf4:ljl'
+     
     />
   );
 }

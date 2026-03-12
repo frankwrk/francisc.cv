@@ -45,7 +45,7 @@ const ProgressBarRoot = React.forwardRef<HTMLDivElement, ProgressBarRootProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid='lc1wv45'
+       
       >
         <div
           className={progress()}
@@ -55,7 +55,7 @@ const ProgressBarRoot = React.forwardRef<HTMLDivElement, ProgressBarRootProps>(
           aria-valuenow={value}
           aria-valuemax={max}
           role='progressbar'
-          data-oid='7bfnv6f'
+         
         />
       </div>
     );

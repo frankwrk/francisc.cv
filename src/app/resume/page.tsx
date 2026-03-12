@@ -39,28 +39,28 @@ function ResumeContent() {
   return (
     <article
       className="max-w-2xl space-y-10 pt-2 [font-family:var(--font-geist-sans)]"
-      data-oid=":fjgvsh"
+     
     >
-      <header className="space-y-1" data-oid=":fbhkm_">
+      <header className="space-y-1">
         <p
           className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="t0o8o4x"
+         
         >
           RESUME
         </p>
         <h1
           className="text-2xl tracking-tight text-[var(--scaffold-toggle-text-active)]"
-          data-oid="hc9_1cx"
+         
         >
           Francisc Furdui
         </h1>
       </header>
 
       {/* Role selector */}
-      <div className="space-y-3" data-oid="he63_va">
+      <div className="space-y-3">
         <p
           className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="t37s9p7"
+         
         >
           Filter by role
         </p>
@@ -71,17 +71,17 @@ function ResumeContent() {
             setSelectedRole(v === "all" ? null : (v as ResumeRole));
           }}
           aria-label="Resume role filter"
-          data-oid="g-6cbxd"
+         
         >
           <SegmentedControl.List
             className="h-8 w-full rounded-full border border-[var(--scaffold-line)] bg-[var(--scaffold-toggle-track)] p-0.5"
             floatingBgClassName="inset-y-0.5 rounded-full border border-[var(--scaffold-line)] bg-[var(--scaffold-toggle-thumb)] shadow-none"
-            data-oid="dkjjce_"
+           
           >
             <SegmentedControl.Trigger
               value="all"
               className="h-7 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-circle)]"
-              data-oid="u7vbskq"
+             
             >
               All
             </SegmentedControl.Trigger>
@@ -90,7 +90,7 @@ function ResumeContent() {
                 key={role}
                 value={role}
                 className="h-7 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-circle)]"
-                data-oid="28dwd8x"
+               
               >
                 {resumeRoleLabels[role]}
               </SegmentedControl.Trigger>
@@ -100,30 +100,30 @@ function ResumeContent() {
       </div>
 
       {/* Summary */}
-      <section className="space-y-2" data-oid="w_p3acs">
+      <section className="space-y-2">
         <p
           className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="y7e0dsp"
+         
         >
           Summary
         </p>
         <p
           className="text-[15px] leading-7 text-[var(--scaffold-ruler)]"
-          data-oid="wcj_gwm"
+         
         >
           {resumeData.summary}
         </p>
       </section>
 
       {/* Experience */}
-      <section className="space-y-4" data-oid="guc2ztq">
+      <section className="space-y-4">
         <p
           className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="z5bmgnq"
+         
         >
           Experience
         </p>
-        <div className="space-y-5" data-oid="h0l7ed_">
+        <div className="space-y-5">
           {resumeData.experience.map((entry) => {
             const isHighlighted =
               selectedRole === null || entry.roles.includes(selectedRole);
@@ -136,45 +136,45 @@ function ResumeContent() {
                     ? "border-[var(--scaffold-toggle-text-active)] opacity-100"
                     : "border-[var(--scaffold-line)] opacity-30",
                 )}
-                data-oid="7i_7i5_"
+               
               >
                 <div
                   className="flex flex-wrap items-baseline justify-between gap-2"
-                  data-oid=".tg3n_4"
+                 
                 >
                   <h3
                     className="text-[15px] font-medium text-[var(--scaffold-toggle-text-active)]"
-                    data-oid="t5terkb"
+                   
                   >
                     {entry.title}
                   </h3>
                   <span
                     className="text-[11px] tracking-[0.06em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-                    data-oid="qdckv7g"
+                   
                   >
                     {entry.period}
                   </span>
                 </div>
                 <p
                   className="mb-2 text-[13px] text-[var(--scaffold-ruler)]"
-                  data-oid=":-i8bhl"
+                 
                 >
                   {entry.company} · {entry.location}
                 </p>
-                <ul className="space-y-1" data-oid="vr3ygzj">
+                <ul className="space-y-1">
                   {entry.bullets.map((bullet) => (
                     <li
                       key={bullet}
                       className="flex gap-2 text-[13px] leading-relaxed text-[var(--scaffold-ruler)]"
-                      data-oid="9l_mlob"
+                     
                     >
                       <span
                         className="mt-0.5 shrink-0 text-[var(--scaffold-line)]"
-                        data-oid="vf6etni"
+                       
                       >
                         —
                       </span>
-                      <span className="min-w-0" data-oid="f36-.8l">
+                      <span className="min-w-0">
                         {bullet}
                       </span>
                     </li>
@@ -187,16 +187,16 @@ function ResumeContent() {
       </section>
 
       {/* Skills */}
-      <section className="space-y-3" data-oid="s1_dgvo">
+      <section className="space-y-3">
         <p
           className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="dr22ij-"
+         
         >
           Skills
         </p>
         <div
           className="border border-[var(--scaffold-line)]"
-          data-oid="iu7zi5d"
+         
         >
           {resumeData.skills.map((row, i) => (
             <div
@@ -205,15 +205,15 @@ function ResumeContent() {
                 "grid grid-cols-[1fr_2fr] gap-4 px-4 py-2.5 text-[13px]",
                 i > 0 && "border-t border-[var(--scaffold-line)]",
               )}
-              data-oid="91p.s11"
+             
             >
               <span
                 className="font-medium text-[var(--scaffold-toggle-text-active)]"
-                data-oid="io_y:ff"
+               
               >
                 {row.area}
               </span>
-              <span className="text-[var(--scaffold-ruler)]" data-oid="rncmlsf">
+              <span className="text-[var(--scaffold-ruler)]">
                 {row.capabilities}
               </span>
             </div>
@@ -222,32 +222,32 @@ function ResumeContent() {
       </section>
 
       {/* Education */}
-      <section className="space-y-2" data-oid="5w.oj3q">
+      <section className="space-y-2">
         <p
           className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="2iihqlw"
+         
         >
           Education
         </p>
         <div
           className="border-l-2 border-[var(--scaffold-line)] pl-4"
-          data-oid="16c7k1:"
+         
         >
           <p
             className="text-[15px] font-medium text-[var(--scaffold-toggle-text-active)]"
-            data-oid="hu.533-"
+           
           >
             {resumeData.education.degree}
           </p>
           <p
             className="text-[13px] text-[var(--scaffold-ruler)]"
-            data-oid="kw6-de2"
+           
           >
             {resumeData.education.institution} · {resumeData.education.year}
           </p>
           <p
             className="mt-1 text-[13px] leading-relaxed text-[var(--scaffold-ruler)]"
-            data-oid="7gxe2dw"
+           
           >
             {resumeData.education.coursework}
           </p>
@@ -255,34 +255,34 @@ function ResumeContent() {
       </section>
 
       {/* Certifications */}
-      <section className="space-y-2" data-oid="1wyj2sl">
+      <section className="space-y-2">
         <p
           className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-square)]"
-          data-oid="v35hudj"
+         
         >
           Certifications
         </p>
         <p
           className="text-[13px] leading-relaxed text-[var(--scaffold-ruler)]"
-          data-oid="l41ckf0"
+         
         >
           {resumeData.certifications}
         </p>
       </section>
 
       {/* Download */}
-      <div className="pb-4 pt-2" data-oid="4u38d.q">
+      <div className="pb-4 pt-2">
         <HoverBorderGradient
           as="a"
           href={pdfHref}
           download
           containerClassName="rounded-full border-[var(--scaffold-line)] bg-[var(--scaffold-surface)]"
           className="bg-[var(--scaffold-surface)] text-[var(--scaffold-toggle-text-active)]"
-          data-oid="cpq6753"
+         
         >
           <span
             className="text-sm font-medium tracking-[0.01em]"
-            data-oid="920d:e0"
+           
           >
             {downloadLabel}
           </span>
@@ -294,8 +294,8 @@ function ResumeContent() {
 
 export default function ResumePage() {
   return (
-    <Suspense data-oid="1qh6nfz">
-      <ResumeContent data-oid="ikzhf14" />
+    <Suspense>
+      <ResumeContent />
     </Suspense>
   );
 }

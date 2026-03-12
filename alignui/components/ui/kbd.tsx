@@ -11,7 +11,7 @@ function Kbd({ className, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
         className,
       )}
       {...rest}
-      data-oid='lxgltf5'
+     
     />
   );
 }

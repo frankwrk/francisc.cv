@@ -117,7 +117,7 @@ const FancyButtonRoot = React.forwardRef<HTMLButtonElement, FancyButtonProps>(
         ref={forwardedRef}
         className={root({ class: className })}
         {...rest}
-        data-oid=':6lov9g'
+       
       >
         {extendedChildren}
       </Component>
@@ -140,7 +140,7 @@ function FancyButtonIcon<T extends React.ElementType>({
     <Component
       className={icon({ class: className })}
       {...rest}
-      data-oid='-s0xhy_'
+     
     />
   );
 }
