@@ -27,7 +27,7 @@ const links = [
 
 const OUTSIDE_CLICK_GRACE_MS = 400;
 
-function NavSocialLinks({
+export function NavSocialLinks({
   variant,
 }: {
   variant: "desktop" | "mobile";
@@ -198,21 +198,6 @@ export function SiteNav() {
                   {label}
                 </Link>
               ))}
-              <div className="flex items-center justify-start gap-3 border-t border-[var(--scaffold-line)] px-5 py-3">
-                <NavSocialLinks variant="mobile" />
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  trigger([20, 30]);
-                  setIsOpen(false);
-                  openAssistant();
-                }}
-                className="flex w-full items-center gap-2 border-t border-[var(--scaffold-line)] px-5 py-4 text-left text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)]"
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                Ask about my work
-              </button>
             </nav>
           </motion.div>
         )}

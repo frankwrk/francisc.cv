@@ -50,44 +50,6 @@ export default function Home() {
             <Signature className="w-[123px] max-w-full text-[var(--scaffold-ruler)]" />
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 pt-1 text-[11px] tracking-[0.14em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)]">
-            <span className="uppercase opacity-70">Find me on</span>
-            <div className="flex flex-wrap gap-2">
-              <a
-                href={profileSummary.links?.x ?? "https://x.com/twosix_ltd"}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-sm border border-[var(--scaffold-line)] px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)]"
-                aria-label="Visit my X profile"
-              >
-                X
-              </a>
-              <a
-                href={
-                  profileSummary.links?.linkedin ??
-                  "https://www.linkedin.com/in/franciscfurdui/"
-                }
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-sm border border-[var(--scaffold-line)] px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)]"
-                aria-label="Visit my LinkedIn profile"
-              >
-                LinkedIn
-              </a>
-              <a
-                href={
-                  profileSummary.links?.instagram ??
-                  "https://www.instagram.com/francisc_frd/"
-                }
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-sm border border-[var(--scaffold-line)] px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)]"
-                aria-label="Visit my Instagram profile"
-              >
-                Instagram
-              </a>
-            </div>
-          </div>
         </section>
       </div>
 
