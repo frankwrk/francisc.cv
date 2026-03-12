@@ -28,6 +28,12 @@ jobs:
       - name: Lint
         run: bun run lint
 
+      - name: Unit tests
+        run: bun test
+
+      - name: E2E smoke tests
+        run: bun test e2e/smoke.spec.ts
+
       - name: Typecheck
         run: bun run typecheck
 

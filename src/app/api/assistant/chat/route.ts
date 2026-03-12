@@ -11,8 +11,85 @@ import { createId } from "@/utils/create-id";
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
+type RateLimitEntry = {
+  timestamps: number[];
+};
+
+const RATE_LIMIT_MAX_REQUESTS = 10;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+
+const rateLimitStore = new Map<string, RateLimitEntry>();
+
+function getClientIdentifier(request: Request): string {
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  if (forwardedFor !== null && forwardedFor.trim().length > 0) {
+    const firstIp = forwardedFor.split(",")[0];
+    if (typeof firstIp === "string" && firstIp.trim().length > 0) {
+      return firstIp.trim();
+    }
+  }
+
+  const cfConnectingIp = request.headers.get("cf-connecting-ip");
+  if (cfConnectingIp !== null && cfConnectingIp.trim().length > 0) {
+    return cfConnectingIp.trim();
+  }
+
+  return "anonymous";
+}
+
+function isRateLimited(identifier: string, now: number): boolean {
+  const existing = rateLimitStore.get(identifier);
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+
+  if (existing === undefined) {
+    rateLimitStore.set(identifier, { timestamps: [now] });
+    return false;
+  }
+
+  const recentTimestamps = existing.timestamps.filter(
+    (timestamp) => timestamp >= windowStart,
+  );
+
+  if (recentTimestamps.length >= RATE_LIMIT_MAX_REQUESTS) {
+    existing.timestamps = recentTimestamps;
+    rateLimitStore.set(identifier, existing);
+    return true;
+  }
+
+  recentTimestamps.push(now);
+  existing.timestamps = recentTimestamps;
+  rateLimitStore.set(identifier, existing);
+
+  return false;
+}
+
 export async function POST(request: Request) {
   const startedAt = Date.now();
+
+  const clientIdentifier = getClientIdentifier(request);
+  if (isRateLimited(clientIdentifier, startedAt)) {
+    const requestId = createId();
+
+    logAssistantError("assistant_rate_limited", {
+      requestId,
+      latencyMs: 0,
+      tool: "file_search",
+      failureStage: "rate_limit",
+      message: "Rate limit exceeded for assistant chat endpoint.",
+      status: 429,
+      clientIdentifier,
+    });
+
+    return Response.json(
+      {
+        requestId,
+        error: "rate_limited",
+        message:
+          "You have sent too many requests to the assistant. Please wait a moment and try again.",
+      },
+      { status: 429 },
+    );
+  }
 
   try {
     const json = await request.json();

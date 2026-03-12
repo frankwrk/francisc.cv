@@ -142,7 +142,7 @@ Single source of truth policy:
 ### Theme conventions
 
 - Theme switching is handled via `next-themes`.
-- Provider is configured in `src/app/layout.tsx` with `defaultTheme="light"` and `enableSystem={false}`.
+- Provider is configured in `src/app/layout.tsx` with `defaultTheme="system"` and `enableSystem`.
 - Global toggle UI is rendered from `src/components/theme/theme-toggle.tsx` inside the scaffold header so it appears on every page.
 
 ## Content architecture currently present

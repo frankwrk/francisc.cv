@@ -11,6 +11,9 @@ export type SiteProfileConfig = {
   };
 };
 
+const contactEmail =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@example.com";
+
 // Central profile content and media sources for the home intro section.
 export const siteProfileConfig: SiteProfileConfig = {
   name: "Francisc Furdui",
@@ -26,7 +29,7 @@ export const siteProfileConfig: SiteProfileConfig = {
     "If you're working on something hard and need someone who can move between design, engineering, and product without losing the thread, I'd like to hear about it.",
   ],
   contact: {
-    email: "francisc.frd@gmail.com",
+    email: contactEmail,
     subject: "Project Inquiry",
     ctaLabel: "Send email",
   },

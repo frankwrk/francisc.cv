@@ -69,7 +69,7 @@ function readMdxFile(dir: string, slug: string) {
   return matter(fs.readFileSync(path.join(dir, `${slug}.mdx`), "utf8"));
 }
 
-export async function getAllProjects(): Promise<ProjectMeta[]> {
+export function getAllProjects(): ProjectMeta[] {
   const files = getMdxFiles(projectsDir);
   const projects = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
@@ -89,7 +89,7 @@ export async function getAllProjects(): Promise<ProjectMeta[]> {
   return projects.sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 }
 
-export async function getProjectBySlug(slug: string): Promise<ProjectData> {
+export function getProjectBySlug(slug: string): ProjectData {
   const { data, content } = readMdxFile(projectsDir, slug);
   return {
     meta: {
@@ -107,7 +107,7 @@ export async function getProjectBySlug(slug: string): Promise<ProjectData> {
   };
 }
 
-export async function getAllArticles(): Promise<ArticleMeta[]> {
+export function getAllArticles(): ArticleMeta[] {
   const files = getMdxFiles(writingDir);
   const articles = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
@@ -124,7 +124,7 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
   return articles.sort((a, b) => (a.date > b.date ? -1 : 1));
 }
 
-export async function getArticleBySlug(slug: string): Promise<ArticleData> {
+export function getArticleBySlug(slug: string): ArticleData {
   const { data, content } = readMdxFile(writingDir, slug);
   return {
     meta: {
@@ -139,7 +139,7 @@ export async function getArticleBySlug(slug: string): Promise<ArticleData> {
   };
 }
 
-export async function getAllStaticPages(): Promise<StaticPageMeta[]> {
+export function getAllStaticPages(): StaticPageMeta[] {
   const files = getMdxFiles(pagesDir);
   const pages = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
@@ -155,7 +155,7 @@ export async function getAllStaticPages(): Promise<StaticPageMeta[]> {
   return pages.sort((a, b) => a.title.localeCompare(b.title));
 }
 
-export async function getStaticPageBySlug(slug: string): Promise<StaticPageData> {
+export function getStaticPageBySlug(slug: string): StaticPageData {
   const { data, content } = readMdxFile(pagesDir, slug);
 
   return {
@@ -168,11 +168,9 @@ export async function getStaticPageBySlug(slug: string): Promise<StaticPageData>
   };
 }
 
-export async function getAllArtTargets(): Promise<ArtTarget[]> {
-  const [projects, articles] = await Promise.all([
-    getAllProjects(),
-    getAllArticles(),
-  ]);
+export function getAllArtTargets(): ArtTarget[] {
+  const projects = getAllProjects();
+  const articles = getAllArticles();
 
   return [
     ...projects.map((project) => ({
