@@ -13,7 +13,6 @@ import { AppShell } from "@/components/layout/app-shell";
 import { MachineVersionContent } from "@/components/machine/machine-version-content";
 import {
   createPersonSchema,
-  homepageIdentitySupport,
 } from "@/config/site-home";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { siteUrl } from "@/config/site-url";

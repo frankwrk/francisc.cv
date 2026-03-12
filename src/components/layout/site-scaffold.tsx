@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Sparkles } from "lucide-react";
 import { useWebHaptics } from "web-haptics/react";
@@ -27,28 +27,40 @@ const ThemeToggle = dynamic(
     ssr: false,
     loading: () => (
       <div
-        className="h-7 w-[96px] rounded-full border border-[var(--scaffold-line)]"
+        className="h-7 w-[96px] rounded-full border border-(--scaffold-line)"
         aria-hidden
       />
     ),
   },
 );
 
-const sideRulerValues = (() => {
-  const values: number[] = [];
-  const { start, end, step } = siteScaffoldConfig.rulerSide;
+/** Opacity for a tick: full opacity above fade zone; linear fade over fadeZonePx at bottom. */
+function sideRulerOpacity(
+  value: number,
+  height: number,
+  fadeZonePx: number
+): number {
+  const fadeStart = height - fadeZonePx;
+  if (value >= fadeStart + fadeZonePx / 2) return 0;
+  if (value > fadeStart) return (fadeStart + fadeZonePx / 2 - value) / (fadeZonePx / 2);
+  return 1;
+}
 
-  for (let value = start; value <= end; value += step) {
-    values.push(value);
+function SideRuler({
+  align,
+  height,
+}: {
+  align: "left" | "right";
+  height: number | null;
+}) {
+  const { stepPx, fadeZonePx } = siteScaffoldConfig.rulerSide;
+
+  const tickValues: number[] = [];
+  if (height !== null && height > 0) {
+    for (let value = stepPx; value <= height; value += stepPx) {
+      tickValues.push(value);
+    }
   }
-
-  return values;
-})();
-
-function SideRuler({ align }: { align: "left" | "right" }) {
-  const range =
-    siteScaffoldConfig.rulerSide.end - siteScaffoldConfig.rulerSide.start;
-  const unitPx = siteScaffoldConfig.rulerSide.unitPx;
 
   return (
     <aside
@@ -62,32 +74,22 @@ function SideRuler({ align }: { align: "left" | "right" }) {
         color: "var(--scaffold-ruler)",
       }}
     >
-      <ul
-        className="relative h-full w-full"
-        style={{ marginTop: `-${siteScaffoldConfig.borderWidth}px` }}
-      >
-        {sideRulerValues.map((value) => {
-          const relativeValue = value - siteScaffoldConfig.rulerSide.start;
-          if (relativeValue === 0) {
-            return null;
-          }
-
-          const positionPx = relativeValue * unitPx;
-          const ratio = range === 0 ? 0 : relativeValue / range;
-          const opacity = Math.max(0.2, 0.95 - ratio * 0.72);
+      <ul className="relative h-full w-full">
+        {tickValues.map((value) => {
+          const opacity = sideRulerOpacity(value, height ?? 0, fadeZonePx);
           const tick = <span className="opacity-70">-</span>;
 
           return (
             <li
               key={`${align}-${value}`}
               className={cn(
-                "absolute flex items-center gap-1.5 font-mono [font-family:var(--font-geist-pixel-square)]",
+                "absolute flex items-center gap-1.5 [font-family:var(--font-geist-pixel-square)]",
                 align === "left"
                   ? "right-0 justify-end"
                   : "left-0 justify-start",
               )}
               style={{
-                top: `${positionPx}px`,
+                top: `${value}px`,
                 opacity,
               }}
             >
@@ -116,8 +118,12 @@ function TopRuler() {
 
   return (
     <header
-      className="flex h-[50px] items-center justify-between border-b px-4 md:px-6"
-      style={{ borderColor: "var(--scaffold-line)" }}
+      className="flex shrink-0 items-center justify-between border-b px-(--scaffold-top-bar-padding-x) md:px-(--scaffold-top-bar-padding-x-md)"
+      style={{
+        borderColor: "var(--scaffold-line)",
+        height: `${siteScaffoldConfig.topBarHeightPx}px`,
+        minHeight: `${siteScaffoldConfig.topBarHeightPx}px`,
+      }}
     >
       <SiteNav />
       <div className="flex items-center gap-3 md:gap-4">
@@ -127,7 +133,7 @@ function TopRuler() {
             trigger([20, 30]);
             openAssistant();
           }}
-          className="flex items-center gap-1 px-1 py-1 text-[11px] uppercase tracking-[0.2em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)] md:hidden"
+          className="flex items-center gap-1 px-1 py-1 text-[11px] uppercase tracking-[0.2em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-pixel-circle)] md:hidden"
           aria-label="Ask about my work"
         >
           <Sparkles className="h-3.5 w-3.5" />
@@ -142,11 +148,11 @@ function TopRuler() {
             trigger([20, 30]);
             openAssistant();
           }}
-          className="group hidden items-center gap-2 px-1 py-1 text-[10px] tracking-[0.14em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)] md:inline-flex"
+          className="group hidden items-center gap-2 px-1 py-1 text-[10px] tracking-[0.14em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-pixel-circle)] md:inline-flex"
           aria-label="Ask about my work"
         >
           <Sparkles className="h-3.5 w-3.5" />
-          <AnimatedShinyText className="transition-colors group-hover:text-[var(--scaffold-toggle-text-active)]">
+          <AnimatedShinyText className="transition-colors group-hover:text-(--scaffold-toggle-text-active)">
             Ask about my work
           </AnimatedShinyText>
         </button>
@@ -158,10 +164,13 @@ function TopRuler() {
 
 /** Horizontal extension reaches viewport edge; vertical top uses pageTopPadding, bottom uses pageBottomPadding or extends to viewport bottom when canvas is shorter. */
 function BorderExtensions() {
-  const { pageTopPadding, pageBottomPadding } = siteScaffoldConfig;
+  const { pageTopPadding, pageBottomPadding, borderWidth } =
+    siteScaffoldConfig;
   const horizontalLength = "calc((100vw - 100%) / 2)";
   const verticalLengthTop = `${pageTopPadding}px`;
   const verticalLengthBottom = `max(${pageBottomPadding}px, calc(100dvh - 100%))`;
+  const leftEdge = -borderWidth;
+  const rightEdge = -borderWidth;
 
   return (
     <div
@@ -169,8 +178,9 @@ function BorderExtensions() {
       className="pointer-events-none absolute inset-0 z-10 hidden md:block"
     >
       <div
-        className="absolute left-0 top-0 h-px -translate-x-full"
+        className="absolute top-0 h-px -translate-x-full"
         style={{
+          left: leftEdge,
           width: horizontalLength,
           background:
             "linear-gradient(to left, var(--scaffold-line), transparent)",
@@ -178,8 +188,9 @@ function BorderExtensions() {
       />
 
       <div
-        className="absolute right-0 top-0 h-px translate-x-full"
+        className="absolute top-0 h-px translate-x-full"
         style={{
+          right: rightEdge,
           width: horizontalLength,
           background:
             "linear-gradient(to right, var(--scaffold-line), transparent)",
@@ -187,8 +198,9 @@ function BorderExtensions() {
       />
 
       <div
-        className="absolute left-0 bottom-0 h-px -translate-x-full"
+        className="absolute bottom-0 h-px -translate-x-full"
         style={{
+          left: leftEdge,
           width: horizontalLength,
           background:
             "linear-gradient(to left, var(--scaffold-line), transparent)",
@@ -196,8 +208,9 @@ function BorderExtensions() {
       />
 
       <div
-        className="absolute right-0 bottom-0 h-px translate-x-full"
+        className="absolute bottom-0 h-px translate-x-full"
         style={{
+          right: rightEdge,
           width: horizontalLength,
           background:
             "linear-gradient(to right, var(--scaffold-line), transparent)",
@@ -205,8 +218,9 @@ function BorderExtensions() {
       />
 
       <div
-        className="absolute left-0 top-0 w-px -translate-y-full"
+        className="absolute top-0 w-px -translate-y-full"
         style={{
+          left: leftEdge,
           height: verticalLengthTop,
           background:
             "linear-gradient(to top, var(--scaffold-line), transparent)",
@@ -214,8 +228,9 @@ function BorderExtensions() {
       />
 
       <div
-        className="absolute right-0 top-0 w-px -translate-y-full"
+        className="absolute top-0 w-px -translate-y-full"
         style={{
+          right: rightEdge,
           height: verticalLengthTop,
           background:
             "linear-gradient(to top, var(--scaffold-line), transparent)",
@@ -223,8 +238,9 @@ function BorderExtensions() {
       />
 
       <div
-        className="absolute bottom-0 left-0 w-px translate-y-full"
+        className="absolute bottom-0 w-px translate-y-full"
         style={{
+          left: leftEdge,
           height: verticalLengthBottom,
           background:
             "linear-gradient(to bottom, var(--scaffold-line), transparent)",
@@ -232,8 +248,9 @@ function BorderExtensions() {
       />
 
       <div
-        className="absolute bottom-0 right-0 w-px translate-y-full"
+        className="absolute bottom-0 w-px translate-y-full"
         style={{
+          right: rightEdge,
           height: verticalLengthBottom,
           background:
             "linear-gradient(to bottom, var(--scaffold-line), transparent)",
@@ -283,6 +300,9 @@ function CornerMarkers() {
 }
 
 export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const [rulerHeight, setRulerHeight] = useState<number | null>(null);
+
   // Polyfill navigator.clipboard for non-secure contexts (HTTP, network IP)
   // so copy UIs do not throw when navigator.clipboard is undefined.
   useEffect(() => {
@@ -308,6 +328,18 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
     });
   }, []);
 
+  // Measure canvas height for side ruler tick positioning (real pixel height).
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (entry) setRulerHeight(entry.contentRect.height);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   const scaffoldVars = buildShellVars();
 
   return (
@@ -320,7 +352,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
           <AssistantShell />
           <div
             aria-hidden
-            className="pointer-events-none fixed inset-0 -z-10 bg-[var(--scaffold-bg)]"
+            className="pointer-events-none fixed inset-0 -z-10 bg-(--scaffold-bg)"
           />
 
           <div
@@ -331,9 +363,10 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
               minHeight: "100dvh",
             }}
           >
-            <SideRuler align="left" />
+            <SideRuler align="left" height={rulerHeight} />
 
             <div
+              ref={canvasRef}
               className="relative flex h-full flex-col overflow-visible"
               style={{
                 background: "var(--scaffold-surface)",
@@ -346,7 +379,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
               <BorderExtensions />
               <a
                 href="#main-content"
-                className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-[54px] focus-visible:z-[100] focus-visible:rounded focus-visible:bg-[var(--scaffold-surface)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-[var(--scaffold-toggle-text-active)] focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)] [font-family:var(--font-geist-pixel-circle)]"
+                className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-(--scaffold-skip-link-top) focus-visible:z-100 focus-visible:rounded focus-visible:bg-(--scaffold-surface) focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-(--scaffold-toggle-text-active) focus-visible:ring-2 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-pixel-circle)]"
               >
                 Skip to main content
               </a>
@@ -358,7 +391,9 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
                     key={section.id}
                     className={cn(
                       "relative",
-                      index === 0 ? "flex-1 p-0" : "px-4 py-4 md:px-6 md:py-6",
+                      index === 0
+                        ? "flex-1 p-0"
+                        : "px-(--scaffold-section-padding-x) py-(--scaffold-section-padding-y) md:px-(--scaffold-section-padding-x-md) md:py-(--scaffold-section-padding-y-md)",
                     )}
                     style={{
                       minHeight: section.minHeight,
@@ -385,7 +420,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
                         <main
                           id="main-content"
                           tabIndex={-1}
-                          className="h-full overflow-y-auto px-5 py-6 outline-none md:px-10 md:py-10"
+                          className="h-full overflow-y-auto px-(--scaffold-main-padding-x) py-(--scaffold-main-padding-y) outline-none md:px-(--scaffold-main-padding-x-md) md:py-(--scaffold-main-padding-y-md)"
                         >
                           {children}
                         </main>
@@ -403,7 +438,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
               </div>
             </div>
 
-            <SideRuler align="right" />
+            <SideRuler align="right" height={rulerHeight} />
           </div>
         </div>
       </AssistantProvider>

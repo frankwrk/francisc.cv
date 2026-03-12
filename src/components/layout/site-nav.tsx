@@ -4,15 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Sparkles } from "lucide-react";
 import {
   RiTwitterXFill,
   RiLinkedinFill,
   RiInstagramLine,
 } from "@remixicon/react";
 import { useWebHaptics } from "web-haptics/react";
-import { useAssistant } from "@/components/ai/assistant-context";
 import { FlipWords } from "@/components/ui/flip-words";
+import { siteScaffoldConfig } from "@/config/site-scaffold";
 import { profileSummary } from "@/config/site-home";
 import { cn } from "@/utils/cn";
 
@@ -33,7 +32,7 @@ export function NavSocialLinks({
   variant: "desktop" | "mobile";
 }) {
   const linkBaseCls =
-    "inline-flex items-center justify-center text-[var(--scaffold-ruler)] hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] rounded-sm transition-colors";
+    "inline-flex items-center justify-center text-(--scaffold-ruler) hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) rounded-sm transition-colors";
 
   const sizeCls =
     variant === "desktop"
@@ -87,7 +86,6 @@ export function SiteNav() {
   const openedAtRef = useRef<number>(0);
   const { trigger } = useWebHaptics();
   const prefersReducedMotion = useReducedMotion();
-  const { openAssistant } = useAssistant();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -117,10 +115,10 @@ export function SiteNav() {
   function linkCls(href: string) {
     return cn(
       "text-[10px] tracking-[0.18em] transition-colors [font-family:var(--font-geist-pixel-circle)]",
-      "rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]",
+      "rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler)",
       isActive(href)
-        ? "text-[var(--scaffold-toggle-text-active)]"
-        : "text-[var(--scaffold-ruler)] hover:text-[var(--scaffold-toggle-text-active)]",
+        ? "text-(--scaffold-toggle-text-active)"
+        : "text-(--scaffold-ruler) hover:text-(--scaffold-toggle-text-active)",
     );
   }
 
@@ -162,7 +160,7 @@ export function SiteNav() {
         aria-expanded={isOpen}
         aria-label="Toggle navigation"
         aria-controls="mobile-nav"
-        className="flex min-h-[44px] min-w-[44px] items-center rounded-sm text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] transition-colors [font-family:var(--font-geist-pixel-circle)] hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)] md:hidden"
+        className="flex min-h-[44px] min-w-[44px] items-center rounded-sm text-[10px] tracking-[0.18em] text-(--scaffold-ruler) transition-colors [font-family:var(--font-geist-pixel-circle)] hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) md:hidden"
       >
         {isOpen ? "CLOSE" : "MENU"}
       </button>
@@ -178,7 +176,8 @@ export function SiteNav() {
               duration: prefersReducedMotion ? 0 : 0.15,
               ease: "easeOut",
             }}
-            className="absolute left-0 right-0 top-[50px] z-50 border-b border-[var(--scaffold-line)] bg-[var(--scaffold-surface)] md:hidden"
+            className="absolute left-0 right-0 z-50 border-b border-(--scaffold-line) bg-(--scaffold-surface) md:hidden"
+            style={{ top: `${siteScaffoldConfig.topBarHeightPx}px` }}
           >
             <nav aria-label="Mobile navigation">
               {links.map(({ label, href }, i) => (
@@ -192,7 +191,7 @@ export function SiteNav() {
                   className={cn(
                     linkCls(href),
                     "flex items-center px-5 py-4",
-                    i > 0 && "border-t border-[var(--scaffold-line)]",
+                    i > 0 && "border-t border-(--scaffold-line)",
                   )}
                 >
                   {label}

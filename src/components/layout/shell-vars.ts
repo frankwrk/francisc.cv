@@ -19,6 +19,17 @@ export type ShellVars = CSSProperties & {
   "--scaffold-toggle-text-inactive-light": string;
   "--scaffold-toggle-text-inactive-dark": string;
   "--scaffold-section-divider-width": string;
+  "--scaffold-skip-link-top": string;
+  "--scaffold-top-bar-padding-x": string;
+  "--scaffold-top-bar-padding-x-md": string;
+  "--scaffold-main-padding-x": string;
+  "--scaffold-main-padding-y": string;
+  "--scaffold-main-padding-x-md": string;
+  "--scaffold-main-padding-y-md": string;
+  "--scaffold-section-padding-x": string;
+  "--scaffold-section-padding-y": string;
+  "--scaffold-section-padding-x-md": string;
+  "--scaffold-section-padding-y-md": string;
   "--machine-surface-bg-light": string;
   "--machine-surface-bg-dark": string;
 };
@@ -48,6 +59,17 @@ export function buildShellVars(): ShellVars {
     "--scaffold-toggle-text-inactive-dark":
       siteScaffoldConfig.palette.dark.toggleTextInactive,
     "--scaffold-section-divider-width": `${siteScaffoldConfig.fullBleedSectionDividerWidth}px`,
+    "--scaffold-skip-link-top": `${siteScaffoldConfig.topBarHeightPx + siteScaffoldConfig.skipLinkOffsetBelowTopBarPx}px`,
+    "--scaffold-top-bar-padding-x": `${siteScaffoldConfig.topBarPaddingPx.x}px`,
+    "--scaffold-top-bar-padding-x-md": `${siteScaffoldConfig.topBarPaddingPx.xMd}px`,
+    "--scaffold-main-padding-x": `${siteScaffoldConfig.mainContentPaddingPx.xPx}px`,
+    "--scaffold-main-padding-y": `${siteScaffoldConfig.mainContentPaddingPx.yPx}px`,
+    "--scaffold-main-padding-x-md": `${siteScaffoldConfig.mainContentPaddingPx.xPxMd}px`,
+    "--scaffold-main-padding-y-md": `${siteScaffoldConfig.mainContentPaddingPx.yPxMd}px`,
+    "--scaffold-section-padding-x": `${siteScaffoldConfig.sectionPaddingPx.xPx}px`,
+    "--scaffold-section-padding-y": `${siteScaffoldConfig.sectionPaddingPx.yPx}px`,
+    "--scaffold-section-padding-x-md": `${siteScaffoldConfig.sectionPaddingPx.xPxMd}px`,
+    "--scaffold-section-padding-y-md": `${siteScaffoldConfig.sectionPaddingPx.yPxMd}px`,
     "--machine-surface-bg-light":
       siteScaffoldConfig.palette.light.machineSurfaceBg,
     "--machine-surface-bg-dark":

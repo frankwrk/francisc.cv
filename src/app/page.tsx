@@ -8,7 +8,6 @@ import {
   homepageIdentitySupport,
   homepageSelectedWork,
   homepageSystemsDiagram,
-  profileSummary,
 } from "@/config/site-home";
 import { SpotlightPanel } from "@/components/ui/spotlight-panel";
 

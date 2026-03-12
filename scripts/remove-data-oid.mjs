@@ -5,7 +5,7 @@
  */
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
-import { readdirSync, statSync } from "fs";
+import { readdirSync } from "fs";
 
 function* walk(dir, exts = new Set([".tsx", ".jsx"])) {
   const entries = readdirSync(dir, { withFileTypes: true });

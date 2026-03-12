@@ -16,7 +16,21 @@ export type ScaffoldPalette = {
   toggleTextInactive: string;
 };
 
+/** Padding in px; base = mobile, Md = md breakpoint and up. */
+export type ScaffoldPaddingPx = {
+  xPx: number;
+  yPx: number;
+  xPxMd: number;
+  yPxMd: number;
+};
+
 export type SiteScaffoldConfig = {
+  /** Top bar (navbar) height in px; used for header and mobile menu offset. */
+  topBarHeightPx: number;
+  /** Offset in px below top bar for skip link (focus position). */
+  skipLinkOffsetBelowTopBarPx: number;
+  /** Top bar horizontal padding in px (base, md). */
+  topBarPaddingPx: { x: number; xMd: number };
   canvasMaxWidth: number;
   pageTopPadding: number;
   pageBottomPadding: number;
@@ -35,16 +49,23 @@ export type SiteScaffoldConfig = {
     dark: ScaffoldPalette;
   };
   rulerSide: {
-    start: number;
-    end: number;
-    step: number;
-    unitPx: number;
+    stepPx: number;
+    /** Height in px of the fade zone at the bottom of the ruler (opacity 1 → 0). */
+    fadeZonePx: number;
   };
+  /** Padding for the main content area (hero section). */
+  mainContentPaddingPx: ScaffoldPaddingPx;
+  /** Padding for non-hero sections. */
+  sectionPaddingPx: ScaffoldPaddingPx;
   sections: ScaffoldSection[];
 };
 
 // Update values in this object to customize the global scaffold.
+// When topBarHeightPx === rulerSide.stepPx (e.g. 50), the first ruler tick aligns with the top bar bottom.
 export const siteScaffoldConfig: SiteScaffoldConfig = {
+  topBarHeightPx: 54,
+  skipLinkOffsetBelowTopBarPx: 4,
+  topBarPaddingPx: { x: 16, xMd: 24 },
   canvasMaxWidth: 980,
   pageTopPadding: 52,
   pageBottomPadding: 52,
@@ -82,11 +103,11 @@ export const siteScaffoldConfig: SiteScaffoldConfig = {
     },
   },
   rulerSide: {
-    start: 0,
-    end: 900,
-    step: 50,
-    unitPx: 1,
+    stepPx: 50,
+    fadeZonePx: 100,
   },
+  mainContentPaddingPx: { xPx: 20, yPx: 24, xPxMd: 40, yPxMd: 40 },
+  sectionPaddingPx: { xPx: 16, yPx: 16, xPxMd: 24, yPxMd: 24 },
   sections: [
     // Single active content section for the current build phase.
     { id: "hero", minHeight: "clamp(520px, 82dvh, 900px)" },
