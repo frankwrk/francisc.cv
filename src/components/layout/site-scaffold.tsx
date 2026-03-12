@@ -372,7 +372,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
           />
 
           <div
-            className="mx-auto grid w-full grid-cols-1 px-4 pt-5 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0 md:pt-(--scaffold-page-top-padding)"
+            className="mx-auto grid w-full grid-cols-1 px-4 pt-5 pb-5 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0 md:pt-(--scaffold-page-top-padding) md:pb-(--scaffold-page-bottom-padding)"
             style={{
               maxWidth: siteScaffoldConfig.canvasMaxWidth + 128,
             }}

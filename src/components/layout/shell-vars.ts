@@ -20,6 +20,7 @@ export type ShellVars = CSSProperties & {
   "--scaffold-toggle-text-inactive-dark": string;
   "--scaffold-section-divider-width": string;
   "--scaffold-page-top-padding": string;
+  "--scaffold-page-bottom-padding": string;
   "--scaffold-border-width": string;
   "--scaffold-skip-link-top": string;
   "--scaffold-top-bar-padding-x": string;
@@ -62,6 +63,7 @@ export function buildShellVars(): ShellVars {
       siteScaffoldConfig.palette.dark.toggleTextInactive,
     "--scaffold-section-divider-width": `${siteScaffoldConfig.fullBleedSectionDividerWidth}px`,
     "--scaffold-page-top-padding": `${siteScaffoldConfig.pageTopPadding}px`,
+    "--scaffold-page-bottom-padding": `${siteScaffoldConfig.pageBottomPadding}px`,
     "--scaffold-border-width": `${siteScaffoldConfig.borderWidth}px`,
     "--scaffold-skip-link-top": `${siteScaffoldConfig.topBarHeightPx + siteScaffoldConfig.skipLinkOffsetBelowTopBarPx}px`,
     "--scaffold-top-bar-padding-x": `${siteScaffoldConfig.topBarPaddingPx.x}px`,
