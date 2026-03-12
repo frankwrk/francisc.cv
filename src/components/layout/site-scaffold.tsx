@@ -284,7 +284,10 @@ function CornerMarkers() {
   } as const;
 
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 z-20">
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 z-20 hidden md:block"
+    >
       <div
         className="absolute rounded-full border"
         style={{ ...markerStyle, left: -marker.offset, top: -marker.offset }}
@@ -369,7 +372,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
           />
 
           <div
-            className="mx-auto grid w-full grid-cols-1 px-4 pt-0 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0 md:pt-(--scaffold-page-top-padding)"
+            className="mx-auto grid w-full grid-cols-1 px-4 pt-5 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0 md:pt-(--scaffold-page-top-padding)"
             style={{
               maxWidth: siteScaffoldConfig.canvasMaxWidth + 128,
             }}
