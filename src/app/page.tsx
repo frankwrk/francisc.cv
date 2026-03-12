@@ -4,6 +4,8 @@ import { ProfileAvatar } from "@/components/profile/profile-avatar";
 import { Signature } from "@/components/brand/signature";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import * as Badge from "@/components/ui/badge";
+import { badgeVariants } from "@/components/ui/badge";
+import { cn } from "@/utils/cn";
 import { siteProfileConfig } from "@/config/site-profile";
 import {
   homepageCapabilities,
@@ -113,13 +115,16 @@ export default function Home() {
                     capability.href ? (
                       <Link
                         href={capability.href}
-                        className="inline-flex w-fit items-center gap-2 border border-[var(--scaffold-line)] px-2.5 py-1 text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)] transition-colors hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--scaffold-ruler)]"
+                        className={cn(
+                          badgeVariants({ color: "gray" }).root(),
+                          "self-start gap-1.5 hover:opacity-80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--scaffold-ruler)]",
+                        )}
                       >
-                        <span>{capability.evidenceLabel}</span>
+                        {capability.evidenceLabel}
                         <span aria-hidden>↗</span>
                       </Link>
                     ) : (
-                      <Badge.Root color="blue">
+                      <Badge.Root color="blue" className="self-start">
                         <Badge.Icon as={RiFlashlightFill} />
                         {capability.evidenceLabel}
                       </Badge.Root>
