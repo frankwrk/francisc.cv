@@ -104,7 +104,7 @@ export const siteScaffoldConfig: SiteScaffoldConfig = {
   },
   rulerSide: {
     stepPx: 50,
-    fadeZonePx: 100,
+    fadeZonePx: 200,
   },
   mainContentPaddingPx: { xPx: 20, yPx: 24, xPxMd: 40, yPxMd: 40 },
   sectionPaddingPx: { xPx: 16, yPx: 16, xPxMd: 24, yPxMd: 24 },

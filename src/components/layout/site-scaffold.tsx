@@ -40,10 +40,20 @@ function sideRulerOpacity(
   height: number,
   fadeZonePx: number
 ): number {
-  const fadeStart = height - fadeZonePx;
-  if (value >= fadeStart + fadeZonePx / 2) return 0;
-  if (value > fadeStart) return (fadeStart + fadeZonePx / 2 - value) / (fadeZonePx / 2);
-  return 1;
+  if (height <= 0 || fadeZonePx <= 0) {
+    return 1;
+  }
+
+  const halfFade = fadeZonePx / 2;
+  const distanceToTop = value;
+  const distanceToBottom = height - value;
+  const distanceToNearestEdge = Math.min(distanceToTop, distanceToBottom);
+
+  if (distanceToNearestEdge >= halfFade) {
+    return 1;
+  }
+
+  return distanceToNearestEdge / halfFade;
 }
 
 function SideRuler({
@@ -156,6 +166,9 @@ function TopRuler() {
             Ask about my work
           </AnimatedShinyText>
         </button>
+        <div className="hidden md:block">
+          <NavSocialLinks variant="desktop" />
+        </div>
         <ThemeToggle />
       </div>
     </header>
@@ -346,7 +359,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
     <MachineModeController machineContent={machineContent}>
       <AssistantProvider>
         <div
-          className="site-scaffold relative min-h-screen w-full"
+          className="site-scaffold relative min-h-screen w-full overflow-x-hidden"
           style={scaffoldVars}
         >
           <AssistantShell />
@@ -356,23 +369,18 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
           />
 
           <div
-            className="mx-auto grid w-full grid-cols-1 grid-rows-[1fr] px-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0"
+            className="mx-auto grid w-full grid-cols-1 px-4 pt-0 md:grid-cols-[auto_minmax(0,1fr)_auto] md:px-0 md:pt-(--scaffold-page-top-padding)"
             style={{
               maxWidth: siteScaffoldConfig.canvasMaxWidth + 128,
-              paddingTop: siteScaffoldConfig.pageTopPadding,
-              minHeight: "100dvh",
             }}
           >
             <SideRuler align="left" height={rulerHeight} />
 
             <div
               ref={canvasRef}
-              className="relative flex h-full flex-col overflow-visible"
+              className="relative flex h-full flex-col overflow-visible border-0 md:border-(--scaffold-line) md:[border-width:var(--scaffold-border-width)]"
               style={{
                 background: "var(--scaffold-surface)",
-                borderStyle: "solid",
-                borderWidth: siteScaffoldConfig.borderWidth,
-                borderColor: "var(--scaffold-line)",
               }}
             >
               <CornerMarkers />
@@ -402,7 +410,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
                     {index > 0 ? (
                       <div
                         aria-hidden
-                        className="pointer-events-none absolute left-1/2 top-0 w-screen -translate-x-1/2"
+                        className="pointer-events-none absolute inset-x-0 top-0 w-full"
                         style={{
                           height: "var(--scaffold-section-divider-width)",
                           background: "var(--scaffold-section-divider)",
@@ -420,7 +428,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
                         <main
                           id="main-content"
                           tabIndex={-1}
-                          className="h-full overflow-y-auto px-(--scaffold-main-padding-x) py-(--scaffold-main-padding-y) outline-none md:px-(--scaffold-main-padding-x-md) md:py-(--scaffold-main-padding-y-md)"
+                          className="px-(--scaffold-main-padding-x) py-(--scaffold-main-padding-y) outline-none md:px-(--scaffold-main-padding-x-md) md:py-(--scaffold-main-padding-y-md)"
                         >
                           {children}
                         </main>
