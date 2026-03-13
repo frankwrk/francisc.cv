@@ -49,7 +49,7 @@ function ResumeContent() {
           RESUME
         </p>
         <h1
-          className="text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl"
+          className="text-balance text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl"
          
         >
           Francisc Furdui
@@ -59,7 +59,7 @@ function ResumeContent() {
       {/* Role selector */}
       <div className="space-y-3">
         <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
          
         >
           Filter by role
@@ -74,13 +74,13 @@ function ResumeContent() {
          
         >
           <SegmentedControl.List
-            className="h-8 w-full rounded-full border border-[var(--scaffold-line)] bg-[var(--scaffold-toggle-track)] p-0.5"
+            className="h-11 w-full rounded-full border border-[var(--scaffold-line)] bg-[var(--scaffold-toggle-track)] p-0.5 md:h-8"
             floatingBgClassName="inset-y-0.5 rounded-full border border-[var(--scaffold-line)] bg-[var(--scaffold-toggle-thumb)] shadow-none"
            
           >
             <SegmentedControl.Trigger
               value="all"
-              className="h-7 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)]"
+              className="h-10 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)] md:h-7"
              
             >
               All
@@ -89,7 +89,7 @@ function ResumeContent() {
               <SegmentedControl.Trigger
                 key={role}
                 value={role}
-                className="h-7 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)]"
+                className="h-10 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)] md:h-7"
                
               >
                 {resumeRoleLabels[role]}
@@ -101,12 +101,12 @@ function ResumeContent() {
 
       {/* Summary */}
       <section className="space-y-2">
-        <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
-         
+        <h2
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+
         >
           Summary
-        </p>
+        </h2>
         <p
           className="text-[15px] leading-7 text-[var(--scaffold-ruler)]"
          
@@ -117,12 +117,12 @@ function ResumeContent() {
 
       {/* Experience */}
       <section className="space-y-4">
-        <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
-         
+        <h2
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+
         >
           Experience
-        </p>
+        </h2>
         <div className="space-y-5">
           {resumeData.experience.map((entry) => {
             const isHighlighted =
@@ -188,12 +188,12 @@ function ResumeContent() {
 
       {/* Skills */}
       <section className="space-y-3">
-        <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
-         
+        <h2
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+
         >
           Skills
-        </p>
+        </h2>
         <div
           className="border border-[var(--scaffold-line)]"
          
@@ -223,12 +223,12 @@ function ResumeContent() {
 
       {/* Education */}
       <section className="space-y-2">
-        <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
-         
+        <h2
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+
         >
           Education
-        </p>
+        </h2>
         <div
           className="border-l-2 border-[var(--scaffold-line)] pl-4"
          
@@ -256,12 +256,12 @@ function ResumeContent() {
 
       {/* Certifications */}
       <section className="space-y-2">
-        <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
-         
+        <h2
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+
         >
           Certifications
-        </p>
+        </h2>
         <p
           className="text-[13px] leading-relaxed text-[var(--scaffold-ruler)]"
          

@@ -120,7 +120,7 @@ export default async function ThinkingDetailPage({ params }: Props) {
               THINKING
             </p>
             <h1
-              className="text-4xl font-medium tracking-tight text-white [font-family:var(--font-geist-pixel-square)] md:text-5xl"
+              className="text-balance text-4xl font-medium tracking-tight text-white [font-family:var(--font-geist-pixel-square)] md:text-5xl"
              
             >
               {meta.title}

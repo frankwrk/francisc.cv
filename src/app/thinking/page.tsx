@@ -36,7 +36,7 @@ export default async function ThinkingPage() {
           THINKING
         </p>
         <h1
-          className="text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl"
+          className="text-balance text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl"
          
         >
           Writing and notes

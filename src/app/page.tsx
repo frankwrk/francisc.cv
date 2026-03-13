@@ -28,7 +28,7 @@ export default function Home() {
             initials={siteProfileConfig.initials}
           />
 
-          <h1 className="text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl">
+          <h1 className="text-balance text-4xl font-medium tracking-tight text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-pixel-square)] md:text-5xl">
             {siteProfileConfig.name}
           </h1>
         </header>
@@ -189,13 +189,6 @@ export default function Home() {
                           {item.status}
                         </Badge.Root>
                       )}
-                      <span className="text-[10px] tracking-[0.08em] text-[var(--scaffold-ruler)] opacity-70">
-                        {item.kind === "documented"
-                          ? "Portfolio artifact"
-                          : item.kind === "external"
-                            ? "External system"
-                            : "In progress"}
-                      </span>
                     </div>
                     <div className="space-y-2">
                       <h3 className="text-[16px] font-medium text-[var(--scaffold-toggle-text-active)]">
@@ -206,13 +199,11 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-                  <div className="text-[11px] tracking-[0.08em] text-[var(--scaffold-ruler)]">
-                    {item.href
-                      ? item.kind === "external"
-                        ? "Open live system"
-                        : "Open case study"
-                      : "Case study in progress"}
-                  </div>
+                  {item.href && (
+                    <div className="text-[11px] tracking-[0.08em] text-[var(--scaffold-ruler)]">
+                      {item.kind === "external" ? "Open live system" : "Open case study"}
+                    </div>
+                  )}
                 </div>
               </SpotlightPanel>
             );

@@ -62,7 +62,7 @@ export function NavSocialLinks({
   ] as const;
 
   return (
-    <div className="flex items-center gap-2" aria-label="Social profiles">
+    <nav className="flex items-center gap-2" aria-label="Social profiles">
       {iconLinks.map(({ href, label, Icon }) => (
         <a
           key={href}
@@ -75,7 +75,7 @@ export function NavSocialLinks({
           <Icon aria-hidden className="h-[1em] w-[1em]" />
         </a>
       ))}
-    </div>
+    </nav>
   );
 }
 

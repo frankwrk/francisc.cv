@@ -97,7 +97,7 @@ export default async function WorkDetailPage({ params }: Props) {
             WORK
           </p>
           <h1
-            className="text-4xl font-medium tracking-tight text-white [font-family:var(--font-geist-pixel-square)] md:text-5xl"
+            className="text-balance text-4xl font-medium tracking-tight text-white [font-family:var(--font-geist-pixel-square)] md:text-5xl"
            
           >
             {meta.title}
@@ -107,17 +107,9 @@ export default async function WorkDetailPage({ params }: Props) {
            
           >
             {meta.role && (
-              <span
-                className="text-[10px] tracking-[0.1em] text-white/70 [font-family:var(--font-geist-sans)]"
-               
-              >
+              <Badge.Root color="teal">
                 {meta.role}
-              </span>
-            )}
-            {meta.role && meta.stack && meta.stack.length > 0 && (
-              <span className="text-white/30">
-                ·
-              </span>
+              </Badge.Root>
             )}
             {meta.stack?.map((item) => (
               <Badge.Root key={item} color="teal">
