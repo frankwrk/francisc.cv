@@ -16,7 +16,6 @@ import { useTheme } from "next-themes";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Cpu, UserRound } from "lucide-react";
 import { useWebHaptics } from "web-haptics/react";
-import * as ButtonGroup from "@/components/ui/button-group";
 import { siteScaffoldConfig } from "@/config/site-scaffold";
 import { EncryptedText } from "@/components/machine/encrypted-text";
 import { cn } from "@/utils/cn";
@@ -64,41 +63,23 @@ function getMachineThemeTokens(resolvedTheme: string | undefined) {
 
 function MachineVersionToggle() {
   const ctx = useMachineMode();
+  const isMachine = ctx.displayMode === "machine";
 
   return (
-    <div
-      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-[90]"
-     
-    >
-      <ButtonGroup.Root
-        size="xsmall"
-        aria-label="Site version"
-        className="rounded-xl border border-[oklch(0.9128_0_89.88)] bg-[color-mix(in_oklab,var(--scaffold-surface)_90%,var(--scaffold-bg))] p-0.5 shadow-[0_12px_30px_-18px_rgba(14,18,27,0.35)] backdrop-blur-md dark:border-[oklch(0.3052_0_89.88)]"
-       
+    <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-[90]">
+      <button
+        type="button"
+        onClick={() => ctx.switchMode(isMachine ? "human" : "machine")}
+        aria-label={isMachine ? "Switch to human version" : "Switch to machine version"}
+        className="flex items-center gap-1.5 rounded-xl bg-[color-mix(in_oklab,var(--scaffold-surface)_90%,var(--scaffold-bg))] px-3 py-2 text-[11px] tracking-[0.12em] text-[oklch(0.5521_0_89.88)] shadow-[0_12px_30px_-18px_rgba(14,18,27,0.35)] backdrop-blur-md transition duration-300 ease-out hover:text-[oklch(0.42_0_89.88)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[var(--scaffold-ruler)] dark:text-[oklch(0.65_0_89.88)] dark:hover:text-[oklch(0.86_0_89.88)]"
       >
-        <ButtonGroup.Item
-          type="button"
-          data-state={ctx.displayMode === "human" ? "on" : "off"}
-          aria-pressed={ctx.displayMode === "human"}
-          onClick={() => ctx.switchMode("human")}
-          className="border-transparent bg-[color-mix(in_oklab,var(--scaffold-surface)_94%,var(--scaffold-bg))] text-[oklch(0.5521_0_89.88)] hover:text-[oklch(0.5521_0_89.88)] data-[state=on]:text-[oklch(0.5521_0_89.88)] dark:text-[oklch(0.65_0_89.88)] dark:hover:text-[oklch(0.65_0_89.88)] dark:data-[state=on]:text-[oklch(0.65_0_89.88)]"
-         
-        >
-          <ButtonGroup.Icon as={UserRound} aria-hidden />
-          <span>HUMAN</span>
-        </ButtonGroup.Item>
-        <ButtonGroup.Item
-          type="button"
-          data-state={ctx.displayMode === "machine" ? "on" : "off"}
-          aria-pressed={ctx.displayMode === "machine"}
-          onClick={() => ctx.switchMode("machine")}
-          className="border-transparent bg-[color-mix(in_oklab,var(--scaffold-surface)_94%,var(--scaffold-bg))] text-[oklch(0.5521_0_89.88)] hover:text-[oklch(0.5521_0_89.88)] data-[state=on]:text-[oklch(0.5521_0_89.88)] dark:text-[oklch(0.65_0_89.88)] dark:hover:text-[oklch(0.65_0_89.88)] dark:data-[state=on]:text-[oklch(0.65_0_89.88)]"
-         
-        >
-          <ButtonGroup.Icon as={Cpu} aria-hidden />
-          <span>MACHINE</span>
-        </ButtonGroup.Item>
-      </ButtonGroup.Root>
+        {isMachine ? (
+          <UserRound className="h-3.5 w-3.5" aria-hidden />
+        ) : (
+          <Cpu className="h-3.5 w-3.5" aria-hidden />
+        )}
+        <span>{isMachine ? "HUMAN" : "MACHINE"}</span>
+      </button>
     </div>
   );
 }

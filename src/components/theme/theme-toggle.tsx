@@ -1,58 +1,30 @@
 "use client";
 
-import { RiEqualizer3Fill, RiMoonLine, RiSunLine } from "@remixicon/react";
+import { RiMoonLine, RiSunLine } from "@remixicon/react";
 import { useTheme } from "next-themes";
 import { useWebHaptics } from "web-haptics/react";
-import * as SegmentedControl from "@/components/ui/segmented-control";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const { trigger } = useWebHaptics();
 
-  const value: "light" | "dark" | "system" =
-    theme === "dark" ? "dark" : theme === "light" ? "light" : "system";
+  const isDark = resolvedTheme === "dark";
 
   return (
-    <SegmentedControl.Root
-      value={value}
-      onValueChange={(nextValue) => {
-        if (
-          nextValue === "light" ||
-          nextValue === "dark" ||
-          nextValue === "system"
-        ) {
-          trigger([20, 60, 20]);
-          setTheme(nextValue);
-        }
+    <button
+      type="button"
+      onClick={() => {
+        trigger([20, 60, 20]);
+        setTheme(isDark ? "light" : "dark");
       }}
-      aria-label="Theme selection"
+      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      className="flex h-7 w-7 items-center justify-center rounded-full text-[var(--scaffold-toggle-text-inactive)] transition duration-300 ease-out hover:text-[var(--scaffold-toggle-text-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[var(--scaffold-ruler)]"
     >
-      <SegmentedControl.List
-        className="w-fit gap-2 rounded-full bg-[var(--scaffold-toggle-track)]"
-        floatingBgClassName="rounded-full bg-[var(--scaffold-toggle-thumb)]"
-      >
-        <SegmentedControl.Trigger
-          value="light"
-          className="aspect-square w-7 text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)]"
-          aria-label="Switch to light theme"
-        >
-          <RiSunLine className="h-4 w-4" aria-hidden />
-        </SegmentedControl.Trigger>
-        <SegmentedControl.Trigger
-          value="dark"
-          className="aspect-square w-7 text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)]"
-          aria-label="Switch to dark theme"
-        >
-          <RiMoonLine className="h-4 w-4" aria-hidden />
-        </SegmentedControl.Trigger>
-        <SegmentedControl.Trigger
-          value="system"
-          className="aspect-square w-7 text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)]"
-          aria-label="Use system theme"
-        >
-          <RiEqualizer3Fill className="h-4 w-4" aria-hidden />
-        </SegmentedControl.Trigger>
-      </SegmentedControl.List>
-    </SegmentedControl.Root>
+      {isDark ? (
+        <RiSunLine className="h-4 w-4" aria-hidden />
+      ) : (
+        <RiMoonLine className="h-4 w-4" aria-hidden />
+      )}
+    </button>
   );
 }

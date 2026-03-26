@@ -11,7 +11,6 @@ import {
   homepageCapabilities,
   homepageIdentitySupport,
   homepageSelectedWork,
-  homepageSystemsDiagram,
 } from "@/config/site-home";
 import { SpotlightPanel } from "@/components/ui/spotlight-panel";
 
@@ -56,7 +55,7 @@ export default function Home() {
         </section>
       </div>
 
-      <SpotlightPanel className="px-5 py-6 md:px-7 md:py-7">
+      <SpotlightPanel className="border-0 px-5 py-6 md:px-7 md:py-7">
         <div className="space-y-3">
           <p className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]">
             {homepageIdentitySupport.eyebrow}
@@ -134,26 +133,6 @@ export default function Home() {
               </SpotlightPanel>
             );
           })}
-        </div>
-
-        <div className="border border-[var(--scaffold-line)] px-4 py-4 md:px-5">
-          <p className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]">
-            SYSTEM PATH
-          </p>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            {homepageSystemsDiagram.map((step, index) => (
-              <div key={step} className="flex items-center gap-2">
-                <Badge.Root color="gray" size="medium">
-                  {step}
-                </Badge.Root>
-                {index < homepageSystemsDiagram.length - 1 ? (
-                  <span className="text-[var(--scaffold-ruler)]" aria-hidden>
-                    →
-                  </span>
-                ) : null}
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
