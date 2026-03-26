@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
     root: projectRoot,
   },
   outputFileTracingRoot: projectRoot,
+  async headers() {
+    return [
+      {
+        source: "/images/:path*",
+        headers: [{ key: "Access-Control-Allow-Origin", value: "*" }],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
