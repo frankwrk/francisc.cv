@@ -38,12 +38,12 @@ function ResumeContent() {
 
   return (
     <article
-      className="max-w-2xl space-y-10 pt-2 [font-family:var(--font-geist-sans)]"
+      className="max-w-2xl space-y-10 pt-2"
      
     >
       <header className="space-y-1">
         <p
-          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)]"
          
         >
           RESUME
@@ -59,7 +59,7 @@ function ResumeContent() {
       {/* Role selector */}
       <div className="space-y-3">
         <p
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] font-normal"
          
         >
           Filter by role
@@ -80,7 +80,7 @@ function ResumeContent() {
           >
             <SegmentedControl.Trigger
               value="all"
-              className="h-10 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)] md:h-7"
+              className="h-10 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] md:h-7"
              
             >
               All
@@ -89,7 +89,7 @@ function ResumeContent() {
               <SegmentedControl.Trigger
                 key={role}
                 value={role}
-                className="h-10 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)] md:h-7"
+                className="h-10 rounded-full px-2 text-[10px] tracking-[0.12em] text-[var(--scaffold-toggle-text-inactive)] data-[state=active]:text-[var(--scaffold-toggle-text-active)] md:h-7"
                
               >
                 {resumeRoleLabels[role]}
@@ -102,13 +102,13 @@ function ResumeContent() {
       {/* Summary */}
       <section className="space-y-2">
         <h2
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] font-normal"
 
         >
           Summary
         </h2>
         <p
-          className="text-[15px] leading-7 text-[var(--scaffold-ruler)]"
+          className="text-[15px] leading-[22px] text-[var(--scaffold-ruler)]"
          
         >
           {resumeData.summary}
@@ -118,7 +118,7 @@ function ResumeContent() {
       {/* Experience */}
       <section className="space-y-4">
         <h2
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] font-normal"
 
         >
           Experience
@@ -149,7 +149,7 @@ function ResumeContent() {
                     {entry.title}
                   </h3>
                   <span
-                    className="text-[11px] tracking-[0.06em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+                    className="text-[11px] tracking-[0.06em] text-[var(--scaffold-ruler)]"
                    
                   >
                     {entry.period}
@@ -189,7 +189,7 @@ function ResumeContent() {
       {/* Skills */}
       <section className="space-y-3">
         <h2
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] font-normal"
 
         >
           Skills
@@ -224,7 +224,7 @@ function ResumeContent() {
       {/* Education */}
       <section className="space-y-2">
         <h2
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] font-normal"
 
         >
           Education
@@ -257,7 +257,7 @@ function ResumeContent() {
       {/* Certifications */}
       <section className="space-y-2">
         <h2
-          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)] font-normal"
+          className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] font-normal"
 
         >
           Certifications

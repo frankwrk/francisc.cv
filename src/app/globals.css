@@ -980,15 +980,25 @@
   transform-origin: center;
 }
 
-/* AlignUI Body Styles */
+/* Body Styles */
 body {
   /* Background is applied by SiteScaffold's fixed bg layer via --scaffold-bg.
      No hardcoded value here so the palette in site-scaffold.ts remains the single
      source of truth. */
-  color: var(--color-text-strong-950);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  color: oklch(0.141 0.005 285.8);
+  font-family: system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5; /* 16px → 24px */
+  text-wrap: pretty;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
+}
+
+.dark body {
+  color: oklch(0.705 0.015 286.1);
 }
 
 .site-scaffold {

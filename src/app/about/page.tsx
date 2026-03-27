@@ -33,12 +33,12 @@ export default async function AboutPage() {
 
   return (
     <article
-      className="max-w-2xl space-y-8 pt-2 [font-family:var(--font-geist-sans)]"
+      className="max-w-2xl space-y-8 pt-2"
      
     >
       <header className="space-y-1">
         <p
-          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)]"
          
         >
           ABOUT
@@ -51,7 +51,7 @@ export default async function AboutPage() {
         </h1>
         {meta.description ? (
           <p
-            className="max-w-[42rem] text-[14px] leading-6 text-[var(--scaffold-ruler)]"
+            className="max-w-[42rem] text-[14px] leading-5 text-[var(--scaffold-ruler)]"
            
           >
             {meta.description}

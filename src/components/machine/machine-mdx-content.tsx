@@ -4,10 +4,10 @@ export function MachineMdxContent({ children }: { children: ReactNode }) {
   return (
     <div
       className="
-        text-[14px] leading-7 text-[var(--scaffold-ruler)] [font-family:var(--font-geist-mono)]
-        [&_h1]:mb-6 [&_h1]:text-[22px] [&_h1]:font-medium [&_h1]:tracking-tight [&_h1]:text-[var(--scaffold-toggle-text-active)] [&_h1]:[font-family:var(--font-geist-sans)]
-        [&_h2]:mb-2 [&_h2]:mt-10 [&_h2]:text-[16px] [&_h2]:font-medium [&_h2]:tracking-[0.04em] [&_h2]:text-[var(--scaffold-toggle-text-active)] [&_h2]:[font-family:var(--font-geist-sans)]
-        [&_h3]:mb-1 [&_h3]:mt-6 [&_h3]:text-[14px] [&_h3]:font-medium [&_h3]:text-[var(--scaffold-toggle-text-active)] [&_h3]:[font-family:var(--font-geist-sans)]
+        text-[14px] leading-5 text-[var(--scaffold-ruler)] [font-family:var(--font-geist-mono)]
+        [&_h1]:mb-6 [&_h1]:text-[22px] [&_h1]:font-medium [&_h1]:tracking-tight [&_h1]:text-[var(--scaffold-toggle-text-active)] [&_h1]:
+        [&_h2]:mb-2 [&_h2]:mt-10 [&_h2]:text-[16px] [&_h2]:font-medium [&_h2]:tracking-[0.04em] [&_h2]:text-[var(--scaffold-toggle-text-active)] [&_h2]:
+        [&_h3]:mb-1 [&_h3]:mt-6 [&_h3]:text-[14px] [&_h3]:font-medium [&_h3]:text-[var(--scaffold-toggle-text-active)] [&_h3]:
         [&_p]:mb-4
         [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5
         [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5

@@ -112,7 +112,7 @@ function SideRuler({
             <li
               key={`${align}-${value}`}
               className={cn(
-                "absolute flex -translate-y-1/2 items-center gap-1.5 [font-family:var(--font-geist-sans)]",
+                "absolute flex -translate-y-1/2 items-center gap-1.5",
                 align === "left"
                   ? "right-0 justify-end"
                   : "left-0 justify-start",
@@ -162,7 +162,7 @@ function TopRuler() {
             trigger([20, 30]);
             openAssistant();
           }}
-          className="flex items-center gap-1 px-1 py-1 text-[11px] uppercase tracking-[0.2em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-sans)] md:hidden"
+          className="flex items-center gap-1 px-1 py-1 text-[11px] uppercase tracking-[0.2em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) md:hidden"
           aria-label="Ask about my work"
         >
           <Sparkles className="h-3.5 w-3.5" />
@@ -177,7 +177,7 @@ function TopRuler() {
             trigger([20, 30]);
             openAssistant();
           }}
-          className="group hidden items-center gap-2 px-1 py-1 text-[10px] tracking-[0.14em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-sans)] md:inline-flex"
+          className="group hidden items-center gap-2 px-1 py-1 text-[10px] tracking-[0.14em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) md:inline-flex"
           aria-label="Ask about my work"
         >
           <Sparkles className="h-3.5 w-3.5" />
@@ -410,7 +410,7 @@ export function SiteScaffold({ children, machineContent }: SiteScaffoldProps) {
               <BorderExtensions />
               <a
                 href="#main-content"
-                className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-(--scaffold-skip-link-top) focus-visible:z-100 focus-visible:rounded focus-visible:bg-(--scaffold-surface) focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-(--scaffold-toggle-text-active) focus-visible:ring-2 focus-visible:ring-(--scaffold-ruler) [font-family:var(--font-geist-sans)]"
+                className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-(--scaffold-skip-link-top) focus-visible:z-100 focus-visible:rounded focus-visible:bg-(--scaffold-surface) focus-visible:px-4 focus-visible:py-2 focus-visible:text-[10px] focus-visible:tracking-[0.18em] focus-visible:text-(--scaffold-toggle-text-active) focus-visible:ring-2 focus-visible:ring-(--scaffold-ruler)"
               >
                 Skip to main content
               </a>

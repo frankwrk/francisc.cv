@@ -9,13 +9,13 @@ export function ContactForm() {
      
     >
       <p
-        className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+        className="text-[10px] tracking-[0.18em] text-[var(--scaffold-ruler)]"
        
       >
         CONTACT
       </p>
       <p
-        className="mt-2 text-[14px] leading-6 text-[var(--scaffold-ruler)]"
+        className="mt-2 text-[14px] leading-5 text-[var(--scaffold-ruler)]"
        
       >
         Email works best for roles and collaborations.

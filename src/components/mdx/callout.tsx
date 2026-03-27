@@ -23,7 +23,7 @@ export function Callout({ type = "note", title, children }: CalloutProps) {
     >
       {title && (
         <p
-          className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)]"
+          className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--scaffold-toggle-text-active)]"
          
         >
           {title}

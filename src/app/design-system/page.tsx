@@ -36,15 +36,15 @@ export default function DesignSystemPage() {
   const { palette } = siteScaffoldConfig;
 
   return (
-    <article className="max-w-4xl space-y-10 pt-2 [font-family:var(--font-geist-sans)]">
+    <article className="max-w-4xl space-y-10 pt-2">
       <header className="space-y-2">
-        <p className="text-[10px] tracking-[0.22em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+        <p className="text-[10px] tracking-[0.22em] text-(--scaffold-ruler)">
           DESIGN SYSTEM
         </p>
         <h1 className="text-2xl tracking-tight text-(--scaffold-toggle-text-active)">
           Visual language for francisc.cv
         </h1>
-        <p className="max-w-3xl text-[14px] leading-6 text-(--scaffold-ruler)">
+        <p className="max-w-3xl text-[14px] leading-5 text-(--scaffold-ruler)">
           This page is a working reference for the type system, scaffold tokens,
           and core UI primitives currently wired into the site. It&apos;s meant
           as a control surface while you tune fonts, colors, and layout without
@@ -54,15 +54,15 @@ export default function DesignSystemPage() {
 
       {/* Typography */}
       <section className="space-y-4">
-        <h2 className="text-sm font-medium tracking-[0.18em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+        <h2 className="text-sm font-medium tracking-[0.18em] text-(--scaffold-ruler)">
           TYPOGRAPHY
         </h2>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2 rounded border border-(--scaffold-line) bg-(--scaffold-bg) p-4">
-            <p className="text-[10px] uppercase tracking-[0.16em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+            <p className="text-[10px] uppercase tracking-[0.16em] text-(--scaffold-ruler)">
               Geist Sans
             </p>
-            <div className="space-y-1 [font-family:var(--font-geist-sans)]">
+            <div className="space-y-1">
               <p className="text-[20px] font-medium tracking-tight text-(--scaffold-toggle-text-active)">
                 Heading — Geist Sans
               </p>
@@ -73,7 +73,7 @@ export default function DesignSystemPage() {
           </div>
 
           <div className="space-y-2 rounded border border-(--scaffold-line) bg-(--scaffold-bg) p-4">
-            <p className="text-[10px] uppercase tracking-[0.16em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+            <p className="text-[10px] uppercase tracking-[0.16em] text-(--scaffold-ruler)">
               Geist Mono
             </p>
             <div className="space-y-1 [font-family:var(--font-geist-mono)]">
@@ -88,11 +88,11 @@ export default function DesignSystemPage() {
           </div>
 
           <div className="space-y-3 rounded border border-(--scaffold-line) bg-(--scaffold-bg) p-4 md:col-span-2">
-            <p className="text-[10px] uppercase tracking-[0.16em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+            <p className="text-[10px] uppercase tracking-[0.16em] text-(--scaffold-ruler)">
               Pixel variants
             </p>
             <div className="grid gap-3 md:grid-cols-3">
-              <div className="space-y-1 [font-family:var(--font-geist-sans)]">
+              <div className="space-y-1">
                 <p className="text-[13px] tracking-[0.18em] text-(--scaffold-toggle-text-active)">
                   PIXEL SQUARE
                 </p>
@@ -108,7 +108,7 @@ export default function DesignSystemPage() {
                   Available for number systems and scaffold metrics.
                 </p>
               </div>
-              <div className="space-y-1 [font-family:var(--font-geist-sans)]">
+              <div className="space-y-1">
                 <p className="text-[13px] tracking-[0.18em] text-(--scaffold-toggle-text-active)">
                   PIXEL CIRCLE / TRIANGLE / LINE
                 </p>
@@ -118,10 +118,10 @@ export default function DesignSystemPage() {
               </div>
             </div>
             <div className="mt-4 grid gap-3">
-              <div className="rounded border border-(--scaffold-line) bg-black px-4 py-6 text-[32px] leading-tight text-white [font-family:var(--font-geist-sans)]">
+              <div className="rounded border border-(--scaffold-line) bg-black px-4 py-6 text-[32px] leading-tight text-white">
                 What will you ship next?
               </div>
-              <div className="rounded border border-(--scaffold-line) bg-black px-4 py-6 text-[32px] leading-tight text-white [font-family:var(--font-geist-sans)]">
+              <div className="rounded border border-(--scaffold-line) bg-black px-4 py-6 text-[32px] leading-tight text-white">
                 What will you ship next?
               </div>
               <div className="rounded border border-(--scaffold-line) bg-black px-4 py-6 text-[32px] leading-tight text-white [font-family:var(--font-geist-pixel-grid)]">
@@ -140,7 +140,7 @@ export default function DesignSystemPage() {
 
       {/* Scaffold palette */}
       <section className="space-y-4">
-        <h2 className="text-sm font-medium tracking-[0.18em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+        <h2 className="text-sm font-medium tracking-[0.18em] text-(--scaffold-ruler)">
           SCAFFOLD PALETTE
         </h2>
         <p className="max-w-3xl text-[13px] leading-relaxed text-(--scaffold-ruler)">
@@ -150,7 +150,7 @@ export default function DesignSystemPage() {
         </p>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-3 rounded border border-(--scaffold-line) bg-(--scaffold-bg) p-4">
-            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-ruler)">
               Light mode preview
             </p>
             <div className="rounded border border-(--scaffold-line)">
@@ -185,7 +185,7 @@ export default function DesignSystemPage() {
           </div>
 
           <div className="space-y-3 rounded border border-(--scaffold-line) bg-(--scaffold-bg) p-4">
-            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-ruler)">
               Dark mode preview
             </p>
             <div className="rounded border border-(--scaffold-line)">
@@ -210,7 +210,7 @@ export default function DesignSystemPage() {
 
         <div className="grid gap-4 rounded border border-(--scaffold-line) bg-(--scaffold-bg) p-4 text-[12px] text-(--scaffold-ruler) md:grid-cols-2">
           <div className="space-y-1">
-            <div className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active) [font-family:var(--font-geist-sans)]">
+            <div className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active)">
               Raw light palette
             </div>
             <ul className="space-y-1">
@@ -223,7 +223,7 @@ export default function DesignSystemPage() {
             </ul>
           </div>
           <div className="space-y-1">
-            <div className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active) [font-family:var(--font-geist-sans)]">
+            <div className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active)">
               Raw dark palette
             </div>
             <ul className="space-y-1">
@@ -240,7 +240,7 @@ export default function DesignSystemPage() {
 
       {/* Layout primitives */}
       <section className="space-y-4">
-        <h2 className="text-sm font-medium tracking-[0.18em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+        <h2 className="text-sm font-medium tracking-[0.18em] text-(--scaffold-ruler)">
           LAYOUT PRIMITIVES
         </h2>
         <p className="max-w-3xl text-[13px] leading-relaxed text-(--scaffold-ruler)">
@@ -297,13 +297,13 @@ export default function DesignSystemPage() {
 
       {/* Components & primitives */}
       <section className="space-y-4">
-        <h2 className="text-sm font-medium tracking-[0.18em] text-(--scaffold-ruler) [font-family:var(--font-geist-sans)]">
+        <h2 className="text-sm font-medium tracking-[0.18em] text-(--scaffold-ruler)">
           COMPONENT PRIMITIVES
         </h2>
         <div className="grid gap-4 md:grid-cols-2">
           {/* Buttons */}
           <div className="space-y-3 rounded border border-(--scaffold-line) bg-(--scaffold-bg) p-4">
-            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active) [font-family:var(--font-geist-sans)]">
+            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active)">
               Buttons
             </p>
             <div className="flex flex-wrap items-center gap-3">
@@ -329,7 +329,7 @@ export default function DesignSystemPage() {
 
           {/* Borders & corners */}
           <div className="space-y-3 rounded border border-(--scaffold-line) bg-(--scaffold-bg) p-4">
-            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active) [font-family:var(--font-geist-sans)]">
+            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active)">
               Borders & radius
             </p>
             <div className="grid gap-3 text-[12px] text-(--scaffold-ruler)">
@@ -374,7 +374,7 @@ export default function DesignSystemPage() {
 
           {/* Icons */}
           <div className="space-y-3 rounded border border-(--scaffold-line) bg-(--scaffold-bg) p-4">
-            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active) [font-family:var(--font-geist-sans)]">
+            <p className="text-[11px] font-medium tracking-[0.14em] text-(--scaffold-toggle-text-active)">
               Icons
             </p>
             <div className="flex items-center gap-3 text-[13px] text-(--scaffold-ruler)">

@@ -24,9 +24,9 @@ export const siteProfileConfig: SiteProfileConfig = {
     "/images/francisc-furdui.jpeg",
   ],
   introParagraphs: [
-    "I work on digital products where strategy and execution are treated as the same problem. My instinct is to reduce complexity before adding features.",
-    "Right now I'm building this portfolio as something I actually use — a place to document decisions and present work with evidence, not just outcomes.",
-    "If you're working on something hard and need someone who can move between design, engineering, and product without losing the thread, I'd like to hear about it.",
+    "I'm Francisc. I reduce complexity before I add features — it's the habit that keeps me useful when scope grows.",
+    "Most of my current work is around AI adoption: what happens after the demo, when a team has to absorb a new capability into real workflows. That usually means rollout structure, the knowledge layer that keeps agents in context, and the coordination work that can be made repeatable without turning brittle.",
+    "If you're working on something in that space, or just need someone who can move between product, engineering, and design, I'd like to hear about it.",
   ],
   contact: {
     email: contactEmail,

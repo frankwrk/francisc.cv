@@ -114,7 +114,7 @@ export function SiteNav() {
 
   function linkCls(href: string) {
     return cn(
-      "text-[10px] tracking-[0.18em] transition-colors [font-family:var(--font-geist-sans)]",
+      "text-[10px] tracking-[0.18em] transition-colors",
       "rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler)",
       isActive(href)
         ? "text-(--scaffold-toggle-text-active)"
@@ -160,7 +160,7 @@ export function SiteNav() {
         aria-expanded={isOpen}
         aria-label="Toggle navigation"
         aria-controls="mobile-nav"
-        className="flex min-h-[44px] min-w-[44px] items-center rounded-sm text-[10px] tracking-[0.18em] text-(--scaffold-ruler) transition-colors [font-family:var(--font-geist-sans)] hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) md:hidden"
+        className="flex min-h-[44px] min-w-[44px] items-center rounded-sm text-[10px] tracking-[0.18em] text-(--scaffold-ruler) transition-colors hover:text-(--scaffold-toggle-text-active) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--scaffold-ruler) md:hidden"
       >
         {isOpen ? "CLOSE" : "MENU"}
       </button>

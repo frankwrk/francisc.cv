@@ -118,7 +118,7 @@ function MachineLoadingOverlay({
         >
           <EncryptedText
             text={label}
-            className="text-[11px] tracking-[0.2em] text-[var(--scaffold-toggle-text-active)] [font-family:var(--font-geist-sans)]"
+            className="text-[11px] tracking-[0.2em] text-[var(--scaffold-toggle-text-active)]"
            
           />
         </motion.div>

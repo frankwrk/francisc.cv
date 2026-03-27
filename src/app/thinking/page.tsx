@@ -25,12 +25,12 @@ export default async function ThinkingPage() {
 
   return (
     <article
-      className="space-y-8 pt-2 [font-family:var(--font-geist-sans)]"
+      className="space-y-8 pt-2"
      
     >
       <header className="space-y-1">
         <p
-          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)]"
          
         >
           THINKING
@@ -73,7 +73,7 @@ export default async function ThinkingPage() {
                 {article.date && (
                   <time
                     dateTime={article.date}
-                    className="block text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+                    className="block text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)]"
                    
                   >
                     {new Date(article.date).toLocaleDateString("en-US", {

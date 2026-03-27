@@ -72,7 +72,7 @@ export default async function ThinkingDetailPage({ params }: Props) {
       />
 
       <article
-        className="space-y-8 [font-family:var(--font-geist-sans)]"
+        className="space-y-8"
        
       >
         {/* Hero header — art canvas background with text overlaid */}
@@ -114,7 +114,7 @@ export default async function ThinkingDetailPage({ params }: Props) {
            
           >
             <p
-              className="text-[10px] tracking-[0.22em] text-white/60 [font-family:var(--font-geist-sans)]"
+              className="text-[10px] tracking-[0.22em] text-white/60"
              
             >
               THINKING
@@ -132,7 +132,7 @@ export default async function ThinkingDetailPage({ params }: Props) {
               {meta.date && (
                 <time
                   dateTime={meta.date}
-                  className="text-[10px] tracking-[0.1em] text-white/60 [font-family:var(--font-geist-sans)]"
+                  className="text-[10px] tracking-[0.1em] text-white/60"
                  
                 >
                   {new Date(meta.date).toLocaleDateString("en-US", {

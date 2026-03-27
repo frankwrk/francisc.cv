@@ -7,6 +7,32 @@ import {
 } from "lucide-react";
 import { siteUrl } from "@/config/site-url";
 
+export type HomepageProject = {
+  title: string;
+  description: string;
+  href?: string;
+  initial: string;
+};
+
+export const homepageProjects: HomepageProject[] = [
+  {
+    title: "SYNQ Engine",
+    description: "Agent orchestration runtime for WordPress-heavy environments.",
+    href: "https://synqengine.com",
+    initial: "S",
+  },
+  {
+    title: "STARTLINE",
+    description: "Framework for enterprise AI adoption and workflow change.",
+    initial: "ST",
+  },
+  {
+    title: "Cycl",
+    description: "AI-assisted credit planning and optimization.",
+    initial: "C",
+  },
+];
+
 export type HomepageIdentitySupport = {
   eyebrow: string;
   title: string;

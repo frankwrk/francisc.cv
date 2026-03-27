@@ -49,7 +49,7 @@ export default async function WorkDetailPage({ params }: Props) {
 
   return (
     <article
-      className="space-y-8 [font-family:var(--font-geist-sans)]"
+      className="space-y-8"
      
     >
       {/* Hero header — art canvas background with text overlaid */}
@@ -91,7 +91,7 @@ export default async function WorkDetailPage({ params }: Props) {
          
         >
           <p
-            className="text-[10px] tracking-[0.22em] text-white/60 [font-family:var(--font-geist-sans)]"
+            className="text-[10px] tracking-[0.22em] text-white/60"
            
           >
             WORK
@@ -131,7 +131,7 @@ export default async function WorkDetailPage({ params }: Props) {
           >
             {meta.description && (
               <p
-                className="text-[15px] leading-relaxed text-[var(--scaffold-ruler)]"
+                className="text-[15px] leading-[22px] text-[var(--scaffold-ruler)]"
                
               >
                 {meta.description}
@@ -140,7 +140,7 @@ export default async function WorkDetailPage({ params }: Props) {
             {meta.outcomes && meta.outcomes.length > 0 && (
               <div className="space-y-2">
                 <p
-                  className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+                  className="text-[10px] uppercase tracking-[0.18em] text-[var(--scaffold-ruler)]"
                  
                 >
                   Outcomes

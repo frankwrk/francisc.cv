@@ -25,12 +25,12 @@ export default async function WorkPage() {
 
   return (
     <article
-      className="space-y-8 pt-2 [font-family:var(--font-geist-sans)]"
+      className="space-y-8 pt-2"
      
     >
       <header className="space-y-1">
         <p
-          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+          className="text-[10px] tracking-[0.22em] text-[var(--scaffold-ruler)]"
          
         >
           WORK
@@ -81,7 +81,7 @@ export default async function WorkPage() {
                 </h2>
                 {project.role && (
                   <span
-                    className="shrink-0 text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)] [font-family:var(--font-geist-sans)]"
+                    className="shrink-0 text-[10px] tracking-[0.1em] text-[var(--scaffold-ruler)]"
                    
                   >
                     {project.role}
