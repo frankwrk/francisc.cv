@@ -19,6 +19,7 @@ import { siteUrl } from "@/config/site-url";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Agentation } from "agentation";
+import { InterfaceKit } from "interface-kit/react";
 import "./globals.css";
 const siteName = "francisc.cv";
 const defaultTitle = "AI adoption & workflow systems — Francisc Furdui";
@@ -109,6 +110,7 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
         {process.env.NODE_ENV === "development" && <Agentation />}
+        {process.env.NODE_ENV === "development" && <InterfaceKit />}
       </body>
     </html>
   );
