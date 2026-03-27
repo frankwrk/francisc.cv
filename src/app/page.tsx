@@ -32,9 +32,9 @@ export default function Home() {
           </h1>
         </header>
 
-        <section className="space-y-4 text-[15px] leading-7 text-[var(--scaffold-ruler)]">
+        <section className="space-y-4 text-[var(--scaffold-ruler)]">
           {siteProfileConfig.introParagraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+            <p key={paragraph} className="text-sm font-light leading-[1.5] tracking-[0.025em]">{paragraph}</p>
           ))}
 
           <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
